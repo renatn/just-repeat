@@ -1,0 +1,31 @@
+{
+  "name": "react-flashcards",
+  "version": "1.0.0",
+  "description": "Flashcards",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renatn/react-flashcards.git"
+  },
+  "keywords": [
+    "flashcards",
+    "react",
+    "babel"
+  ],
+  "author": "Renat Nasyrov",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/renatn/react-flashcards/issues"
+  },
+  "homepage": "https://github.com/renatn/react-flashcards#readme",
+  "dependencies": {
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2"
+  },
+  "devDependencies": {
+    "webpack": "^1.13.0"
+  }
+}
