@@ -30,6 +30,11 @@ const showAnswer = (card) => {
 	render();
 }
 
+const nextCard = (level) => {
+	memo = memo.slice(1);
+	render();
+}
+
 const addCard = (front, back) => {
 	cards = [...cards, {
 		front,
@@ -38,6 +43,11 @@ const addCard = (front, back) => {
 	save(cards);
 	render();
 };
+
+const stop = () => {
+	isStarted = false;
+	render();
+}
 
 const startMemo = () => {
 	isStarted = true;
@@ -69,7 +79,9 @@ const Editor = (props) => {
 				Add
 			</button>
 			<ul>
-				{props.cards.map((card, i) => <li key={i}>{card.front} - {card.back}</li> )}
+				{props.cards.map((card, i) => <li key={i}>
+					{card.front} - {card.back} &nbsp; <button>X</button>
+				</li> )}
 			</ul>
 		</div>		
 	);
@@ -77,61 +89,68 @@ const Editor = (props) => {
 
 
 const AnswerActions = (props) => {
+	const handleEasy = () => {
+		props.onDifficultyLevel(0);
+	}
+
 	return (
 		<div>
 			<p>{props.back}</p>
 			<div>
-				<button>Easy</button>
-				<button>Normal</button>				
-				<button>Hard</button>
+				<button onClick={handleEasy}>Easy</button>
+				<button onClick={handleEasy}>Normal</button>				
+				<button onClick={handleEasy}>Hard</button>
 			</div>
 		</div>
 	);
 }
 
 const Player = (props) => {
+
+	const handleOK = () => stop();
+
+	if (props.memo.length === 0) {
+		return (
+			<div>
+				<h2>Test Passed!</h2>
+				<button onClick={handleOK}>OK</button>
+			</div>
+		);
+	}
 	const question = props.memo[0];
 	const card = props.cards[question.index];
 	const handleAnswer = () => props.onAnswer(question); 
-
-	let backView;
-	if (question.isAnswered) {
-		backView = <AnswerActions back={card.back} />
-	} else {
-		backView = (
-			<button onClick={handleAnswer}>Answer</button>
-		);
-	}
-
 	return (
 		<div>
 			<div>
 				{card.front}
 			</div>
-			{backView}
+			<div className={question.isAnswered ? '' : 'hidden'}>
+				<AnswerActions back={card.back} onDifficultyLevel={props.onDifficultyLevel}/>
+			</div>
+			<div className={question.isAnswered ? 'hidden' : ''}>
+				<button onClick={handleAnswer}>Answer</button>
+			</div>
 		</div>
 	);
 }
 
 const App = (props) => {
 	const view = props.isStarted 
-		? <Player cards={props.cards} memo={props.memo} onAnswer={props.onAnswer}/>
+		? <Player cards={props.cards} memo={props.memo} onDifficultyLevel={props.onDifficultyLevel} onAnswer={props.onAnswer}/>
 		: <Editor cards={props.cards} onAddCard={props.onAddCard} />
-
 	return (
 		<div>
 			<h1>App</h1>
 			{view}	
-			<p>
+			<div className={props.isStarted ? 'hidden' : ''}>
 				<button disabled={!props.cards.length} onClick={props.onStart}>
 					Start
 				</button>
-			</p>
+			</div>
 		</div>
 	);
 }
-
-
 
 cards = load();
 const render = () => ReactDOM.render(
@@ -141,6 +160,7 @@ const render = () => ReactDOM.render(
 		isStarted={isStarted}
 		onAddCard={addCard} 
 		onStart={startMemo}
+		onDifficultyLevel={nextCard}
 		onAnswer={showAnswer}
 	/>, 
 	document.getElementById('app')
