@@ -5,17 +5,43 @@ let cards = [];
 let memo = [];
 let isStarted = false
 
+const load = () => {
+	const data = localStorage.getItem('react-flashcards');
+	if (!data) {
+		return [];
+	}
+	return JSON.parse(data);
+}
+
+const save = (cards) => {
+	localStorage.setItem('react-flashcards', JSON.stringify(cards));
+}
+
+const showAnswer = (card) => {
+	memo = memo.map((m) => {
+		if (m.index === card.index) {
+			return {
+				index: m.index,
+				isAnswered: true
+			}
+		}
+		return m;
+	});
+	render();
+}
+
 const addCard = (front, back) => {
 	cards = [...cards, {
 		front,
 		back
 	}];
+	save(cards);
 	render();
 };
 
 const startMemo = () => {
 	isStarted = true;
-	memo = cards.map((_, i) => i);
+	memo = cards.map((_, i) => ({index: i, isAnswered: false}));
 	render();
 }
 
@@ -49,28 +75,47 @@ const Editor = (props) => {
 	);
 }
 
+
+const AnswerActions = (props) => {
+	return (
+		<div>
+			<p>{props.back}</p>
+			<div>
+				<button>Easy</button>
+				<button>Normal</button>				
+				<button>Hard</button>
+			</div>
+		</div>
+	);
+}
+
 const Player = (props) => {
-	let back = '';
-	const card = props.cards[props.memo[0]];
-	const handleClick = () => back = card.back
+	const question = props.memo[0];
+	const card = props.cards[question.index];
+	const handleAnswer = () => props.onAnswer(question); 
+
+	let backView;
+	if (question.isAnswered) {
+		backView = <AnswerActions back={card.back} />
+	} else {
+		backView = (
+			<button onClick={handleAnswer}>Answer</button>
+		);
+	}
+
 	return (
 		<div>
 			<div>
 				{card.front}
-				<br />
-				{back}
 			</div>
-			<button onClick={handleClick}>Answer</button>
+			{backView}
 		</div>
 	);
 }
 
 const App = (props) => {
-	
-	const handleStart = () => props.onStart();
-
 	const view = props.isStarted 
-		? <Player cards={props.cards} memo={props.memo} />
+		? <Player cards={props.cards} memo={props.memo} onAnswer={props.onAnswer}/>
 		: <Editor cards={props.cards} onAddCard={props.onAddCard} />
 
 	return (
@@ -78,7 +123,7 @@ const App = (props) => {
 			<h1>App</h1>
 			{view}	
 			<p>
-				<button disabled={!props.cards.length} onClick={handleStart}>
+				<button disabled={!props.cards.length} onClick={props.onStart}>
 					Start
 				</button>
 			</p>
@@ -86,8 +131,18 @@ const App = (props) => {
 	);
 }
 
+
+
+cards = load();
 const render = () => ReactDOM.render(
-	<App cards={cards} memo={memo} isStarted={isStarted} onAddCard={addCard} onStart={startMemo} />, 
+	<App
+		cards={cards} 
+		memo={memo} 
+		isStarted={isStarted}
+		onAddCard={addCard} 
+		onStart={startMemo}
+		onAnswer={showAnswer}
+	/>, 
 	document.getElementById('app')
 );
 
