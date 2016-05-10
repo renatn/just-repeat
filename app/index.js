@@ -44,6 +44,12 @@ const addCard = (front, back) => {
 	render();
 };
 
+const removeCard = (front) => {
+	cards = cards.filter((card) => card.front !== front);
+	save(cards);
+	render();
+}
+
 const stop = () => {
 	isStarted = false;
 	render();
@@ -55,6 +61,18 @@ const startMemo = () => {
 	render();
 }
 
+const CardItem = (props) => {
+	const handleRemove = () => {
+		removeCard(props.front);
+	};
+
+	return (
+		<li>
+			{props.front} - {props.back} &nbsp; <button onClick={handleRemove}>X</button>
+		</li>
+	);
+};
+
 const Editor = (props) => {
 	let inputFront = null,
 		inputBack = null;
@@ -63,7 +81,8 @@ const Editor = (props) => {
 		props.onAddCard(inputFront.value, inputBack.value);
 		inputFront.value = '';
 		inputBack.value = '';
-	}
+	};
+
 
 	return (
 		<div>
@@ -79,9 +98,7 @@ const Editor = (props) => {
 				Add
 			</button>
 			<ul>
-				{props.cards.map((card, i) => <li key={i}>
-					{card.front} - {card.back} &nbsp; <button>X</button>
-				</li> )}
+				{props.cards.map((card, i) => <CardItem {...card} key={i} />  )}
 			</ul>
 		</div>		
 	);
