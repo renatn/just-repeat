@@ -8,12 +8,34 @@ const cards = (state = [], action) => {
 		case 'ADD_CARD': 
 			return [...state, {
 				front: action.front,
-				back: action.back
+				back: action.back,
+				level: 0
 			}];
 		case 'REMOVE_CARD': 
 			return state.filter((card) => card.front !== action.front);
 		default:
 			return state;
+	}
+}
+
+const memo = (state = [], action) => {
+	switch (action.type) {
+		case 'START_MEMO':
+			return action.cards.map((_, i) => ({index: i, isAnswered: false}));
+		case 'SHOW_ANSWER':
+			return state.map((m) => {
+				if (m.index === action.index) {
+					return {
+						index: m.index,
+						isAnswered: true
+					}
+				}
+				return m;
+			});
+		case 'DIFFICULTY_LEVEL':
+			return state.slice(1)
+		default: 
+			return state;			
 	}
 }
 
@@ -24,12 +46,19 @@ const INITIAL_STATE = {
 }
 
 const flash = (state = INITIAL_STATE, action) => {
+
+	const update = (opts) => {
+		return Object.assign({}, state, opts);
+	};
+
 	switch (action.type) {
 		case 'START_MEMO':
 			return Object.assign({}, state, {
-				memo: state.cards.map((_, i) => ({index: i, isAnswered: false})),
+				memo: memo(state.memo, action),
 				isStarted: true
 			});
+		case 'LOAD_CARDS':
+			return update({cards: action.cards});
 		case 'ADD_CARD':
 			return Object.assign({}, state, {
 				cards: cards(state.cards, action)
@@ -40,15 +69,15 @@ const flash = (state = INITIAL_STATE, action) => {
 			});
 		case 'SHOW_ANSWER':
 			return Object.assign({}, state, {
-				memo: state.memo.map((m) => {
-					if (m.index === action.index) {
-						return {
-							index: m.index,
-							isAnswered: true
-						}
-					}
-					return m;
-				})
+				memo: memo(state.memo, action)
+			});
+		case 'DIFFICULTY_LEVEL':
+			return Object.assign({}, state, {
+				memo: memo(state.memo, action)
+			});
+		case 'STOP_MEMO':
+			return Object.assign({}, state, {
+				isStarted: false
 			});
 		default:
 			return state;
@@ -103,7 +132,6 @@ const Editor = (props) => {
 }
 
 const AnswerActions = (props) => {
-
 	const handleEasy = () => store.dispatch({ type: 'DIFFICULTY_LEVEL', level: 0});
 
 	return (
@@ -120,6 +148,7 @@ const AnswerActions = (props) => {
 
 const Player = (props) => {
 	const { memo, cards } = store.getState();
+	const handleOK = () => store.dispatch({ type: 'STOP_MEMO' });
 
 	if (memo.length === 0) {
 		return (
@@ -132,7 +161,6 @@ const Player = (props) => {
 	const question = memo[0];
 	const card = cards[question.index];
 	
-	const handleOK = () => store.dispatch({ type: 'STOP_MEMO' });
 	const handleAnswer = () => store.dispatch({ type: 'SHOW_ANSWER', index: question.index }); 
 	return (
 		<div>
@@ -150,16 +178,41 @@ const Player = (props) => {
 }
 
 const App = (props) => {
+	
 	const { cards, isStarted } = store.getState();
+	
 	const view = isStarted ? <Player /> : <Editor />;
-	const handleStart = () => store.dispatch({ type: 'START_MEMO' });
+	
+	const handleStart = () => store.dispatch({ type: 'START_MEMO', cards });
+	
+	const handleSave = () => {
+		localStorage.setItem('react-flashcards', JSON.stringify(cards));
+		alert(`Saved: ${cards.length} cards`);
+	}
+	
+	const handleLoad = () => {
+		const data = localStorage.getItem('react-flashcards') || '[]';
+		const cards = JSON.parse(data);
+		store.dispatch({
+			type: 'LOAD_CARDS',
+			cards: cards
+		});
+		alert(`Loaded: ${cards.length} cards`);
+	}
+
 	return (
 		<div>
-			<h1>App</h1>
+			<h1>FlashCards</h1>
 			{view}	
 			<div className={isStarted ? 'hidden' : ''}>
 				<button disabled={!cards.length} onClick={handleStart}>
 					Start
+				</button>
+				<button onClick={handleLoad}>
+					Load
+				</button>
+				<button onClick={handleSave}>
+					Save
 				</button>
 			</div>
 		</div>
@@ -168,7 +221,6 @@ const App = (props) => {
 
 
 const render = () => {
-	console.log(store.getState());
 	ReactDOM.render(
 		<App />,
 		document.getElementById('app')
@@ -177,29 +229,3 @@ const render = () => {
 
 store.subscribe(render);
 render();
-
-/*
-
-const load = () => {
-	const data = localStorage.getItem('react-flashcards');
-	if (!data) {
-		return [];
-	}
-	return JSON.parse(data);
-}
-
-const save = (cards) => {
-	localStorage.setItem('react-flashcards', JSON.stringify(cards));
-}
-
-const nextCard = (level) => {
-	memo = memo.slice(1);
-	render();
-}
-
-const stop = () => {
-	isStarted = false;
-	render();
-}
-
-*/
