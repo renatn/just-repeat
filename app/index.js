@@ -20,7 +20,6 @@ const cards = (state = [], action) => {
 		case 'REMOVE_CARD': 
 			return state.filter((card) => card.front !== action.front);
 		case 'DIFFICULTY_LEVEL':
-			console.log(action);
 			return state.map((card) => {
 				if (card.front === action.front) {
 					return {
@@ -57,19 +56,24 @@ const memo = (state = [], action) => {
 	}
 }
 
-const appStatus = (state = false, action) => {
+const status = (state = { isStarted: false, dirty: false }, action) => {
 	switch (action.type) {
 		case 'START_MEMO':
-			return true;
+			return {...state, isStarted: true};
 		case 'STOP_MEMO':
-			return false;
+			return {...state, isStarted: false};
+		case 'ADD_CARD':
+		case 'REMOVE_CARD':
+			return {...state, dirty: true};
+		case 'APP_SAVE':
+			return {...state, dirty: false};
 		default:
 			return state;
 	}
 };
 
 const app = combineReducers({
-	isStarted: appStatus,
+	status,
 	cards,
 	memo
 });
@@ -77,8 +81,7 @@ const app = combineReducers({
 const store = createStore(app);
 
 
-
-const Editor = (props) => {
+const Editor = ({ cards }) => {
 	let inputFront = null,
 		inputBack = null;
 
@@ -96,8 +99,6 @@ const Editor = (props) => {
 		store.dispatch({type: 'REMOVE_CARD', front});
 	};
 
-	const { cards } = props;
-
 	return (
 		<div>
 			<p>
@@ -112,9 +113,9 @@ const Editor = (props) => {
 				Add
 			</button>
 			<button onClick={handleView}>
-				View 1
+				View
 			</button>
-			<ul>
+			<ul className="hidden">
 				{cards.map((card, i) => <CardItem {...card} key={i} onRemove={handleRemove} />  )}
 			</ul>
 		</div>		
@@ -163,7 +164,7 @@ const Player = ({ memo, cards }) => {
 
 const FlashApp = (props) => {
 	
-	const { cards, isStarted, memo } = props;
+	const { cards, status, memo } = props;
 	
 	const handleStart = () => store.dispatch(Actions.startLearn(cards));
 	
@@ -176,16 +177,35 @@ const FlashApp = (props) => {
 		store.dispatch(Actions.load());
 	}
 
-	const view = isStarted ? <Player cards={cards} memo={memo} /> : <Editor cards={cards} />;
+	const view = status.isStarted ? <Player cards={cards} memo={memo} /> : <Editor cards={cards} />;
 
 	return (
 		<div>
-			<h1>FlashCards</h1>
+			<div className="app-header clearfix">
+				<span className="app-title">FlashCards</span>
+				<ul className="pull-right">
+					<li><a href="">Load</a></li>
+					<li><a href="">Save</a></li>
+				</ul>
+			</div>
+
+			<ul className="deck-list">
+				<li className="deck">
+					<div className="deck__name">{`English: ${cards.length}`}</div>
+					<div className="deck__actions">
+						<button disabled={!cards.length} onClick={handleStart}>
+							Play
+						</button>
+						<button onClick={handleStart}>
+							Add
+						</button>
+					</div>
+				</li>
+			</ul>
+
 			{view}	
-			<div className={isStarted ? 'hidden' : ''}>
-				<button disabled={!cards.length} onClick={handleStart}>
-					Play
-				</button>
+			<div className={status.isStarted ? 'hidden' : ''}>
+				<br />
 				<button onClick={handleLoad}>
 					Load
 				</button>

@@ -20,3 +20,51 @@ body {
 .flashcard__back {
 	text-align: center;
 }
+
+.deck-list {
+	display: block;
+	margin: 0 20px 20px 0;
+	padding: 0;
+}
+
+.deck {
+	list-style-type: none;
+	padding: 20px;
+	border: 1px solid #000;
+}
+
+.deck > div {
+	float: left;
+}
+
+.deck::after {
+	content: '';
+	display: table;
+	clear: both;
+}
+
+.deck button {
+	padding: 20px;
+	margin: 0 20px 0 0;
+}
+
+.deck .deck__actions {
+	float: right;
+}
+.deck__name {
+	width: 50%;
+}
+
+.clearfix::after {
+	content: '';
+	display: table;
+	clear: both;
+}
+
+.pull-right {
+	float: right;
+}
+
+.app-header {
+	padding: 20px;
+}
