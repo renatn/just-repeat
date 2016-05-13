@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import classNames from 'classnames';
 
 const cards = (state = [], action) => {
 	switch (action.type) {
+		case 'SET_CARDS':
+			return action.cards;
 		case 'ADD_CARD': 
 			return [...state, {
 				front: action.front,
@@ -39,52 +42,24 @@ const memo = (state = [], action) => {
 	}
 }
 
-const INITIAL_STATE = {
-	cards: [],
-	memo: [],
-	isStarted: false
-}
-
-const flash = (state = INITIAL_STATE, action) => {
-
-	const update = (opts) => {
-		return Object.assign({}, state, opts);
-	};
-
+const appMode = (state = false, action) => {
 	switch (action.type) {
 		case 'START_MEMO':
-			return Object.assign({}, state, {
-				memo: memo(state.memo, action),
-				isStarted: true
-			});
-		case 'LOAD_CARDS':
-			return update({cards: action.cards});
-		case 'ADD_CARD':
-			return Object.assign({}, state, {
-				cards: cards(state.cards, action)
-			});
-		case 'REMOVE_CARD': 
-			return Object.assign({}, state, {
-				cards: cards(state.cards, action)
-			});
-		case 'SHOW_ANSWER':
-			return Object.assign({}, state, {
-				memo: memo(state.memo, action)
-			});
-		case 'DIFFICULTY_LEVEL':
-			return Object.assign({}, state, {
-				memo: memo(state.memo, action)
-			});
+			return true;
 		case 'STOP_MEMO':
-			return Object.assign({}, state, {
-				isStarted: false
-			});
+			return false;
 		default:
 			return state;
 	}
-}
+};
 
-const store = createStore(flash);
+const app = combineReducers({
+	isStarted: appMode,
+	cards,
+	memo
+});
+
+const store = createStore(app);
 
 const CardItem = ({front, back}) => {
 	const handleRemove = () => store.dispatch({type: 'REMOVE_CARD', front});
@@ -109,6 +84,10 @@ const Editor = (props) => {
 		inputBack.value = '';
 	};
 
+	const handleView = () => {
+
+	};
+
 	const { cards } = store.getState();
 
 	return (
@@ -123,6 +102,9 @@ const Editor = (props) => {
 			</p>
 			<button onClick={handleAdd}>
 				Add
+			</button>
+			<button onClick={handleView}>
+				View 1
 			</button>
 			<ul>
 				{cards.map((card, i) => <CardItem {...card} key={i} />  )}
@@ -194,7 +176,7 @@ const App = (props) => {
 		const data = localStorage.getItem('react-flashcards') || '[]';
 		const cards = JSON.parse(data);
 		store.dispatch({
-			type: 'LOAD_CARDS',
+			type: 'SET_CARDS',
 			cards: cards
 		});
 		alert(`Loaded: ${cards.length} cards`);
@@ -206,7 +188,7 @@ const App = (props) => {
 			{view}	
 			<div className={isStarted ? 'hidden' : ''}>
 				<button disabled={!cards.length} onClick={handleStart}>
-					Start
+					Play
 				</button>
 				<button onClick={handleLoad}>
 					Load
@@ -218,7 +200,6 @@ const App = (props) => {
 		</div>
 	);
 }
-
 
 const render = () => {
 	ReactDOM.render(
