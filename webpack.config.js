@@ -5,7 +5,7 @@ module.exports = {
 	entry: './app/index.js',
 
 	output: {
-		path: path.join(__dirname, 'dist'),
+		path: path.join(__dirname, 'public/assets'),
 		filename: 'bundle.js',
 		publicPath: '/assets'
 	},

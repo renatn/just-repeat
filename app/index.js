@@ -161,7 +161,7 @@ const Player = ({ memo, cards }) => {
 	);
 }
 
-const App = (props) => {
+const FlashApp = (props) => {
 	
 	const { cards, isStarted, memo } = props;
 	
@@ -199,7 +199,7 @@ const App = (props) => {
 
 const render = () => {
 	ReactDOM.render(
-		<App {...store.getState()} />,
+		<FlashApp {...store.getState()} />,
 		document.getElementById('app')
 	);		
 };
