@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import classNames from 'classnames';
+
+import Actions from './actions';
+import CardAnswerActions from './components/CardAnswerActions';
+import CardItem from './components/CardItem';
 
 const cards = (state = [], action) => {
 	switch (action.type) {
@@ -16,6 +19,18 @@ const cards = (state = [], action) => {
 			}];
 		case 'REMOVE_CARD': 
 			return state.filter((card) => card.front !== action.front);
+		case 'DIFFICULTY_LEVEL':
+			console.log(action);
+			return state.map((card) => {
+				if (card.front === action.front) {
+					return {
+						...card,
+						level: action.level
+					}
+				}
+				return card;
+			});
+
 		default:
 			return state;
 	}
@@ -29,7 +44,7 @@ const memo = (state = [], action) => {
 			return state.map((m) => {
 				if (m.index === action.index) {
 					return {
-						index: m.index,
+						...m,
 						isAnswered: true
 					}
 				}
@@ -42,7 +57,7 @@ const memo = (state = [], action) => {
 	}
 }
 
-const appMode = (state = false, action) => {
+const appStatus = (state = false, action) => {
 	switch (action.type) {
 		case 'START_MEMO':
 			return true;
@@ -54,32 +69,21 @@ const appMode = (state = false, action) => {
 };
 
 const app = combineReducers({
-	isStarted: appMode,
+	isStarted: appStatus,
 	cards,
 	memo
 });
 
 const store = createStore(app);
 
-const CardItem = ({front, back}) => {
-	const handleRemove = () => store.dispatch({type: 'REMOVE_CARD', front});
-	return (
-		<li>
-			{front} - {back} &nbsp; <button onClick={handleRemove}>X</button>
-		</li>
-	);
-};
+
 
 const Editor = (props) => {
 	let inputFront = null,
 		inputBack = null;
 
 	const handleAdd = () => {
-		store.dispatch({
-			type: 'ADD_CARD',
-			front: inputFront.value,
-			back: inputBack.value
-		});		
+		store.dispatch(Actions.addCard(inputFront.value, inputBack.value));		
 		inputFront.value = '';
 		inputBack.value = '';
 	};
@@ -88,7 +92,11 @@ const Editor = (props) => {
 
 	};
 
-	const { cards } = store.getState();
+	const handleRemove = (front) => {
+		store.dispatch({type: 'REMOVE_CARD', front});
+	};
+
+	const { cards } = props;
 
 	return (
 		<div>
@@ -107,30 +115,15 @@ const Editor = (props) => {
 				View 1
 			</button>
 			<ul>
-				{cards.map((card, i) => <CardItem {...card} key={i} />  )}
+				{cards.map((card, i) => <CardItem {...card} key={i} onRemove={handleRemove} />  )}
 			</ul>
 		</div>		
 	);
 }
 
-const AnswerActions = (props) => {
-	const handleEasy = () => store.dispatch({ type: 'DIFFICULTY_LEVEL', level: 0});
 
-	return (
-		<div>
-			<p>{props.back}</p>
-			<div>
-				<button onClick={handleEasy}>Easy</button>
-				<button onClick={handleEasy}>Normal</button>				
-				<button onClick={handleEasy}>Hard</button>
-			</div>
-		</div>
-	);
-}
-
-const Player = (props) => {
-	const { memo, cards } = store.getState();
-	const handleOK = () => store.dispatch({ type: 'STOP_MEMO' });
+const Player = ({ memo, cards }) => {
+	const handleOK = () => store.dispatch(Actions.stopLearn());
 
 	if (memo.length === 0) {
 		return (
@@ -143,29 +136,36 @@ const Player = (props) => {
 	const question = memo[0];
 	const card = cards[question.index];
 	
-	const handleAnswer = () => store.dispatch({ type: 'SHOW_ANSWER', index: question.index }); 
+	const handleAnswer = () => store.dispatch(Actions.answer(question.index)); 
+	const handleDifficult = (level) => store.dispatch(Actions.cardLevel(card.front, level));
+
 	return (
 		<div>
-			<div>
-				{card.front}
+		
+			<div className="flashcard">
+				<p className="flashcard__front">
+					{card.front}
+				</p>
+				<p className={question.isAnswered ? '' : 'hidden'}>
+					{card.back}
+				</p>
 			</div>
-			<div className={question.isAnswered ? '' : 'hidden'}>
-				<AnswerActions back={card.back} onDifficultyLevel={props.onDifficultyLevel}/>
-			</div>
-			<div className={question.isAnswered ? 'hidden' : ''}>
-				<button onClick={handleAnswer}>Answer</button>
-			</div>
+
+			<CardAnswerActions
+				isAnswered={question.isAnswered} 
+				onAnswer={handleAnswer} 
+				onDifficult={handleDifficult} 
+			/>
+
 		</div>
 	);
 }
 
 const App = (props) => {
 	
-	const { cards, isStarted } = store.getState();
+	const { cards, isStarted, memo } = props;
 	
-	const view = isStarted ? <Player /> : <Editor />;
-	
-	const handleStart = () => store.dispatch({ type: 'START_MEMO', cards });
+	const handleStart = () => store.dispatch(Actions.startLearn(cards));
 	
 	const handleSave = () => {
 		localStorage.setItem('react-flashcards', JSON.stringify(cards));
@@ -173,14 +173,10 @@ const App = (props) => {
 	}
 	
 	const handleLoad = () => {
-		const data = localStorage.getItem('react-flashcards') || '[]';
-		const cards = JSON.parse(data);
-		store.dispatch({
-			type: 'SET_CARDS',
-			cards: cards
-		});
-		alert(`Loaded: ${cards.length} cards`);
+		store.dispatch(Actions.load());
 	}
+
+	const view = isStarted ? <Player cards={cards} memo={memo} /> : <Editor cards={cards} />;
 
 	return (
 		<div>
@@ -203,7 +199,7 @@ const App = (props) => {
 
 const render = () => {
 	ReactDOM.render(
-		<App />,
+		<App {...store.getState()} />,
 		document.getElementById('app')
 	);		
 };

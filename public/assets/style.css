@@ -5,3 +5,18 @@ body {
 .hidden {
 	display: none;
 }
+
+.flashcard {
+	border: 1px solid #000;
+	padding: 20px;
+	margin: 20px;
+}
+
+.flashcard__front {
+	text-align: center;
+	font-size: 24px;
+}
+
+.flashcard__back {
+	text-align: center;
+}
