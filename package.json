@@ -5,7 +5,7 @@
   "main": "app/index.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server --inline --port 8080 --progress --color --content-base public/",
+    "start": "webpack-dev-server --host 0.0.0.0 --inline --port 8080 --progress --color --content-base public/",
     "test": "mocha --compilers js:babel-core/register --recursive"
   },
   "repository": {
