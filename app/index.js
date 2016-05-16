@@ -35,6 +35,15 @@ const cards = (state = [], action) => {
 	}
 }
 
+const editor = (state = {}, action) => {
+	switch (action.type) {
+		case 'TOGGLE_CARDS_VIEW':
+			return {...state, isShowCards: !state.isShowCards}
+		default:
+			return state;
+	}
+}
+
 const memo = (state = [], action) => {
 	switch (action.type) {
 		case 'START_MEMO':
@@ -75,13 +84,14 @@ const status = (state = { isStarted: false, dirty: false }, action) => {
 const app = combineReducers({
 	status,
 	cards,
-	memo
+	memo,
+	editor
 });
 
 const store = createStore(app);
 
 
-const Editor = ({ cards }) => {
+const Editor = ({ cards, isShowCards }) => {
 	let inputFront = null,
 		inputBack = null;
 
@@ -92,7 +102,7 @@ const Editor = ({ cards }) => {
 	};
 
 	const handleView = () => {
-
+		store.dispatch({type: 'TOGGLE_CARDS_VIEW'});
 	};
 
 	const handleRemove = (front) => {
@@ -113,9 +123,9 @@ const Editor = ({ cards }) => {
 				Add
 			</button>
 			<button onClick={handleView}>
-				View
+				{isShowCards ? 'Hide' : 'View'}
 			</button>
-			<ul className="hidden">
+			<ul className={isShowCards ? '' : 'hidden'}>
 				{cards.map((card, i) => <CardItem {...card} key={i} onRemove={handleRemove} />  )}
 			</ul>
 		</div>		
@@ -164,7 +174,7 @@ const Player = ({ memo, cards }) => {
 
 const FlashApp = (props) => {
 	
-	const { cards, status, memo } = props;
+	const { cards, status, memo, editor } = props;
 	
 	const handleStart = () => store.dispatch(Actions.startLearn(cards));
 	
@@ -177,7 +187,7 @@ const FlashApp = (props) => {
 		store.dispatch(Actions.load());
 	}
 
-	const view = status.isStarted ? <Player cards={cards} memo={memo} /> : <Editor cards={cards} />;
+	const view = status.isStarted ? <Player cards={cards} memo={memo} /> : <Editor cards={cards} isShowCards={editor.isShowCards}/>;
 
 	return (
 		<div>
@@ -193,7 +203,7 @@ const FlashApp = (props) => {
 				<li className="deck">
 					<div className="deck__name">{`English: ${cards.length}`}</div>
 					<div className="deck__actions">
-						<button disabled={!cards.length} onClick={handleStart}>
+						<button disabled={!cards.length || status.isStarted} onClick={handleStart}>
 							Play
 						</button>
 						<button onClick={handleStart}>
@@ -209,7 +219,7 @@ const FlashApp = (props) => {
 				<button onClick={handleLoad}>
 					Load
 				</button>
-				<button onClick={handleSave}>
+				<button onClick={handleSave} disabled={!status.dirty}>
 					Save
 				</button>
 			</div>
@@ -219,7 +229,9 @@ const FlashApp = (props) => {
 
 const render = () => {
 	ReactDOM.render(
-		<FlashApp {...store.getState()} />,
+		<Provider store={store}>
+			<FlashApp {...store.getState()} />
+		</Provider>,
 		document.getElementById('app')
 	);		
 };
