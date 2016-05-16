@@ -22,7 +22,6 @@ class Editor extends Component {
 		this.inputBack.value = '';
 	}
 
-
 	render() {
 		const { cards, isShowCards } = this.props;
 

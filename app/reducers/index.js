@@ -56,7 +56,7 @@ const memo = (state = [], action) => {
 	}
 };
 
-const status = (state = { isStarted: false, dirty: false }, action) => {
+const status = (state = { isStarted: false, dirty: false, route: 'START' }, action) => {
 	switch (action.type) {
 		case 'START_MEMO':
 			return {...state, isStarted: true};
@@ -67,6 +67,10 @@ const status = (state = { isStarted: false, dirty: false }, action) => {
 			return {...state, dirty: true};
 		case 'APP_SAVE':
 			return {...state, dirty: false};
+		case 'SHOW_ADD_CARD_FORM':
+			return {...state, route: 'ADD_CARD'}
+		case 'CLOSE_OVERLAY':
+			return {...state, route: 'START'}
 		default:
 			return state;
 	}
