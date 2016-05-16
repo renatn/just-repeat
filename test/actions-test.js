@@ -7,7 +7,7 @@ describe('actions', () => {
       type: 'ADD_CARD',
       front: 'awesome',
       back: 'классный'
-    }
+    };
     expect(Actions.addCard('awesome', 'классный')).to.deep.equal(expectedAction);
-  })
-})
+  });
+});
