@@ -1,14 +1,9 @@
 import { expect } from 'chai';
 import Actions from '../app/actions';
-import { cards } from '../app/reducers';
+import { cards, router } from '../app/reducers';
 
 describe('cards reducer', () => {
   it('should return initial state', () => {
-    const expectedAction = {
-      type: 'ADD_CARD',
-      front: 'awesome',
-      back: 'классный'
-    };
     expect(cards(undefined, {})).to.deep.equal([]);
   });
 
@@ -24,5 +19,17 @@ describe('cards reducer', () => {
 			}
 		]
 	);
+  });
+});
+
+describe('router reducer', () => {
+  it('should return initial state', () => {
+    expect(router(undefined, {})).to.equal('START');
+  });
+
+  it('should handle STUDY', () => {
+    expect(
+      router('START', Actions.route('STUDY'))
+    ).to.equal('STUDY');
   });
 });

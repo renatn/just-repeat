@@ -44,11 +44,20 @@ const cardLevel = (front, level) => (
 	}
 );
 
+const route = (route) => (
+	{
+		type: 'ROUTE',
+		route
+	}
+);
+
+
 export default {
 	addCard,
 	startLearn,
 	load,
 	answer,
 	stopLearn,
-	cardLevel
+	cardLevel,
+	route
 };

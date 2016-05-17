@@ -76,9 +76,19 @@ const status = (state = { isStarted: false, dirty: false, route: 'START' }, acti
 	}
 };
 
+const router = (state = 'START', action) => {
+	switch (action.type) {
+		case 'ROUTE':
+			return action.route;
+		default:
+			return state;
+	}
+}
+
 export {
 	status,
 	memo,
 	cards,
-	editor
+	editor,
+	router
 }
