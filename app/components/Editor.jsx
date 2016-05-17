@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Actions from '../actions';
-import CardItem from './CardItem';
 
-class Editor extends Component {
+class AddCard extends Component {
 
 	constructor(props) {
 		super(props);
@@ -23,8 +22,6 @@ class Editor extends Component {
 	}
 
 	render() {
-		const { cards, isShowCards } = this.props;
-
 		return (
 			<div>
 				<p>
@@ -38,25 +35,9 @@ class Editor extends Component {
 				<button onClick={this.handleAdd}>
 					Add
 				</button>
-				<ul className={isShowCards ? '' : 'hidden'}>
-					{cards.map((card, i) => <CardItem {...card} key={i} onRemove={this.props.onRemoveCard} />  )}
-				</ul>
 			</div>		
 		);
 	}
 }
 
-export default connect(
-	state => {
-		return {
-			isShowCards: state.editor.isShowCards,
-			cards: state.cards
-		}
-	},
-	dispatch => {
-		return {
-			onRemoveCard: (front) => dispatch({type: 'REMOVE_CARD', front}),
-			dispatch
-		}
-	}
-)(Editor);
+export default connect()(AddCard);

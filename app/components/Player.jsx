@@ -9,40 +9,36 @@ class Player extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleOK = this.handleOK.bind(this);
 		this.handleAnswer = this.handleAnswer.bind(this);
 		this.handleDifficult = this.handleDifficult.bind(this);
 	}
 
-	handleOK() {
-		this.props.dispatch(Actions.stopLearn());
-	}
-
-	handleAnswer() {
-		const question = this.props.memo[0];
-		this.props.dispatch(Actions.answer(question.index)); 
+	handleAnswer() {	
+		const question = this.props.player[0];
+		this.props.onAnswer(question.index);
 	}
 
 	handleDifficult(level) {
-		const question = this.props.memo[0];
+		const question = this.props.player[0];
 		const card = this.props.cards[question.index];
 
+		this.props.onResult(card.front, level);
 		this.props.dispatch(Actions.cardLevel(card.front, level));
 	} 
 
 	render() {
-		const { memo, cards } = this.props;
+		const { cards, player } = this.props;
 	
-		if (memo.length === 0) {
+		if (player.length === 0) {
 			return (
 				<div>
 					<h2>Test Passed!</h2>
-					<button onClick={this.handleOK}>OK</button>
+					<button onClick={this.props.onStop}>OK</button>
 				</div>
 			);
 		}
 
-		const question = memo[0];
+		const question = player[0];
 		const card = cards[question.index];
 
 		return (
@@ -70,8 +66,15 @@ class Player extends Component {
 export default connect(
 	state => {
 		return {
-			memo: state.memo,
+			player: state.player,
 			cards: state.cards
+		}
+	},
+	dispatch => {
+		return {
+			onResult: (front, level) => dispatch(Actions.cardLevel(front, level)),
+			onAnswer: (index) => dispatch(Actions.answer(index)),
+			onStop: () => dispatch(Actions.route('START'))
 		}
 	}
 )(Player);

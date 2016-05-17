@@ -6,14 +6,6 @@ const addCard = (front, back) => (
 	}
 );
 
-const startLearn = (cards) => {
-	const sortedCards = cards.sort((a, b) => a.level - b.level);
-	return	{
-		type: 'START_MEMO', 
-		cards: sortedCards 
-	}
-};
-
 const load = () => {
 	const data = localStorage.getItem('react-flashcards') || '[]';
 	const cards = JSON.parse(data);
@@ -27,12 +19,6 @@ const answer = (index) => (
 	{ 
 		type: 'SHOW_ANSWER', 
 		index
-	}
-);
-
-const stopLearn = () => (
-	{ 
-		type: 'STOP_MEMO' 
 	}
 );
 
@@ -51,13 +37,21 @@ const route = (route) => (
 	}
 );
 
+const study = (cards) => {
+	const sortedCards = cards.sort((a, b) => a.level - b.level);
+	return	{
+		type: 'ROUTE', 
+		cards: sortedCards,
+		route: 'STUDY'
+	}
+};
+
 
 export default {
 	addCard,
-	startLearn,
+	study,
 	load,
 	answer,
-	stopLearn,
 	cardLevel,
 	route
 };

@@ -4,12 +4,36 @@ import classnames from 'classnames';
 
 import Actions from '../actions';
 import Player from './Player';
-import Editor from './Editor';
+import AddCard from './Editor';
+import BrowseCards from './BrowseCards';
+
+const getViewByRoute = (route) => {
+	switch (route) {
+		case 'STUDY':
+			return <Player />;
+		case 'ADD_CARD':
+			return <AddCard />;
+		case 'BROWSE':
+			return <BrowseCards />;
+		default:
+			return null;
+	}
+};
 
 class FlashApp extends Component {
 
+	constructor(props) {
+		super(props);
+
+		this.handleStudy = this.handleStudy.bind(this);
+	}
+
 	componentDidMount() {
  		this.props.onLoad();
+	}
+
+	handleStudy() {
+		this.props.onStudy(this.props.cards);
 	}
 
 	render() {
@@ -20,18 +44,7 @@ class FlashApp extends Component {
 			alert(`Saved: ${cards.length} cards`);
 		}
 		
-		let view;
-		switch (router) {
-			case 'STUDY':
-				view = <Player />;
-				break;
-			case 'ADD_CARD':
-				view = <Editor />;
-				break;
-			default:
-				view = null;
-		}
-
+		const view = getViewByRoute(router);
 		return (
 			<div>
 				<div>
@@ -43,7 +56,7 @@ class FlashApp extends Component {
 						<li className="deck">
 							<div className="deck__name">{`English: ${cards.length}`}</div>
 							<div className="deck__actions">
-								<button disabled={!cards.length || status.isStarted} onClick={this.props.onStudy}>
+								<button disabled={!cards.length || status.isStarted} onClick={this.handleStudy}>
 									Study
 								</button>
 								<button onClick={this.props.onAddCard}>
@@ -82,7 +95,7 @@ export default connect(
 	},
 	dispatch => {
 		return {
-			onStudy: (cards) => dispatch(Actions.route('STUDY')),
+			onStudy: (cards) => dispatch(Actions.study(cards)),
 			onBrowse: () => dispatch(Actions.route('BROWSE')),
 			onAddCard: () => dispatch(Actions.route('ADD_CARD')),
 			onCloseOverlay: () => dispatch(Actions.route('START')),

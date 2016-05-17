@@ -26,19 +26,13 @@ const cards = (state = [], action) => {
 	}
 };
 
-const editor = (state = {}, action) => {
+const player = (state = [], action) => {
 	switch (action.type) {
-		case 'TOGGLE_CARDS_VIEW':
-			return {...state, isShowCards: !state.isShowCards}
-		default:
+		case 'ROUTE':
+			if (action.route == 'STUDY') {
+				return action.cards.map((_, i) => ({index: i, isAnswered: false}));
+			}
 			return state;
-	}
-};
-
-const memo = (state = [], action) => {
-	switch (action.type) {
-		case 'START_MEMO':
-			return action.cards.map((_, i) => ({index: i, isAnswered: false}));
 		case 'SHOW_ANSWER':
 			return state.map((m) => {
 				if (m.index === action.index) {
@@ -56,25 +50,6 @@ const memo = (state = [], action) => {
 	}
 };
 
-const status = (state = { isStarted: false, dirty: false, route: 'START' }, action) => {
-	switch (action.type) {
-		case 'START_MEMO':
-			return {...state, isStarted: true};
-		case 'STOP_MEMO':
-			return {...state, isStarted: false, dirty: true};
-		case 'ADD_CARD':
-		case 'REMOVE_CARD':
-			return {...state, dirty: true};
-		case 'APP_SAVE':
-			return {...state, dirty: false};
-		case 'SHOW_ADD_CARD_FORM':
-			return {...state, route: 'ADD_CARD'}
-		case 'CLOSE_OVERLAY':
-			return {...state, route: 'START'}
-		default:
-			return state;
-	}
-};
 
 const router = (state = 'START', action) => {
 	switch (action.type) {
@@ -86,9 +61,7 @@ const router = (state = 'START', action) => {
 }
 
 export {
-	status,
-	memo,
+	player,
 	cards,
-	editor,
 	router
 }
