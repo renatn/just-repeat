@@ -1,10 +1,41 @@
 body {
-	background-color: #d8d7d7;
+	background-color: rgb(13, 130, 120);
+	color: #fff;
 	font-family: 'Helvetica', 'Tahoma', sans-serif;
+}
+
+button {
+	cursor: pointer;
+}
+
+.button--def {
+	border: none;
+	display: inline-block;
+	padding: 20px 40px;
+	text-transform: uppercase;
+	background-color: #222;
+	color: whitesmoke;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	transition: background 0.25s ease-out;
+}
+
+.button--def:hover {
+    background-color: #2CD892;
 }
 
 .hidden {
 	display: none;
+}
+
+.clearfix:after {
+	content: '';
+	display: table;
+	clear: both;
+}
+
+.pull-right {
+	float: right;
 }
 
 .flashcard {
@@ -23,6 +54,15 @@ body {
 	text-align: center;
 }
 
+.flashcard-actions {
+	text-align: center;
+}
+
+.flashcard-actions button {
+	padding: 10px;
+	margin-right: 10px;
+}
+
 .deck-list {
 	display: block;
 	margin: 0 20px 20px 0;
@@ -33,6 +73,7 @@ body {
 	list-style-type: none;
 	padding: 20px;
 	border: 1px solid #000;
+	background-color: rgb(249, 130, 98);
 }
 
 .deck > div {
@@ -48,7 +89,6 @@ body {
 .deck button {
 	padding: 20px;
 	margin: 0 20px 0 0;
-	background-color: ;#fe4e6e;
 }
 
 .deck .deck__actions {
@@ -56,16 +96,7 @@ body {
 }
 .deck__name {
 	width: 50%;
-}
-
-.clearfix::after {
-	content: '';
-	display: table;
-	clear: both;
-}
-
-.pull-right {
-	float: right;
+	font-size: 24px;
 }
 
 .app-header {
@@ -83,36 +114,54 @@ body {
 	height: 100%;
 	top: 0;
 	left: 0;
+	color: #fff;
 	background: #613864;
-
-
-/*	opacity: 0;
-	visibility: hidden;
-	transition: opacity 0.5s, visibility 0s 0.5s;
-*/
 	visibility: hidden;
 	-webkit-transform: translateY(-100%);
 	transform: translateY(-100%);
 	-webkit-transition: -webkit-transform 0.4s ease-in-out, visibility 0s 0.4s;
-	transition: transform 0.4s ease-in-out, visibility 0s 0.4s;	
+	transition: transform 0.25s ease-in-out, visibility 0s 0.25s;	
 }
 
 .overlay__button-close {
-	width: 80px;
-	height: 80px;
+	width: 45px;
+	height: 45px;
 	position: absolute;
 	right: 20px;
 	top: 20px;
+	border: none;
+	border-radius: 50%;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: #fff;
+}
+
+.overlay__content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding-right: 50px;
 }
 
 .overlay--open {
-/*	opacity: 1;
-	visibility: visible;
-	transition: opacity 0.5s;
-*/
 	visibility: visible;
 	-webkit-transform: translateY(0%);
 	transform: translateY(0%);
 	-webkit-transition: -webkit-transform 0.4s ease-in-out;
-	transition: transform 0.4s ease-in-out;	
+	transition: transform 0.25s ease-in-out;	
+}
+
+.study-done {
+	text-align: center;
+}
+
+.call-to-action {
+	text-align: center;
+}
+
+.main {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	height: 100vh;
 }

@@ -6,6 +6,7 @@ import Actions from '../actions';
 import Player from './Player';
 import AddCard from './Editor';
 import BrowseCards from './BrowseCards';
+import AddDeck from './AddDeck';
 
 const getViewByRoute = (route) => {
 	switch (route) {
@@ -15,6 +16,8 @@ const getViewByRoute = (route) => {
 			return <AddCard />;
 		case 'BROWSE':
 			return <BrowseCards />;
+		case 'ADD_DECK':
+			return <AddDeck />;
 		default:
 			return null;
 	}
@@ -39,7 +42,8 @@ class FlashApp extends Component {
 	render() {
 		const { cards, router } = this.props;
 		
-		const handleSave = () => {
+		const handleSave = (e) => {
+			e.preventDefault();
 			localStorage.setItem('react-flashcards', JSON.stringify(cards));
 			alert(`Saved: ${cards.length} cards`);
 		}
@@ -47,39 +51,44 @@ class FlashApp extends Component {
 		const view = getViewByRoute(router);
 		return (
 			<div>
-				<div>
-					<div className="app-header clearfix">
-						<span className="app-header__title">FlashCards</span>
-					</div>
+				<div className="main">
+					<div className="main__content">
+						<div className="app-header clearfix">
+							<a className="pull-right" href="" onClick={handleSave}>Save</a>
+							<span className="app-header__title">FlashCards</span>
+						</div>
 
-					<ul className="deck-list">
-						<li className="deck">
-							<div className="deck__name">{`English: ${cards.length}`}</div>
-							<div className="deck__actions">
-								<button disabled={!cards.length || status.isStarted} onClick={this.handleStudy}>
-									Study
-								</button>
-								<button onClick={this.props.onAddCard}>
-									Add
-								</button>
-								<button onClick={this.props.onBrowse}>
-									Browse
-								</button>
-							</div>
-						</li>
-					</ul>
+						<ul className="deck-list">
+							<li className="deck">
+								<div className="deck__name">{`English: ${cards.length}`}</div>
+								<div className="deck__actions">
+									<button disabled={!cards.length || status.isStarted} onClick={this.handleStudy}>
+										Study
+									</button>
+									<button onClick={this.props.onAddCard}>
+										Add
+									</button>
+									<button onClick={this.props.onBrowse}>
+										Browse
+									</button>
+								</div>
+							</li>
+						</ul>
 
-					<div>
-						<button onClick={handleSave}>
-							Save
-						</button>
+						<div className="call-to-action">
+							<button className="button--def" onClick={this.props.onAddDeck}>
+								Добавить колоду
+							</button>
+						</div>
 					</div>
 				</div>
 				<div className={classnames({ overlay: true, 'overlay--open': router !== 'START' })}>
 					<button className="overlay__button-close" onClick={this.props.onCloseOverlay}>
 						X
 					</button>
-					{view}
+					<div className="overlay__content">
+						{view}
+					</div>
 				</div>
 			</div>
 		);
@@ -98,6 +107,7 @@ export default connect(
 			onStudy: (cards) => dispatch(Actions.study(cards)),
 			onBrowse: () => dispatch(Actions.route('BROWSE')),
 			onAddCard: () => dispatch(Actions.route('ADD_CARD')),
+			onAddDeck: () => dispatch(Actions.route('ADD_DECK')),
 			onCloseOverlay: () => dispatch(Actions.route('START')),
 
 			onLoad: () => dispatch(Actions.load()),

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 
 import Actions from '../actions';
 import CardAnswerActions from './CardAnswerActions';
@@ -21,9 +22,7 @@ class Player extends Component {
 	handleDifficult(level) {
 		const question = this.props.player[0];
 		const card = this.props.cards[question.index];
-
 		this.props.onResult(card.front, level);
-		this.props.dispatch(Actions.cardLevel(card.front, level));
 	} 
 
 	render() {
@@ -31,7 +30,7 @@ class Player extends Component {
 	
 		if (player.length === 0) {
 			return (
-				<div>
+				<div className="study-done">
 					<h2>Test Passed!</h2>
 					<button onClick={this.props.onStop}>OK</button>
 				</div>
@@ -47,7 +46,7 @@ class Player extends Component {
 					<p className="flashcard__front">
 						{card.front}
 					</p>
-					<p className={question.isAnswered ? '' : 'hidden'}>
+					<p className={classnames({ hidden: !question.isAnswered, 'flashcard__back': true })}>
 						{card.back}
 					</p>
 				</div>

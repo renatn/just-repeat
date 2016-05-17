@@ -7,7 +7,7 @@ const CardAnswerActions = ({ isAnswered, onAnswer, onDifficult }) => {
 	const handleHard = () => onDifficult(1);
 
 	return (
-		<div>
+		<div className="flashcard-actions">
 			<button className={isAnswered ? 'hidden' : ''} onClick={onAnswer}>Answer</button>
 			<span className={isAnswered ? '' : 'hidden'}>
 				<button onClick={handleEasy}>Easy</button>
