@@ -1,5 +1,6 @@
 body {
 	background-color: #d8d7d7;
+	font-family: 'Helvetica', 'Tahoma', sans-serif;
 }
 
 .hidden {
@@ -10,6 +11,7 @@ body {
 	border: 1px solid #000;
 	padding: 20px;
 	margin: 20px;
+	background-color: #ffe700;
 }
 
 .flashcard__front {
@@ -46,6 +48,7 @@ body {
 .deck button {
 	padding: 20px;
 	margin: 0 20px 0 0;
+	background-color: ;#fe4e6e;
 }
 
 .deck .deck__actions {
