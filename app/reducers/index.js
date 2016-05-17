@@ -50,7 +50,6 @@ const player = (state = [], action) => {
 	}
 };
 
-
 const router = (state = 'START', action) => {
 	switch (action.type) {
 		case 'ROUTE':
@@ -58,10 +57,23 @@ const router = (state = 'START', action) => {
 		default:
 			return state;
 	}
-}
+};
+
+const decks = (state = [], action) => {
+	switch (action.type) {
+		case 'ADD_DECK':
+			return [...state, {
+				name: action.deck,
+				cards: cards(undefined, {})
+			}];
+		default:
+			return state;
+	}
+};
 
 export {
 	player,
 	cards,
-	router
+	router,
+	decks
 }

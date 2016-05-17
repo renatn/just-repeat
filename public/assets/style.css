@@ -70,6 +70,7 @@ button {
 }
 
 .deck {
+	margin-bottom: 0.5em;
 	list-style-type: none;
 	padding: 20px;
 	border: 1px solid #000;
@@ -137,10 +138,9 @@ button {
 
 .overlay__content {
 	display: flex;
-	justify-content: center;
-	align-items: center;
 	flex-direction: column;
-	padding-right: 50px;
+	align-items: center;
+	padding-right: 70px;
 }
 
 .overlay--open {
@@ -164,4 +164,28 @@ button {
 	justify-content: center;
 	flex-direction: column;
 	height: 100vh;
+}
+
+.input {
+	position: relative;
+	margin: 0 1em 1em 0;
+	z-index: 1;
+	display: inline-block;
+	vertical-align: top;
+	width: 15em;
+}
+
+.input__field {
+	border: 2px solid transparent;
+	font-size: 24px;
+	line-height: 30px;
+	position: relative;
+	display: block;
+	float: right;
+	width: 100%;
+	background-color: #d0d1d0;
+	padding: 0.8em;
+}
+
+.form {
 }

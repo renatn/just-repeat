@@ -27,7 +27,6 @@ class FlashApp extends Component {
 
 	constructor(props) {
 		super(props);
-
 		this.handleStudy = this.handleStudy.bind(this);
 	}
 
@@ -40,8 +39,8 @@ class FlashApp extends Component {
 	}
 
 	render() {
-		const { cards, router } = this.props;
-		
+		const { decks, cards, router } = this.props;
+
 		const handleSave = (e) => {
 			e.preventDefault();
 			localStorage.setItem('react-flashcards', JSON.stringify(cards));
@@ -63,16 +62,21 @@ class FlashApp extends Component {
 								<div className="deck__name">{`English: ${cards.length}`}</div>
 								<div className="deck__actions">
 									<button disabled={!cards.length || status.isStarted} onClick={this.handleStudy}>
-										Study
+										Учить
 									</button>
 									<button onClick={this.props.onAddCard}>
-										Add
+										Добавить
 									</button>
 									<button onClick={this.props.onBrowse}>
-										Browse
+										Просмотр
 									</button>
 								</div>
 							</li>
+							{decks.map((deck, i) => (
+								<li key={i} className="deck">
+									<div className="deck__name">{deck.name}</div>
+								</li>
+							))}
 						</ul>
 
 						<div className="call-to-action">
@@ -98,6 +102,7 @@ class FlashApp extends Component {
 export default connect(
 	state => {
 		return {
+			decks: state.decks,
 			cards: state.cards, 
 			router: state.router
 		}
