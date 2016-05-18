@@ -4,7 +4,7 @@
   "description": "Flashcards",
   "main": "app/index.js",
   "scripts": {
-    "compile": "webpack -p",
+    "compile": "webpack --config webpack.config.prod.js",
     "start": "webpack-dev-server --host 0.0.0.0 --inline --port 8080 --progress --color --content-base public/",
     "tarball": "zip -9 -r -q react-flashcards.zip public/",
     "dist": "npm run compile && npm run tarball",
