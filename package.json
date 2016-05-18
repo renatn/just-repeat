@@ -4,8 +4,10 @@
   "description": "Flashcards",
   "main": "app/index.js",
   "scripts": {
-    "build": "webpack",
+    "compile": "webpack -p",
     "start": "webpack-dev-server --host 0.0.0.0 --inline --port 8080 --progress --color --content-base public/",
+    "tarball": "zip -9 -r -q react-flashcards.zip public/",
+    "dist": "npm run compile && npm run tarball",
     "test": "mocha --compilers js:babel-core/register --recursive"
   },
   "repository": {
