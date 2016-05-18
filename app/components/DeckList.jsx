@@ -13,16 +13,16 @@ const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
 		<li className="deck">
 			<div className="deck__name">{deck.name} : {deck.cards.length}</div>
 			<div className="deck__actions">
-				<button className="button--def" disabled={!deck.cards.length} onClick={handleStudy}>
+				<button className="btn btn--base" disabled={!deck.cards.length} onClick={handleStudy}>
 					Учить
 				</button>
-				<button className="button--def" onClick={handleAddCard}>
+				<button className="btn btn--base" onClick={handleAddCard}>
 					Пополнить
 				</button>
-				<button className="button--def" onClick={onBrowse}>
+				<button className="btn btn--base" onClick={onBrowse}>
 					Просмотр
 				</button>
-				<button className="button--def" onClick={handleRemove}>
+				<button className="btn btn--base" onClick={handleRemove}>
 					Удалить
 				</button>
 			</div>

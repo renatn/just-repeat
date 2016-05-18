@@ -34,7 +34,7 @@ class AddCard extends Component {
 						<input className="input__field" ref={(c) => this.inputBack = c} type="text" placeholder="Ответ"/>
 					</span>
 				</p>
-				<button className="btn button--def" onClick={this.handleAdd}>
+				<button className="btn btn--base" onClick={this.handleAdd}>
 					Добавить
 				</button>
 				<a href="" onClick={this.props.onCancel}>Отменить</a>

@@ -20,7 +20,7 @@ const AddDeck = (props) => {
 				</span>
 			</div>
 			<div>
-				<button className="btn button--def" onClick={handleAdd}>
+				<button className="btn btn--alt" onClick={handleAdd}>
 					Создать
 				</button>
 				<a href="" className="" onClick={props.onCancel}>Отменить</a>

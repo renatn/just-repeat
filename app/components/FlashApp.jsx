@@ -28,25 +28,22 @@ class FlashApp extends Component {
 
 	constructor(props) {
 		super(props);
-		this.handleStudy = this.handleStudy.bind(this);
+		this.handleSave = this.handleSave.bind(this);
 	}
 
 	componentDidMount() {
  		this.props.onLoad();
 	}
 
-	handleStudy() {
-		this.props.onStudy(this.props.cards);
+	handleSave(e) {
+		e.preventDefault();
+		const { decks } = this.props;
+		localStorage.setItem('react-flashcards', JSON.stringify(decks));
+		alert(`Saved: ${decks.length} decks`);
 	}
 
 	render() {
 		const { decks, router } = this.props;
-
-		const handleSave = (e) => {
-			e.preventDefault();
-			localStorage.setItem('react-flashcards', JSON.stringify(decks));
-			alert(`Saved: ${decks.length} decks`);
-		}
 		
 		const view = getViewByRoute(router);
 		const isOverlayOpen = router !== 'START';
@@ -55,7 +52,7 @@ class FlashApp extends Component {
 				<div className={classnames({ main: true, hidden: isOverlayOpen })}>
 					<div className="main__content">
 						<div className="app-header clearfix">
-							<a className="pull-right" href="" onClick={handleSave}>Save</a>
+							<a className="pull-right hidden" href="" onClick={this.handleSave}>Save</a>
 							<span className="app-header__title">FlashCards!</span>
 							<p className={classnames({ 'app_header__description': true, hidden: decks.length > 0 })}>
 								Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
@@ -65,7 +62,7 @@ class FlashApp extends Component {
 						<DeckList />
 
 						<div className="call-to-action">
-							<button className="button--def" onClick={this.props.onAddDeck}>
+							<button className="btn btn--accent" onClick={this.props.onAddDeck}>
 								Добавить колоду
 							</button>
 						</div>
