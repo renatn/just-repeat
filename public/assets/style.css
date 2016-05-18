@@ -9,6 +9,20 @@ button {
 	cursor: pointer;
 }
 
+.hidden {
+	display: none !important;
+}
+
+.clearfix:after {
+	content: '';
+	display: table;
+	clear: both;
+}
+
+.pull-right {
+	float: right;
+}
+
 .btn {
 	border: none;
 	display: inline-block;
@@ -19,6 +33,7 @@ button {
 	font-weight: 700;
 	letter-spacing: 0.1em;
 	transition: background 0.25s ease-out;
+	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 }
 
 .btn:hover {
@@ -37,36 +52,6 @@ button {
 .btn.btn--alt {
 	background-color: #4aa0d5;
 	color: white;
-}
-
-.button--def {
-	border: none;
-	display: inline-block;
-	padding: 20px 40px;
-	text-transform: uppercase;
-	background-color: #222;
-	color: whitesmoke;
-	font-weight: 700;
-	letter-spacing: 0.1em;
-	transition: background 0.25s ease-out;
-}
-
-.button--def:hover {
-    background-color: #2CD892;
-}
-
-.hidden {
-	display: none !important;
-}
-
-.clearfix:after {
-	content: '';
-	display: table;
-	clear: both;
-}
-
-.pull-right {
-	float: right;
 }
 
 .flashcard {
@@ -90,11 +75,6 @@ button {
 
 .flashcard-actions {
 	text-align: center;
-}
-
-.flashcard-actions button {
-	padding: 10px;
-	margin-right: 10px;
 }
 
 .deck-list {
@@ -124,6 +104,7 @@ button {
 .deck .deck__actions {
 	float: right;
 }
+
 .deck__name {
 	width: 50%;
 	font-size: 24px;
@@ -150,7 +131,7 @@ button {
 	top: 0;
 	left: 0;
 	color: #fff;
-	background: #eb586f;
+	background: #fc5185; /* #eb586f; */
 	visibility: hidden;
 	-webkit-transform: translateY(-100%);
 	transform: translateY(-100%);
@@ -171,9 +152,6 @@ button {
 }
 
 .overlay__content {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	padding-right: 70px;
 }
 
@@ -187,6 +165,7 @@ button {
 
 .study-done {
 	text-align: center;
+	padding-top: 40px;
 }
 
 .call-to-action {
@@ -199,27 +178,54 @@ button {
 .main__content {
 	padding-top: 2em;
 }
+
 .input {
-	position: relative;
-	margin: 0 1em 1em 0;
-	z-index: 1;
-	display: inline-block;
-	vertical-align: top;
-	width: 15em;
+	margin-bottom: 20px;
 }
 
 .input__field {
-	border: 2px solid transparent;
-	font-size: 24px;
-	line-height: 30px;
-	position: relative;
 	display: block;
-	float: right;
+	border: 2px solid transparent;
+	padding: 0.4em;
+	font-size: 2em;
 	width: 100%;
 	background-color: #d0d1d0;
-	padding: 0.8em;
 }
+
+.input__label {
+	display: inline-block;
+	font-size: 1.5em;
+	padding: 0;
+	color: #f2ede3;
+}}
 
 .form {
+	position: relative;
+	color: #f2ede3;
 }
 
+.form__title {
+	padding: 20px;
+	margin-bottom: 20px;
+	color: rgba(0, 0, 0, 0.1);
+	font-size: 1.3em;
+}
+
+.form__title h1 {
+	margin: 0;
+	font-weight: 700;
+}
+
+.form__fields {
+	max-width: 960px;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.form__fields .btn {
+	margin-right: 20px;
+}
+
+.form__fields a {
+	color: white;
+}

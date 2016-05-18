@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Actions from '../actions';
+import TextInput from './TextInput';
 
 const AddDeck = (props) => {
 
@@ -13,13 +14,11 @@ const AddDeck = (props) => {
 
 	return (
 		<div className="form">
-			<h1>Новая колода</h1>
-			<div>
-				<span className="input">
-					<input className="input__field" ref={(c) => input = c} type="text" placeholder="Название"/>
-				</span>
+			<div className="form__title">
+				<h1>Новая колода</h1>
 			</div>
-			<div>
+			<div className="form__fields">
+				<TextInput caption="Название" onRef={(c) => input = c} />
 				<button className="btn btn--alt" onClick={handleAdd}>
 					Создать
 				</button>

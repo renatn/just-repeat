@@ -8,7 +8,12 @@ const addCard = (deck, front, back) => (
 );
 
 const load = () => {
-	const data = localStorage.getItem('react-flashcards') || '[]';
+	const data = localStorage.getItem('react-flashcards-v1');
+	if (!data) {
+		return {
+			type: 'NOPE'
+		};
+	}
 	const decks = JSON.parse(data);
 	return {
 		type: 'SET_DECKS',

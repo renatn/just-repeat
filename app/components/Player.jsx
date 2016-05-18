@@ -30,8 +30,8 @@ class Player extends Component {
 		if (player.length === 0) {
 			return (
 				<div className="study-done">
-					<h2>Test Passed!</h2>
-					<button className="button--def" onClick={this.props.onStop}>OK</button>
+					<h1>Интервальное повторение завершено!</h1>
+					<button className="btn btn--base" onClick={this.props.onStop}>OK</button>
 				</div>
 			);
 		}

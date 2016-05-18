@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Actions from '../actions';
+import TextInput from './TextInput';
 
 class AddCard extends Component {
 
@@ -21,23 +22,18 @@ class AddCard extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1>{this.props.deck}</h1>
-				<h2>Новая карточка</h2>
-				<p>
-					<span className="input">
-						<input className="input__field" ref={(c) => this.inputFront = c} type="text" placeholder="Вопрос"/>
-					</span>
-				</p>
-				<p>
-					<span className="input">
-						<input className="input__field" ref={(c) => this.inputBack = c} type="text" placeholder="Ответ"/>
-					</span>
-				</p>
-				<button className="btn btn--base" onClick={this.handleAdd}>
-					Добавить
-				</button>
-				<a href="" onClick={this.props.onCancel}>Отменить</a>
+			<div class="form">
+				<div className="form__title">
+					<h1>{this.props.deck} : Новая карточка</h1>
+				</div>
+				<div className="form__fields">
+					<TextInput caption="Вопрос" onRef={(c) => this.inputFront = c} />
+					<TextInput caption="Ответ" onRef={(c) => this.inputBack = c} />
+					<button className="btn btn--alt" onClick={this.handleAdd}>
+						Добавить
+					</button>
+					<a href="" onClick={this.props.onCancel}>Отменить</a>
+				</div>
 			</div>		
 		);
 	}
