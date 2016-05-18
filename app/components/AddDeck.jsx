@@ -13,12 +13,18 @@ const AddDeck = (props) => {
 
 	return (
 		<div className="form">
-			<span className="input">
-				<input className="input__field" ref={(c) => input = c} type="text" placeholder="Название"/>
-			</span>
-			<button className="button--def" onClick={handleAdd}>
-				Добавить
-			</button>
+			<h1>Новая колода</h1>
+			<div>
+				<span className="input">
+					<input className="input__field" ref={(c) => input = c} type="text" placeholder="Название"/>
+				</span>
+			</div>
+			<div>
+				<button className="btn button--def" onClick={handleAdd}>
+					Создать
+				</button>
+				<a href="" className="" onClick={props.onCancel}>Отменить</a>
+			</div>
 		</div>
 	);
 }
@@ -30,6 +36,10 @@ export default connect(
 			onAddDeck: (deck) => {
 				dispatch({ type: 'ADD_DECK', deck });
 				dispatch(Actions.route('START'));
+			},
+			onCancel: (e) => {
+				e.preventDefault();
+			 	dispatch(Actions.route('START'));
 			}
 		}
 	}

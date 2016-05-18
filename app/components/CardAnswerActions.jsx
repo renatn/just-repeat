@@ -8,11 +8,11 @@ const CardAnswerActions = ({ isAnswered, onAnswer, onDifficult }) => {
 
 	return (
 		<div className="flashcard-actions">
-			<button className={isAnswered ? 'hidden' : ''} onClick={onAnswer}>Answer</button>
+			<button className={isAnswered ? 'hidden' : 'button--def'} onClick={onAnswer}>Answer</button>
 			<span className={isAnswered ? '' : 'hidden'}>
-				<button onClick={handleEasy}>Easy</button>
-				<button onClick={handleNorm}>Normal</button>				
-				<button onClick={handleHard}>Hard</button>
+				<button className="button--def" onClick={handleEasy}>Easy</button>
+				<button className="button--def" onClick={handleNorm}>Normal</button>				
+				<button className="button--def" onClick={handleHard}>Hard</button>
 			</span>
 		</div>
 	);

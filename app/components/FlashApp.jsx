@@ -4,9 +4,10 @@ import classnames from 'classnames';
 
 import Actions from '../actions';
 import Player from './Player';
-import AddCard from './Editor';
+import AddCard from './AddCard';
 import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
+import DeckList from './DeckList';
 
 const getViewByRoute = (route) => {
 	switch (route) {
@@ -39,45 +40,29 @@ class FlashApp extends Component {
 	}
 
 	render() {
-		const { decks, cards, router } = this.props;
+		const { decks, router } = this.props;
 
 		const handleSave = (e) => {
 			e.preventDefault();
-			localStorage.setItem('react-flashcards', JSON.stringify(cards));
-			alert(`Saved: ${cards.length} cards`);
+			localStorage.setItem('react-flashcards', JSON.stringify(decks));
+			alert(`Saved: ${decks.length} decks`);
 		}
 		
 		const view = getViewByRoute(router);
+		const isOverlayOpen = router !== 'START';
 		return (
 			<div>
-				<div className="main">
+				<div className={classnames({ main: true, hidden: isOverlayOpen })}>
 					<div className="main__content">
 						<div className="app-header clearfix">
 							<a className="pull-right" href="" onClick={handleSave}>Save</a>
-							<span className="app-header__title">FlashCards</span>
+							<span className="app-header__title">FlashCards!</span>
+							<p className={classnames({ 'app_header__description': true, hidden: decks.length > 0 })}>
+								Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
+							</p>
 						</div>
 
-						<ul className="deck-list">
-							<li className="deck">
-								<div className="deck__name">{`English: ${cards.length}`}</div>
-								<div className="deck__actions">
-									<button disabled={!cards.length || status.isStarted} onClick={this.handleStudy}>
-										Учить
-									</button>
-									<button onClick={this.props.onAddCard}>
-										Добавить
-									</button>
-									<button onClick={this.props.onBrowse}>
-										Просмотр
-									</button>
-								</div>
-							</li>
-							{decks.map((deck, i) => (
-								<li key={i} className="deck">
-									<div className="deck__name">{deck.name}</div>
-								</li>
-							))}
-						</ul>
+						<DeckList />
 
 						<div className="call-to-action">
 							<button className="button--def" onClick={this.props.onAddDeck}>
@@ -86,7 +71,7 @@ class FlashApp extends Component {
 						</div>
 					</div>
 				</div>
-				<div className={classnames({ overlay: true, 'overlay--open': router !== 'START' })}>
+				<div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>
 					<button className="overlay__button-close" onClick={this.props.onCloseOverlay}>
 						X
 					</button>
@@ -109,9 +94,9 @@ export default connect(
 	},
 	dispatch => {
 		return {
-			onStudy: (cards) => dispatch(Actions.study(cards)),
-			onBrowse: () => dispatch(Actions.route('BROWSE')),
-			onAddCard: () => dispatch(Actions.route('ADD_CARD')),
+			onStudy: (deck) => dispatch(Actions.startStudy(deck)),
+			onBrowse: (cards) => dispatch(Actions.route('BROWSE'), cards),
+			onAddCard: (deck) => dispatch(Actions.routeAddCard(deck)),
 			onAddDeck: () => dispatch(Actions.route('ADD_DECK')),
 			onCloseOverlay: () => dispatch(Actions.route('START')),
 

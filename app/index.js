@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-import { cards, player, router, decks } from './reducers';
+import { player, router, decks, deck } from './reducers';
 import FlashApp from './components/FlashApp';		
 
 const app = combineReducers({
-	cards,
 	player,
 	router,
-	decks
+	decks,
+	deck
 });
 
 ReactDOM.render(

@@ -15,30 +15,28 @@ class Player extends Component {
 	}
 
 	handleAnswer() {	
-		const question = this.props.player[0];
-		this.props.onAnswer(question.index);
+		const card = this.props.player[0];
+		this.props.onAnswer(card.front);
 	}
 
 	handleDifficult(level) {
-		const question = this.props.player[0];
-		const card = this.props.cards[question.index];
+		const card = this.props.player[0];
 		this.props.onResult(card.front, level);
 	} 
 
 	render() {
-		const { cards, player } = this.props;
+		const { deck, player } = this.props;
 	
 		if (player.length === 0) {
 			return (
 				<div className="study-done">
 					<h2>Test Passed!</h2>
-					<button onClick={this.props.onStop}>OK</button>
+					<button className="button--def" onClick={this.props.onStop}>OK</button>
 				</div>
 			);
 		}
 
-		const question = player[0];
-		const card = cards[question.index];
+		const card = player[0];
 
 		return (
 			<div>
@@ -46,13 +44,13 @@ class Player extends Component {
 					<p className="flashcard__front">
 						{card.front}
 					</p>
-					<p className={classnames({ hidden: !question.isAnswered, 'flashcard__back': true })}>
+					<p className={classnames({ hidden: !card.isAnswered, 'flashcard__back': true })}>
 						{card.back}
 					</p>
 				</div>
 
 				<CardAnswerActions
-					isAnswered={question.isAnswered} 
+					isAnswered={card.isAnswered} 
 					onAnswer={this.handleAnswer} 
 					onDifficult={this.handleDifficult} 
 				/>
@@ -66,13 +64,13 @@ export default connect(
 	state => {
 		return {
 			player: state.player,
-			cards: state.cards
+			deck: state.deck
 		}
 	},
 	dispatch => {
 		return {
 			onResult: (front, level) => dispatch(Actions.cardLevel(front, level)),
-			onAnswer: (index) => dispatch(Actions.answer(index)),
+			onAnswer: (front) => dispatch(Actions.answer(front)),
 			onStop: () => dispatch(Actions.route('START'))
 		}
 	}

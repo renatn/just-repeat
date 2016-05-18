@@ -1,6 +1,7 @@
-const addCard = (front, back) => (
+const addCard = (deck, front, back) => (
 	{
 		type: 'ADD_CARD',
+		deck,
 		front,
 		back
 	}
@@ -8,17 +9,17 @@ const addCard = (front, back) => (
 
 const load = () => {
 	const data = localStorage.getItem('react-flashcards') || '[]';
-	const cards = JSON.parse(data);
+	const decks = JSON.parse(data);
 	return {
-		type: 'SET_CARDS',
-		cards: cards
+		type: 'SET_DECKS',
+		decks
 	};
 };
 
-const answer = (index) => (
+const answer = (front) => (
 	{ 
 		type: 'SHOW_ANSWER', 
-		index
+		front
 	}
 );
 
@@ -37,21 +38,39 @@ const route = (route) => (
 	}
 );
 
-const study = (cards) => {
-	const sortedCards = cards.sort((a, b) => a.level - b.level);
+const routeStudy = (deck) => {
+	// const sortedCards = cards.sort((a, b) => a.level - b.level);
 	return	{
 		type: 'ROUTE', 
-		cards: sortedCards,
-		route: 'STUDY'
-	}
+		route: 'STUDY',
+		deck
+	};
+};
+
+const routeAddCard = (deck) => {
+	return {
+		type: 'ROUTE', 
+		route: 'ADD_CARD',
+		deck
+	};
 };
 
 
+const removeDeck = (deckName) => {
+	return {
+		type: 'REMOVE_DECK', 
+		deck: deckName
+	};
+
+};
+
 export default {
 	addCard,
-	study,
+	routeStudy,
 	load,
 	answer,
 	cardLevel,
-	route
+	route,
+	routeAddCard,
+	removeDeck
 };

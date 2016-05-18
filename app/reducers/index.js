@@ -1,7 +1,5 @@
 const cards = (state = [], action) => {
 	switch (action.type) {
-		case 'SET_CARDS':
-			return action.cards;
 		case 'ADD_CARD': 
 			return [...state, {
 				front: action.front,
@@ -30,18 +28,18 @@ const player = (state = [], action) => {
 	switch (action.type) {
 		case 'ROUTE':
 			if (action.route == 'STUDY') {
-				return action.cards.map((_, i) => ({index: i, isAnswered: false}));
+				return action.deck.cards.map((card) => ({...card, isAnswered: false}));
 			}
 			return state;
 		case 'SHOW_ANSWER':
-			return state.map((m) => {
-				if (m.index === action.index) {
+			return state.map((card) => {
+				if (card.front === action.front) {
 					return {
-						...m,
+						...card,
 						isAnswered: true
 					}
 				}
-				return m;
+				return card;
 			});
 		case 'DIFFICULTY_LEVEL':
 			return state.slice(1)
@@ -61,19 +59,47 @@ const router = (state = 'START', action) => {
 
 const decks = (state = [], action) => {
 	switch (action.type) {
+		case 'SET_DECKS':
+			return action.decks;
 		case 'ADD_DECK':
 			return [...state, {
 				name: action.deck,
 				cards: cards(undefined, {})
 			}];
+		case 'REMOVE_DECK':
+			return state.filter(deck => deck.name !== action.deck);
+		case 'ADD_CARD': 			
+			return state.map(deck => {
+				if (deck.name === action.deck) {
+					return {...deck, cards: cards(deck.cards, action)}
+				}
+				return deck;
+			});
 		default:
 			return state;
 	}
 };
 
+const deck = (state = null, action) => {
+	switch (action.type) {
+		case 'ROUTE':
+			switch (action.route) {
+				case 'ADD_CARD':
+				case 'STUDY':
+				case 'BROWSE':
+					return action.deck
+				default:
+					return state;
+			}
+
+		default:
+			return state;
+	}
+}
+
 export {
 	player,
-	cards,
 	router,
-	decks
+	decks,
+	deck
 }
