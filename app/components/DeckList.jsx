@@ -11,26 +11,23 @@ const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
 
 	return (
 		<li className="deck">
-			<div className="deck__name">{deck.name} : {deck.cards.length}</div>
+			<div className="deck__count" onClick={onBrowse}>{deck.cards.length}</div>
+			<div className="deck__name">
+				{deck.name}
+				&nbsp;<i className="fa fa-pencil"></i>
+			</div>
+			<div className="deck__study">
+				<button className="btn btn--alt" onClick={handleStudy}>Учить</button>
+			</div>
 			<ul className="deck__actions">
 				<li className="action-item">
-					<a className="" onClick={handleStudy}>
-						Учить
-					</a>
-				</li>
-				<li className="action-item">
 					<a className="" onClick={handleAddCard}>
-						Пополнить
-					</a>
-				</li>
-				<li className="action-item">
-					<a className="" onClick={onBrowse}>
-						Просмотр
+						<i className="fa fa-plus fa-2x"></i>
 					</a>
 				</li>
 				<li className="action-item">
 		 			<a className="" onClick={handleRemove}>
-						Удалить
+						<i className="fa fa-trash fa-2x"></i>
 					</a>
 				</li>
 			</ul>
