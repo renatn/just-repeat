@@ -42,7 +42,7 @@ class AddCard extends Component {
 export default connect(
 	state => {
 		return {
-			deck: state.deck
+			deckName: state.router['deckName']
 		}
 	},
 	dispatch => {

@@ -9,8 +9,8 @@ import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
 import DeckList from './DeckList';
 
-const getViewByRoute = (route) => {
-	switch (route) {
+const getViewByRoute = (router) => {
+	switch (router.route) {
 		case 'STUDY':
 			return <Player />;
 		case 'ADD_CARD':
@@ -46,7 +46,7 @@ class FlashApp extends Component {
 		const { decks, router } = this.props;
 		
 		const view = getViewByRoute(router);
-		const isOverlayOpen = router !== 'START';
+		const isOverlayOpen = router.route !== '/';
 		return (
 			<div>
 				<header className="app-header">
@@ -83,18 +83,13 @@ export default connect(
 	state => {
 		return {
 			decks: state.decks,
-			cards: state.cards, 
 			router: state.router
 		}
 	},
 	dispatch => {
 		return {
-			onStudy: (deck) => dispatch(Actions.startStudy(deck)),
-			onBrowse: (cards) => dispatch(Actions.route('BROWSE'), cards),
-			onAddCard: (deck) => dispatch(Actions.routeAddCard(deck)),
 			onAddDeck: () => dispatch(Actions.route('ADD_DECK')),
-			onCloseOverlay: () => dispatch(Actions.route('START')),
-
+			onCloseOverlay: () => dispatch(Actions.route('/')),
 			onLoad: () => dispatch(Actions.load()),
 		}
 	}

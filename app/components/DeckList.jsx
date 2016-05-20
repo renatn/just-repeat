@@ -5,7 +5,7 @@ import Actions from '../actions';
 
 const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
 
-	const handleStudy = () => onStudy(deck);
+	const handleStudy = () => onStudy(deck.name);
 	const handleAddCard = () => onAddCard(deck.name);
 	const handleRemove = () => onRemove(deck.name);
 
@@ -60,7 +60,7 @@ export default connect(
 	},
 	dispatch => {
 		return {
-			onStudy: (deck) => dispatch(Actions.routeStudy(deck)),
+			onStudy: (deckName) => dispatch(Actions.routeStudy(deckName)),
 			onBrowse: (cards) => dispatch(Actions.route('BROWSE'), cards),
 			onAddCard: (deckName) => dispatch(Actions.routeAddCard(deckName)),
 			onRemove: (deckName) => dispatch(Actions.removeDeck(deckName))
