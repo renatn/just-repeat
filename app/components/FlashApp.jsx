@@ -49,15 +49,14 @@ class FlashApp extends Component {
 		const isOverlayOpen = router !== 'START';
 		return (
 			<div>
-				<div className={classnames({ main: true, hidden: isOverlayOpen })}>
+				<header className="app-header">
+					<h1 className="app-header__title">FlashCards!</h1>
+				</header>
+				<main className="main">
 					<div className="main__content">
-						<div className="app-header clearfix">
-							<a className="pull-right hidden" href="" onClick={this.handleSave}>Save</a>
-							<span className="app-header__title">FlashCards!</span>
-							<p className={classnames({ 'app_header__description': true, hidden: decks.length > 0 })}>
-								Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
-							</p>
-						</div>
+						<p className={classnames({ 'app_header__description': true, hidden: decks.length > 0 })}>
+							Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
+						</p>
 
 						<DeckList />
 
@@ -67,10 +66,9 @@ class FlashApp extends Component {
 							</button>
 						</div>
 					</div>
-				</div>
+				</main>
 				<div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>
 					<button className="overlay__button-close" onClick={this.props.onCloseOverlay}>
-						X
 					</button>
 					<div className="overlay__content">
 						{view}

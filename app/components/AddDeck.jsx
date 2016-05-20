@@ -18,7 +18,7 @@ const AddDeck = (props) => {
 				<h1>Новая колода</h1>
 			</div>
 			<div className="form__fields">
-				<TextInput caption="Название" onRef={(c) => input = c} />
+				<TextInput caption="Название" onRef={(c) => input = c} onEnter={handleAdd} />
 				<button className="btn btn--alt" onClick={handleAdd}>
 					Создать
 				</button>
