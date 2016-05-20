@@ -85,14 +85,9 @@ button {
 
 .deck {
 	margin-bottom: 0.5em;
-	list-style-type: none;
 	padding: 20px;
 	border-left: 3px solid cyan;
 	background-color: #3fc1c9;
-}
-
-.deck > div {
-	float: left;
 }
 
 .deck::after {
@@ -101,13 +96,23 @@ button {
 	clear: both;
 }
 
-.deck .deck__actions {
-	float: right;
+.deck__actions {
+	padding: 0;	
+}
+
+.action-item {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.action-item a {
+	cursor: pointer;
 }
 
 .deck__name {
 	width: 50%;
 	font-size: 24px;
+	margin-bottom: 1em;
 }
 
 .overlay {

@@ -12,26 +12,37 @@ const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
 	return (
 		<li className="deck">
 			<div className="deck__name">{deck.name} : {deck.cards.length}</div>
-			<div className="deck__actions">
-				<button className="btn btn--base" disabled={!deck.cards.length} onClick={handleStudy}>
-					Учить
-				</button>
-				<button className="btn btn--base" onClick={handleAddCard}>
-					Пополнить
-				</button>
-				<button className="btn btn--base" onClick={onBrowse}>
-					Просмотр
-				</button>
-				<button className="btn btn--base" onClick={handleRemove}>
-					Удалить
-				</button>
-			</div>
+			<ul className="deck__actions">
+				<li className="action-item">
+					<a className="" onClick={handleStudy}>
+						Учить
+					</a>
+				</li>
+				<li className="action-item">
+					<a className="" onClick={handleAddCard}>
+						Пополнить
+					</a>
+				</li>
+				<li className="action-item">
+					<a className="" onClick={onBrowse}>
+						Просмотр
+					</a>
+				</li>
+				<li className="action-item">
+		 			<a className="" onClick={handleRemove}>
+						Удалить
+					</a>
+				</li>
+			</ul>
 		</li>
 	);
 };
 
 
 const DeckList = (props) => {
+	if (props.decks.length === 0) {
+		return null;
+	}
 	return (
 		<ul className="deck-list">
 			{props.decks.map((deck, i) => {	
