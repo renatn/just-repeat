@@ -24,11 +24,22 @@ const save = (decks) => {
 }
 
 const study = (deck) => {
-	return (dispatch) => {		
+	return dispatch => {		
 		dispatch(startStudy(deck));
 		dispatch(route('/STUDY'));
 	}
 }
+
+const addDeck = (deckName) => {
+	return dispatch => {
+		dispatch({
+			type: 'ADD_DECK', 
+			deck: deckName 
+		});
+		dispatch(route('/'));
+	}
+};
+
 
 const addCard = (deck, front, back) => (
 	{
@@ -78,7 +89,6 @@ const routeAddCard = (deck) => {
 	};
 };
 
-
 const removeDeck = (deckName) => {
 	return {
 		type: 'REMOVE_DECK', 
@@ -97,5 +107,6 @@ export default {
 	cardLevel,
 	route,
 	routeAddCard,
+	addDeck,
 	removeDeck
 };

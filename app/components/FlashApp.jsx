@@ -54,17 +54,18 @@ class FlashApp extends Component {
 				</header>
 				<main className="main">
 					<div className="main__content">
-						<p className={classnames({ 'app_header__description': true, hidden: decks.length > 0 })}>
-							Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
-						</p>
+						<div className={classnames({ hidden: decks.length > 0 })}>
+							<p className="app_header__description">
+								Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
+							</p>
 
-						<DeckList />
-
-						<div className="call-to-action">
-							<button className="btn btn--accent" onClick={this.props.onAddDeck}>
-								Добавить колоду
-							</button>
+							<div className="call-to-action">
+								<button className="btn btn--accent" onClick={this.props.onAddDeck}>
+									Добавить колоду
+								</button>
+							</div>
 						</div>
+						<DeckList />
 					</div>
 				</main>
 				<div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>

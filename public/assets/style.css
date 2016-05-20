@@ -83,11 +83,24 @@ button {
 	padding: 0;
 }
 
+.deck-list::after {
+	content: '';
+	display: table;
+	clear: both;
+}
+
 .deck {
-	margin-bottom: 0.5em;
+	margin-bottom: 1em;
+	margin-right: 1em;
+	min-width: 15em;
+	min-height: 10em;
 	padding: 20px;
-	border-left: 3px solid cyan;
-	background-color: #3fc1c9;
+	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
+	background-color: #e45a84;
+	list-style-type: none;
+	float: left;
+	border-radius: 10px;
+	position: relative;
 }
 
 .deck::after {
@@ -98,6 +111,7 @@ button {
 
 .deck__actions {
 	padding: 0;	
+	float: left;
 }
 
 .action-item {
@@ -105,7 +119,7 @@ button {
 	transition: background 0.25s ease-out;
 	padding: 1em;
 	text-transform: uppercase;
-	color: #222;
+	color: rgba(0, 0, 0, 0.3);
 }
 
 .action-item a {
@@ -114,27 +128,61 @@ button {
 }
 
 .action-item:hover {
-	background-color: #f5f5f5;
 	color: #222;
 }
 
 .deck__study {
-	float: right;
+	display: block;
+	text-align: right;
+	position: absolute;
+	bottom: 1em;
+	width: 85%;
 }
 
 .deck__count {
-	font-size: 2em;
-	float: right;
+	display: inline-block;
+	font-size: 1.4em;
 	color: rgba(0, 0, 0, 0.3);
 }
 
 .deck__name {
-	width: 90%;
-	font-size: 2em;
-	font-weight: 700;
-	margin-bottom: 1em;
-	color: rgba(0, 0, 0, 0.3);
+	display: inline-block;
+	font-size: 1.4em;
+	font-weight: 500;
+	margin-right: 1em;
+	color: #fff; /* rgba(0, 0, 0, 0.3); */
+}
 
+.deck--empty {
+	background-color: transparent;
+	box-shadow: none;
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+
+.deck--empty a {
+	display: inline-block;
+	border: 1px dashed;
+	color: white;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 1.4em;
+	position: absolute;
+	border-radius: 10px;
+	padding: 3.2em;
+}
+
+.deck--empty a:hover {
+	color: #fc5185;
+}
+
+.deck .btn {
+	border-radius: 10px;
+	padding: 15px 20px;
+	border: 3px solid white;
+	box-shadow: none;
 }
 
 .app-header {
@@ -150,6 +198,8 @@ button {
 .app_header__description {
 	font-size: 1.4em;
 	color: #ccc;
+	text-align: center;
+	margin: 0 0 2em 0;
 }
 
 .overlay {
@@ -159,7 +209,7 @@ button {
 	top: 0;
 	left: 0;
 	color: #fff;
-	background: #fc5185; /* #eb586f; */
+	background: #2CD892; /* #fc5185; */ /* #eb586f; */
 	visibility: hidden;
 	-webkit-transform: translateY(-100%);
 	transform: translateY(-100%);
@@ -209,6 +259,7 @@ button {
 .main__content {
 	max-width: 960px;
 	margin: 0 auto;
+	padding-left: 2em;
 }
 
 .input {

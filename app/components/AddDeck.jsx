@@ -32,13 +32,10 @@ export default connect(
 	null,
 	dispatch => {
 		return {
-			onAddDeck: (deck) => {
-				dispatch({ type: 'ADD_DECK', deck });
-				dispatch(Actions.route('START'));
-			},
+			onAddDeck: (deck) => dispatch(Actions.addDeck(deck)),
 			onCancel: (e) => {
 				e.preventDefault();
-			 	dispatch(Actions.route('START'));
+			 	dispatch(Actions.route('/'));
 			}
 		}
 	}

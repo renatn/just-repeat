@@ -27,10 +27,7 @@ const cards = (state = [], action) => {
 const player = (state = [], action) => {
 	switch (action.type) {
 		case 'START_STUDY':
-			if (action.route == 'STUDY') {
-				return action.cards.map((card) => ({...card, isAnswered: false}));
-			}
-			return state;
+			return action.cards.map((card) => ({...card, isAnswered: false}));
 		case 'SHOW_ANSWER':
 			return state.map((card) => {
 				if (card.front === action.front) {
