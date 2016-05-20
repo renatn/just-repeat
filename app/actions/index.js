@@ -1,3 +1,35 @@
+const load = () => {
+	return dispatch => {
+		const data = localStorage.getItem('react-flashcards-v1');
+		if (!data) {
+			dispatch({type: 'NOPE'});
+			return;
+		}
+		const decks = JSON.parse(data);
+		dispatch({
+			type: 'SET_DECKS',
+			decks
+		});
+	}
+};
+
+const save = (decks) => {
+	return dispatch => {
+		localStorage.setItem('react-flashcards-v1', JSON.stringify(decks));
+		dispatch({
+			type: 'SAVE_SUCCESS',
+			message: `Saved ${deck.length} decks`
+		});
+	};
+}
+
+const study = (deck) => {
+	return (dispatch) => {		
+		dispatch(startStudy(deck));
+		dispatch(route('/STUDY'));
+	}
+}
+
 const addCard = (deck, front, back) => (
 	{
 		type: 'ADD_CARD',
@@ -6,20 +38,6 @@ const addCard = (deck, front, back) => (
 		back
 	}
 );
-
-const load = () => {
-	const data = localStorage.getItem('react-flashcards-v1');
-	if (!data) {
-		return {
-			type: 'NOPE'
-		};
-	}
-	const decks = JSON.parse(data);
-	return {
-		type: 'SET_DECKS',
-		decks
-	};
-};
 
 const answer = (front) => (
 	{ 
@@ -69,10 +87,12 @@ const removeDeck = (deckName) => {
 
 };
 
+
 export default {
 	addCard,
 	routeStudy,
 	load,
+	save,
 	answer,
 	cardLevel,
 	route,

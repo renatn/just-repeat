@@ -9,8 +9,8 @@ import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
 import DeckList from './DeckList';
 
-const getViewByRoute = (route) => {
-	switch (route) {
+const getViewByRoute = (router) => {
+	switch (router.route) {
 		case 'STUDY':
 			return <Player />;
 		case 'ADD_CARD':
@@ -46,18 +46,17 @@ class FlashApp extends Component {
 		const { decks, router } = this.props;
 		
 		const view = getViewByRoute(router);
-		const isOverlayOpen = router !== 'START';
+		const isOverlayOpen = router.route !== '/';
 		return (
 			<div>
-				<div className={classnames({ main: true, hidden: isOverlayOpen })}>
+				<header className="app-header">
+					<h1 className="app-header__title">FlashCards!</h1>
+				</header>
+				<main className="main">
 					<div className="main__content">
-						<div className="app-header clearfix">
-							<a className="pull-right hidden" href="" onClick={this.handleSave}>Save</a>
-							<span className="app-header__title">FlashCards!</span>
-							<p className={classnames({ 'app_header__description': true, hidden: decks.length > 0 })}>
-								Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
-							</p>
-						</div>
+						<p className={classnames({ 'app_header__description': true, hidden: decks.length > 0 })}>
+							Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
+						</p>
 
 						<DeckList />
 
@@ -67,10 +66,9 @@ class FlashApp extends Component {
 							</button>
 						</div>
 					</div>
-				</div>
+				</main>
 				<div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>
 					<button className="overlay__button-close" onClick={this.props.onCloseOverlay}>
-						X
 					</button>
 					<div className="overlay__content">
 						{view}
@@ -85,18 +83,13 @@ export default connect(
 	state => {
 		return {
 			decks: state.decks,
-			cards: state.cards, 
 			router: state.router
 		}
 	},
 	dispatch => {
 		return {
-			onStudy: (deck) => dispatch(Actions.startStudy(deck)),
-			onBrowse: (cards) => dispatch(Actions.route('BROWSE'), cards),
-			onAddCard: (deck) => dispatch(Actions.routeAddCard(deck)),
 			onAddDeck: () => dispatch(Actions.route('ADD_DECK')),
-			onCloseOverlay: () => dispatch(Actions.route('START')),
-
+			onCloseOverlay: () => dispatch(Actions.route('/')),
 			onLoad: () => dispatch(Actions.load()),
 		}
 	}

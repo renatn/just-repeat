@@ -60,11 +60,11 @@ class Player extends Component {
 	}
 }
 
+
 export default connect(
 	state => {
 		return {
-			player: state.player,
-			deck: state.deck
+			player: state.player
 		}
 	},
 	dispatch => {

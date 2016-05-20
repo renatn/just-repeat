@@ -1,8 +1,8 @@
 body {
-	background-color: #364f6b;
 	color: #fff;
 	font-family: 'Helvetica', 'Tahoma', sans-serif;
 	font-size: 16px;
+	background-color: #364f6b;
 }
 
 button {
@@ -164,7 +164,8 @@ button {
 	-webkit-transform: translateY(-100%);
 	transform: translateY(-100%);
 	-webkit-transition: -webkit-transform 0.4s ease-in-out, visibility 0s 0.4s;
-	transition: transform 0.25s ease-in-out, visibility 0s 0.25s;	
+	transition: transform 0.25s ease-in, visibility 0s 0.25s;	
+	overflow: auto;
 }
 
 .overlay__button-close {
@@ -175,7 +176,8 @@ button {
 	top: 20px;
 	border: none;
 	border-radius: 50%;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(0, 0, 0, 0.3) ;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAAhklEQVRYhe3VwQ3AIAxD0ezH/vO4p0gc2kqFNNiS/wD4HWiJcM4555xqAAaAwXre0wAqRirP+n2oDVsx2I7dGT6GXQEcx36B0GCzNxAdNruD0WKzGUiPzSYoPzZCDCx1JaQ+OqnfmtTDIfU0rwCOoXeG29EVg23oyqEWdD4IrOc555xzrr0LvMqzEF8atfgAAAAASUVORK5CYII=');
 	color: #fff;
 }
 
@@ -188,7 +190,7 @@ button {
 	-webkit-transform: translateY(0%);
 	transform: translateY(0%);
 	-webkit-transition: -webkit-transform 0.4s ease-in-out;
-	transition: transform 0.25s ease-in-out;	
+	transition: transform 0.25s ease-out;	
 }
 
 .study-done {
@@ -201,10 +203,12 @@ button {
 }
 
 .main {
+	/*padding: 2em 5%;	*/
 }
 
 .main__content {
-	padding-top: 2em;
+	max-width: 960px;
+	margin: 0 auto;
 }
 
 .input {
@@ -248,6 +252,7 @@ button {
 	max-width: 960px;
 	width: 80%;
 	margin: 0 auto;
+	padding-bottom: 2em;
 }
 
 .form__fields .btn {
