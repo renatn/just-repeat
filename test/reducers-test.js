@@ -1,21 +1,23 @@
 import { expect } from 'chai';
 import Actions from '../app/actions';
-import { cards, router } from '../app/reducers';
+import { decks, router } from '../app/reducers';
 
-describe('cards reducer', () => {
+describe('decks reducer', () => {
   it('should return initial state', () => {
-    expect(cards(undefined, {})).to.deep.equal([]);
+    expect(decks(undefined, {})).to.deep.equal([]);
   });
 
-  it('should handle ADD_CARD', () => {
+  it('should handle ADD_DECK', () => {
   	expect(
-  		cards(undefined, Actions.addCard('abc', 'qaz'))
+  		decks(undefined, {
+        type: 'ADD_DECK', 
+        deck: 'English 101' 
+      })
 	).to.deep.equal(
 		[
 			{
-				front: 'abc',
-				back: 'qaz',
-				level: 0
+				name: 'English 101',
+				cards: []
 			}
 		]
 	);
@@ -24,12 +26,12 @@ describe('cards reducer', () => {
 
 describe('router reducer', () => {
   it('should return initial state', () => {
-    expect(router(undefined, {})).to.equal('START');
+    expect(router(undefined, {})).to.deep.equal({route: '/'});
   });
 
   it('should handle STUDY', () => {
     expect(
-      router('START', Actions.route('STUDY'))
-    ).to.equal('STUDY');
+      router({route: '/'}, Actions.route('/STUDY'))
+    ).to.deep.equal({ route: '/STUDY', type: 'ROUTE' });
   });
 });

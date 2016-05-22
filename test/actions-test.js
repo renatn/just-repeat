@@ -6,8 +6,10 @@ describe('actions', () => {
     const expectedAction = {
       type: 'ADD_CARD',
       front: 'awesome',
-      back: 'классный'
+      back: 'классный',
+      deck: 'english'
     };
-    expect(Actions.addCard('awesome', 'классный')).to.deep.equal(expectedAction);
+    expect(Actions.addCard('english', 'awesome', 'классный'))
+    	.to.deep.equal(expectedAction);
   });
 });

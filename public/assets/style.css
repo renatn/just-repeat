@@ -5,16 +5,6 @@ body {
 	background-color: #364f6b;
 }
 
-button {
-	cursor: pointer;
-}
-
-a {
-	color: #ffffff;
-	text-decoration: none;
-	border-bottom: 1px dashed #ffffff;
-}
-
 .hidden {
 	display: none !important;
 }
@@ -29,6 +19,12 @@ a {
 	float: right;
 }
 
+.link {
+	color: #ffffff;
+	text-decoration: none;
+	border-bottom: 1px dashed #ffffff;
+}
+
 .btn {
 	border: none;
 	display: inline-block;
@@ -40,6 +36,7 @@ a {
 	letter-spacing: 0.1em;
 	transition: background 0.25s ease-out;
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
+	cursor: pointer;
 }
 
 .btn:hover {

@@ -24,7 +24,7 @@ const cards = (state = [], action) => {
 	}
 };
 
-const player = (state = [], action) => {
+export const player = (state = [], action) => {
 	switch (action.type) {
 		case 'START_STUDY':
 			return action.cards.map((card) => ({...card, isAnswered: false}));
@@ -45,7 +45,7 @@ const player = (state = [], action) => {
 	}
 };
 
-const router = (state = {route: '/'}, action) => {
+export const router = (state = {route: '/'}, action) => {
 	switch (action.type) {
 		case 'ROUTE':
 			return action;
@@ -54,7 +54,7 @@ const router = (state = {route: '/'}, action) => {
 	}
 };
 
-const decks = (state = [], action) => {
+export const decks = (state = [], action) => {
 	switch (action.type) {
 		case 'SET_DECKS':
 			return action.decks
@@ -80,10 +80,3 @@ const decks = (state = [], action) => {
 			return state;
 	}
 };
-
-
-export {
-	router,
-	player,
-	decks
-}

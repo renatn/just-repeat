@@ -9,7 +9,7 @@ import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
 import DeckList from './DeckList';
 
-const getViewByRoute = (router) => {
+const renderScene = (router) => {
 	switch (router.route) {
 		case '/STUDY':
 			return <Player />;
@@ -45,7 +45,6 @@ class FlashApp extends Component {
 	render() {
 		const { decks, router } = this.props;
 		
-		const view = getViewByRoute(router);
 		const isOverlayOpen = router.route !== '/';
 		return (
 			<div>
@@ -78,7 +77,7 @@ class FlashApp extends Component {
 					>
 					</button>
 					<div className="overlay__content">
-						{view}
+						{renderScene(router)}
 					</div>
 				</div>
 			</div>
