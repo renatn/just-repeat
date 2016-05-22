@@ -2,11 +2,10 @@ const load = () => {
 	return dispatch => {
 		const data = localStorage.getItem('react-flashcards-v1');
 		if (!data) {
-			dispatch({type: 'NOPE'});
-			return;
+			return dispatch({type: 'NOPE'});
 		}
 		const decks = JSON.parse(data);
-		dispatch({
+		return dispatch({
 			type: 'SET_DECKS',
 			decks
 		});
@@ -21,14 +20,22 @@ const save = (decks) => {
 			message: `Saved ${deck.length} decks`
 		});
 	};
-}
+};
 
-const study = (deck) => {
-	return dispatch => {		
-		dispatch(startStudy(deck));
+const study = (deckName) => {
+	return (dispatch, getState) => {	
+		const deck = getState().decks.find((deck) => deck.name === deckName);	
+		dispatch(startStudy(deck.cards));
 		dispatch(route('/STUDY'));
-	}
-}
+	};
+};
+
+const startStudy = (cards) => {
+	return {
+		type: 'START_STUDY',
+		cards
+	};
+};
 
 const addDeck = (deckName) => {
 	return dispatch => {
@@ -39,7 +46,6 @@ const addDeck = (deckName) => {
 		dispatch(route('/'));
 	}
 };
-
 
 const addCard = (deck, front, back) => (
 	{
@@ -72,19 +78,10 @@ const route = (route) => (
 	}
 );
 
-const routeStudy = (deck) => {
-	// const sortedCards = cards.sort((a, b) => a.level - b.level);
-	return	{
-		type: 'ROUTE', 
-		route: 'STUDY',
-		deck
-	};
-};
-
 const routeAddCard = (deck) => {
 	return {
 		type: 'ROUTE', 
-		route: 'ADD_CARD',
+		route: '/ADD_CARD',
 		deck
 	};
 };
@@ -94,13 +91,11 @@ const removeDeck = (deckName) => {
 		type: 'REMOVE_DECK', 
 		deck: deckName
 	};
-
 };
 
 
 export default {
 	addCard,
-	routeStudy,
 	load,
 	save,
 	answer,
@@ -108,5 +103,6 @@ export default {
 	route,
 	routeAddCard,
 	addDeck,
-	removeDeck
+	removeDeck,
+	study
 };

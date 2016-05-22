@@ -6,12 +6,13 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import Actions from './actions';
-import { router, decks } from './reducers';
+import { router, decks, player } from './reducers';
 import FlashApp from './components/FlashApp';		
 
 const app = combineReducers({
 	router,
-	decks
+	decks,
+	player
 });
 
 const autoSaver = store => next => action => {

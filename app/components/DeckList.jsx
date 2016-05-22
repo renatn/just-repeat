@@ -3,10 +3,26 @@ import { connect } from 'react-redux';
 
 import Actions from '../actions';
 
+const plural = (n) => {
+	switch (n) {
+		case 1:
+			return 'карточка';
+		case 2:
+		case 3:
+		case 4:
+			return 'карточки';
+		default:
+			return 'карточек';
+	}
+};
+
 const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
 
 	const handleStudy = () => onStudy(deck.name);
-	const handleAddCard = () => onAddCard(deck.name);
+	const handleAddCard = (e) =>{
+		e.preventDefault();
+		onAddCard(deck.name);
+	}
 	const handleRemove = () => onRemove(deck.name);
 
 	return (
@@ -14,16 +30,18 @@ const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
 			<div className="deck__name">
 				{deck.name}
 			</div>
-			<div className="deck__count" onClick={onBrowse}>{deck.cards.length}</div>
+			<div>
+				<span className="deck__count" onClick={onBrowse}>
+					{deck.cards.length} {plural(deck.cards.length)}
+				</span>
+				<a href="" className="deck__add-link" onClick={handleAddCard}>
+					<i className="fa fa-2x fa-plus"></i>
+				</a>
+			</div>
 			<div className="deck__study">
 				<ul className="deck__actions">
 					<li className="action-item">
-						<a className="" onClick={handleAddCard}>
-							<i className="fa fa-plus fa-2x"></i>
-						</a>
-					</li>
-					<li className="action-item">
-			 			<a className="" onClick={handleRemove}>
+			 			<a title="Удалить" onClick={handleRemove}>
 							<i className="fa fa-trash fa-2x"></i>
 						</a>
 					</li>
@@ -62,13 +80,13 @@ export default connect(
 	},
 	dispatch => {
 		return {
-			onStudy: (deckName) => dispatch(Actions.routeStudy(deckName)),
-			onBrowse: (cards) => dispatch(Actions.route('BROWSE'), cards),
+			onStudy: (deckName) => dispatch(Actions.study(deckName)),
+			onBrowse: (cards) => dispatch(Actions.route('/BROWSE'), cards),
 			onAddCard: (deckName) => dispatch(Actions.routeAddCard(deckName)),
 			onRemove: (deckName) => dispatch(Actions.removeDeck(deckName)),
 			onAddDeck: (e) => {
 				e.preventDefault();
-				dispatch(Actions.route('ADD_DECK'));
+				dispatch(Actions.route('/ADD_DECK'));
 			}
 		}
 	}

@@ -84,5 +84,6 @@ const decks = (state = [], action) => {
 
 export {
 	router,
+	player,
 	decks
 }

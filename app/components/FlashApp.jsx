@@ -11,14 +11,14 @@ import DeckList from './DeckList';
 
 const getViewByRoute = (router) => {
 	switch (router.route) {
-		case 'STUDY':
+		case '/STUDY':
 			return <Player />;
-		case 'ADD_CARD':
+		case '/ADD_CARD':
 			return <AddCard />;
-		case 'BROWSE':
+		case '/BROWSE':
 			return <BrowseCards />;
-		case 'ADD_DECK':
-			return <AddDeck />;
+		case '/ADD_DECK':
+			return <AddDeck deck={router.deck} />;
 		default:
 			return null;
 	}
@@ -60,7 +60,10 @@ class FlashApp extends Component {
 							</p>
 
 							<div className="call-to-action">
-								<button className="btn btn--accent" onClick={this.props.onAddDeck}>
+								<button 
+									className="btn btn--accent" 
+									onClick={this.props.onAddDeck}
+								>
 									Добавить колоду
 								</button>
 							</div>
@@ -69,7 +72,10 @@ class FlashApp extends Component {
 					</div>
 				</main>
 				<div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>
-					<button className="overlay__button-close" onClick={this.props.onCloseOverlay}>
+					<button 
+						className="overlay__button-close" 
+						onClick={this.props.onCloseOverlay}
+					>
 					</button>
 					<div className="overlay__content">
 						{view}
@@ -89,7 +95,7 @@ export default connect(
 	},
 	dispatch => {
 		return {
-			onAddDeck: () => dispatch(Actions.route('ADD_DECK')),
+			onAddDeck: () => dispatch(Actions.route('/ADD_DECK')),
 			onCloseOverlay: () => dispatch(Actions.route('/')),
 			onLoad: () => dispatch(Actions.load()),
 		}

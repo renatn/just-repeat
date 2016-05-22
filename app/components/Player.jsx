@@ -71,7 +71,7 @@ export default connect(
 		return {
 			onResult: (front, level) => dispatch(Actions.cardLevel(front, level)),
 			onAnswer: (front) => dispatch(Actions.answer(front)),
-			onStop: () => dispatch(Actions.route('START'))
+			onStop: () => dispatch(Actions.route('/'))
 		}
 	}
 )(Player);

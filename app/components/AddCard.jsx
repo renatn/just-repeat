@@ -15,7 +15,7 @@ class AddCard extends Component {
 	}
 
 	handleAdd() {
-		this.props.onAddCard(this.props.deck, this.inputFront.value, this.inputBack.value)
+		this.props.onAddCard(this.props.deckName, this.inputFront.value, this.inputBack.value)
 		this.inputFront.value = '';
 		this.inputBack.value = '';
 	}
@@ -24,7 +24,7 @@ class AddCard extends Component {
 		return (
 			<div class="form">
 				<div className="form__title">
-					<h1>{this.props.deck} : Новая карточка</h1>
+					<h1>{this.props.deckName} : Новая карточка</h1>
 				</div>
 				<div className="form__fields">
 					<TextInput caption="Вопрос" onRef={(c) => this.inputFront = c} />
@@ -42,18 +42,18 @@ class AddCard extends Component {
 export default connect(
 	state => {
 		return {
-			deckName: state.router['deckName']
-		}
+			deckName: state.router.deck
+		};
 	},
 	dispatch => {
 		return {
 			onAddCard: (deck, front, back) => {
 				dispatch(Actions.addCard(deck, front, back));
-				dispatch(Actions.route('START'));
+				dispatch(Actions.route('/'));
 			},
 			onCancel: (e) => {
 				e.preventDefault();
-			 	dispatch(Actions.route('START'));
+			 	dispatch(Actions.route('/'));
 			}
 		}
 	}
