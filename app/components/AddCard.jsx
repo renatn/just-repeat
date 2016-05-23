@@ -22,7 +22,7 @@ class AddCard extends Component {
 
 	render() {
 		return (
-			<div class="form">
+			<div className="form">
 				<div className="form__title">
 					<h1>{this.props.deckName} : Новая карточка</h1>
 				</div>
@@ -32,7 +32,7 @@ class AddCard extends Component {
 					<button className="btn btn--alt" onClick={this.handleAdd}>
 						Добавить
 					</button>
-					<a href="" onClick={this.props.onCancel}>Отменить</a>
+					<a href="" className="link" onClick={this.props.onCancel}>Отменить</a>
 				</div>
 			</div>		
 		);

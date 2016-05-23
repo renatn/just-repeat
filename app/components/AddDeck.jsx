@@ -22,7 +22,7 @@ const AddDeck = (props) => {
 				<button className="btn btn--alt" onClick={handleAdd}>
 					Создать
 				</button>
-				<a href="" className="" onClick={props.onCancel}>Отменить</a>
+				<a href="" className="link" onClick={props.onCancel}>Отменить</a>
 			</div>
 		</div>
 	);

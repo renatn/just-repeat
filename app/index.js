@@ -7,7 +7,20 @@ import { Provider } from 'react-redux';
 
 import Actions from './actions';
 import { router, decks, player } from './reducers';
-import FlashApp from './components/FlashApp';		
+import FlashApp from './components/FlashApp';	
+
+/* 
+TODO:
+	- Сменить цвет кнопка при Hover
+	- Дизайн колод - без круглых углов (MD?)
+	- Экран обучения - цвет карточки
+	- Обучения - даты
+	- Экран overlay - max-width 960px
+	- Undo - удаления
+	- Экран просмотра/редактирования карточек
+	- переименование
+	- Валидация полей формы
+*/	
 
 const app = combineReducers({
 	router,

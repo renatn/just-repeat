@@ -27,27 +27,26 @@ const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
 
 	return (
 		<li className="deck">
-			<div className="deck__name">
-				{deck.name}
+			<div className="deck_top">
+				<div className="deck__name">
+					{deck.name}
+				</div>
+				<div>
+					<span className="deck__count" onClick={onBrowse}>
+						{deck.cards.length} {plural(deck.cards.length)}
+					</span>
+				</div>
 			</div>
-			<div>
-				<span className="deck__count" onClick={onBrowse}>
-					{deck.cards.length} {plural(deck.cards.length)}
-				</span>
-				<a href="" className="deck__add-link" onClick={handleAddCard}>
-					<i className="fa fa-2x fa-plus"></i>
-				</a>
-			</div>
-			<div className="deck__study">
-				<ul className="deck__actions">
-					<li className="action-item">
-			 			<a title="Удалить" onClick={handleRemove}>
-							<i className="fa fa-trash fa-2x"></i>
-						</a>
-					</li>
-				</ul>
-
-				<button className="btn btn--alt" onClick={handleStudy}>Учить</button>
+			<div className="clearfix deck__actions">
+				<button className="btn btn--alt" onClick={handleStudy}>
+					Учить
+				</button>
+				<button className="btn btn--alt" onClick={handleAddCard}>
+					Пополнить
+				</button>
+				<button className="btn btn--alt" onClick={handleRemove}>
+					Удалить
+				</button>
 			</div>
 		</li>
 	);
@@ -65,7 +64,9 @@ const DeckList = (props) => {
 			})}
 			<li className="deck deck--empty">
 				<a href="" className="btn-link" onClick={props.onAddDeck}>
-					Добавить колоду
+					<span>
+						Добавить колоду
+					</span>
 				</a>
 			</li>
 		</ul>
