@@ -101,7 +101,7 @@ body {
     -webkit-flex-wrap: wrap; /* Safari */
 	flex-wrap: wrap;
 	
-	-webkit-justify-content: flex-start; /* Safari */
+	-webkit-justify-content: center; /* Safari */
 	justify-content: center;
 }
 
@@ -114,7 +114,7 @@ body {
 	background-color: #e45a84;
 	list-style-type: none;
 
-	 -webkit-flex: 1;
+	-webkit-flex: 1 0 auto;
 	flex: 1;
 }
 
@@ -141,13 +141,6 @@ body {
 	padding: 1rem;
 	background-color: #d45178;
 	position: relative;
-}
-
-.deck__action-link--main {
-	position: absolute;
-	top: -50%;
-	right: 1rem;
-	transform: translateY(15%);
 }
 
 .deck__count {
@@ -192,7 +185,8 @@ body {
 	text-transform: uppercase;
 	top: 50%;
 	left: 50%;
-	transform: translateY(-50%) translateX(-50%);	
+	-webkit-transform: translateY(-50%) translateX(-50%);
+	transform: translateY(-50%) translateX(-50%);
 }
 
 .deck--empty a:hover {
