@@ -26,7 +26,7 @@ const study = (deckName) => {
 	return (dispatch, getState) => {	
 		const deck = getState().decks.find((deck) => deck.name === deckName);	
 		dispatch(startStudy(deck.cards));
-		dispatch(route('/STUDY'));
+		dispatch({type: 'ROUTE', route: '/STUDY', deck: deckName});
 	};
 };
 
@@ -73,9 +73,10 @@ const answer = (front) => (
 	}
 );
 
-const cardLevel = (front, level) => (
+const cardLevel = (deck, front, level) => (
 	{ 
 		type: 'DIFFICULTY_LEVEL', 
+		deck,
 		front, 
 		level 
 	}

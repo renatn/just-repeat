@@ -21,11 +21,11 @@ class Player extends Component {
 
 	handleDifficult(level) {
 		const card = this.props.player[0];
-		this.props.onResult(card.front, level);
+		this.props.onResult(this.props.deckName, card.front, level);
 	} 
 
 	render() {
-		const { deck, player } = this.props;
+		const { deckName, player } = this.props;
 	
 		if (player.length === 0) {
 			return (
@@ -40,6 +40,9 @@ class Player extends Component {
 
 		return (
 			<div>
+				<header className="overlay__title">
+					<h1>{deckName}</h1>
+				</header>
 				<div className="flashcard">
 					<p className="flashcard__front">
 						{card.front}
@@ -64,12 +67,13 @@ class Player extends Component {
 export default connect(
 	state => {
 		return {
-			player: state.player
+			player: state.player,
+			deckName: state.router.deck
 		}
 	},
 	dispatch => {
 		return {
-			onResult: (front, level) => dispatch(Actions.cardLevel(front, level)),
+			onResult: (deckName, front, level) => dispatch(Actions.cardLevel(deckName, front, level)),
 			onAnswer: (front) => dispatch(Actions.answer(front)),
 			onStop: () => dispatch(Actions.route('/'))
 		}

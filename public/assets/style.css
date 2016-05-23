@@ -78,7 +78,7 @@ body {
 
 .flashcard {
 	border: 1px solid #000;
-	margin: 20px;
+	margin: 2rem;
 	background-color: #ffe700;
 	color: black;
 }
@@ -116,13 +116,14 @@ body {
 	margin-bottom: 1em;
 	margin-right: 1em;
 	min-width: 26rem;
+	max-width: 26rem;
 	min-height: 15rem;
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 	background-color: #e45a84;
 	list-style-type: none;
 
-	-webkit-flex: 1 0 33%;
-	flex: 1 0 33%;
+	-webkit-flex: 1 0 26rem;
+	flex: 1 0 26rem;
 
 	display: -webkit-flex; /* Safari */
 	display: flex;	
@@ -268,6 +269,12 @@ body {
 	margin: 0 auto;
 }
 
+.overlay__title {
+	margin: 2rem;
+	color: rgba(0, 0, 0, 0.1);
+	font-size: 1.3rem;
+}
+
 .overlay--open {
 	visibility: visible;
 	-webkit-transform: translateY(0%);
@@ -290,8 +297,8 @@ body {
 }
 
 .main__content {
-	max-width: 960px;
-	margin: 0 auto;
+	/*max-width: 960px;*/
+	/*margin: 0 auto;*/
 }
 
 .input {
