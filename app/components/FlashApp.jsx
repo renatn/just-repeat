@@ -80,6 +80,9 @@ class FlashApp extends Component {
 						{renderScene(router)}
 					</div>
 				</div>
+				<div className="undo undo--open">
+					<button className="btn btn--base">Отменить</button>
+				</div>
 			</div>
 		);
 	}

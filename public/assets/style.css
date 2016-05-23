@@ -109,17 +109,26 @@ body {
 	margin-bottom: 1em;
 	margin-right: 1em;
 	min-width: 18rem;
-	min-height: 10em;
+	min-height: 15rem;
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 	background-color: #e45a84;
 	list-style-type: none;
 
 	-webkit-flex: 1 0 auto;
 	flex: 1;
+
+	display: -webkit-flex; /* Safari */
+	display: flex;	
+
+	-webkit-flex-direction: column;
+	flex-direction: column;
 }
 
 .deck_top {
 	padding: 1rem;
+
+	-webkit-flex: 1 0 auto;
+	flex: 1;	
 }
 
 
@@ -228,7 +237,7 @@ body {
 	visibility: hidden;
 	-webkit-transform: translateY(-100%);
 	transform: translateY(-100%);
-	-webkit-transition: -webkit-transform 0.4s ease-in-out, visibility 0s 0.4s;
+	-webkit-transition: -webkit-transform 0.25s ease-in, visibility 0s 0.25s;
 	transition: transform 0.25s ease-in, visibility 0s 0.25s;	
 	overflow: auto;
 }
@@ -323,4 +332,27 @@ body {
 .form__fields .btn {
 	margin-right: 1em;
 	margin-bottom: 1em;
+}
+
+
+.undo {
+	position: fixed;
+	bottom: 0;
+	padding: 1rem;
+	background-color: rgba(0, 0, 0, 0.1);
+	width: 100%;
+	visibility: hidden;
+
+	-webkit-transform: translateY(100%);
+	transform: translateY(100%);
+	-webkit-transition: -webkit-transform 0.25s ease-in, visibility 0s 0.25s;
+	transition: transform 0.25s ease-in, visibility 0s 0.25s;	
+}
+
+.undo--open {
+	visibility: visible;
+	-webkit-transform: translateY(0%);
+	transform: translateY(0%);
+	-webkit-transition: -webkit-transform 0.25s ease-out;
+	transition: transform 0.25s ease-out;		
 }
