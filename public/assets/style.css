@@ -93,26 +93,28 @@ body {
 }
 
 .deck-list {
-	display: flex;
-	flex-wrap: wrap;
 	margin: 0 1em 1em 0;
-	justify-content: center;
-}
+	
+	display: -webkit-flex; /* Safari */
+	display: flex;
 
-.deck-list::after {
-	content: '';
-	display: table;
-	clear: both;
+    -webkit-flex-wrap: wrap; /* Safari */
+	flex-wrap: wrap;
+	
+	-webkit-justify-content: flex-start; /* Safari */
+	justify-content: center;
 }
 
 .deck {
 	margin-bottom: 1em;
 	margin-right: 1em;
-	min-width: 17.5rem;
+	min-width: 18rem;
 	min-height: 10em;
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 	background-color: #e45a84;
 	list-style-type: none;
+
+	 -webkit-flex: 1;
 	flex: 1;
 }
 
@@ -167,28 +169,30 @@ body {
 .deck--empty {
 	background-color: transparent;
 	box-shadow: none;
-	padding: 0;
-	min-width: 19em;
+	position: relative;
+	max-width: 18rem;
 }
 
 .deck--empty a {
 	display: block;
+	text-align: center;
 	border: 1px dashed;
-	color: white;
+	color: #fff;
 	text-decoration: none;
 	text-transform: uppercase;
-	text-align: center;
 	font-size: 1.4em;
 	width: 100%;
 	height: 100%;
-	position: relative;
+	position: absolute;
 }
 
 .deck--empty a > span {
 	position: absolute;
+	text-decoration: none;
+	text-transform: uppercase;
 	top: 50%;
-	left: 50&;
-	transform: translateX(-50%) translateY(-50%);
+	left: 50%;
+	transform: translateY(-50%) translateX(-50%);	
 }
 
 .deck--empty a:hover {
