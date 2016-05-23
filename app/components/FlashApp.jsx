@@ -43,7 +43,7 @@ class FlashApp extends Component {
 	}
 
 	render() {
-		const { decks, router } = this.props;
+		const { decks, router, spa } = this.props;
 		
 		const isOverlayOpen = router.route !== '/';
 		return (
@@ -80,9 +80,14 @@ class FlashApp extends Component {
 						{renderScene(router)}
 					</div>
 				</div>
-				<div className="undo undo--open">
+				<div className={classnames({ undo: true, 'undo--open': spa.showUndo })}>
 					<div className="container">
-						<button className="btn btn--base">Отменить</button>
+						<button className="btn btn--base" onClick={this.props.onUndo}>
+							Отменить
+						</button>
+						<a href="" className="link" onClick={this.props.onCloseUndo}>
+							Закрыть
+						</a>
 					</div>
 				</div>
 			</div>
@@ -94,7 +99,8 @@ export default connect(
 	state => {
 		return {
 			decks: state.decks,
-			router: state.router
+			router: state.router,
+			spa: state.spa
 		}
 	},
 	dispatch => {
@@ -102,6 +108,11 @@ export default connect(
 			onAddDeck: () => dispatch(Actions.route('/ADD_DECK')),
 			onCloseOverlay: () => dispatch(Actions.route('/')),
 			onLoad: () => dispatch(Actions.load()),
+			onUndo: () => dispatch(Actions.undo()),
+			onCloseUndo: (e) => {
+				e.preventDefault();
+				dispatch(Actions.closeUndo());
+			}
 		}
 	}
 )(FlashApp);

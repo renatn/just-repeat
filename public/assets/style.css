@@ -34,7 +34,6 @@ body {
 .link:hover {
 	color: #000;
 	border-bottom: 1px dashed #000;
-
 }
 
 .btn {
@@ -64,6 +63,10 @@ body {
 	color: #222;
 }
 
+.btn.btn--base:hover {
+	background-color: #fff;
+}
+
 .btn.btn--alt {
 	background-color: #4aa0d5;
 	color: white;
@@ -72,7 +75,6 @@ body {
 .btn.btn--alt:hover {
     background-color: #5fc1fe !important;
 }
-
 
 .flashcard {
 	border: 1px solid #000;
@@ -113,14 +115,14 @@ body {
 .deck {
 	margin-bottom: 1em;
 	margin-right: 1em;
-	min-width: 18rem;
+	min-width: 26rem;
 	min-height: 15rem;
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 	background-color: #e45a84;
 	list-style-type: none;
 
-	-webkit-flex: 1 0 auto;
-	flex: 1;
+	-webkit-flex: 1 0 33%;
+	flex: 1 0 33%;
 
 	display: -webkit-flex; /* Safari */
 	display: flex;	
@@ -339,12 +341,11 @@ body {
 	margin-bottom: 1em;
 }
 
-
 .undo {
 	position: fixed;
 	bottom: 0;
 	padding: 1rem;
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: #203348;
 	width: 100%;
 	visibility: hidden;
 
@@ -352,6 +353,10 @@ body {
 	transform: translateY(100%);
 	-webkit-transition: -webkit-transform 0.25s ease-in, visibility 0s 0.25s;
 	transition: transform 0.25s ease-in, visibility 0s 0.25s;	
+}
+
+.undo button {
+	margin-right: 1rem;
 }
 
 .undo--open {

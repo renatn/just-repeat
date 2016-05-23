@@ -30,6 +30,16 @@ const study = (deckName) => {
 	};
 };
 
+const undo = () => {
+	return (dispatch) => {
+		const prev = localStorage.getItem('react-flashcards-v1.bak');
+		localStorage.setItem('react-flashcards-v1', prev);
+
+		dispatch(load());
+		dispatch(closeUndo());
+	};
+};
+
 const startStudy = (cards) => {
 	return {
 		type: 'START_STUDY',
@@ -93,6 +103,11 @@ const removeDeck = (deckName) => {
 	};
 };
 
+const closeUndo = () => {
+	return {
+		type: 'HIDE_UNDO'
+	};
+};
 
 export default {
 	addCard,
@@ -104,5 +119,7 @@ export default {
 	routeAddCard,
 	addDeck,
 	removeDeck,
-	study
+	study,
+	undo,
+	closeUndo
 };
