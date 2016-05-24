@@ -50,8 +50,6 @@ export const router = (state = {route: '/'}, action) => {
 	switch (action.type) {
 		case 'ROUTE':
 			return action;
-		case 'UNDO':
-			return {...state, showUndo: true }
 		default:
 			return state;
 	}

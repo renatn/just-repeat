@@ -49,18 +49,20 @@ const addDeck = (deckName) => {
       type: 'ADD_DECK', 
       deck: deckName 
     });
-    dispatch(route('/'));
+    dispatch(routeRoot());
   }
 };
 
-const addCard = (deck, front, back) => (
-  {
+const addCard = (deck, front, back) => dispatch => { 
+  dispatch({
     type: 'ADD_CARD',
     deck,
     front,
     back
-  }
-);
+  });
+
+  dispatch(routeRoot());
+};
 
 const answer = (front) => (
   { 
@@ -85,11 +87,25 @@ const route = (route) => (
   }
 );
 
+const routeRoot = () => {
+  return {
+    type: 'ROUTE',
+    route: '/'
+  };
+};
+
 const routeAddCard = (deck) => {
   return {
     type: 'ROUTE', 
     route: '/ADD_CARD',
     deck
+  };
+};
+
+const routeAddDeck = () => {
+  return {
+    type: 'ROUTE', 
+    route: '/ADD_DECK'
   };
 };
 
@@ -112,11 +128,13 @@ export default {
 	save,
 	answer,
 	cardLevel,
-	route,
-	routeAddCard,
 	addDeck,
 	removeDeck,
 	study,
 	undo,
-	closeUndo
+	closeUndo,
+  route,
+  routeRoot,
+  routeAddCard,
+  routeAddDeck
 };

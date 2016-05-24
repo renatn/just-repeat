@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-import Actions from '../actions';
 import CardAnswerActions from './CardAnswerActions';
 
 class Player extends Component {
@@ -16,12 +14,12 @@ class Player extends Component {
 
   handleAnswer() {
     const card = this.props.player[0];
-    this.props.onAnswer(card.front);
+    this.props.answer(card.front);
   }
 
 	handleDifficult(level) {
 		const card = this.props.player[0];
-		this.props.onResult(this.props.deckName, card.front, level);
+		this.props.cardLevel(this.props.deckName, card.front, level);
 	} 
 
 	render() {
@@ -31,20 +29,11 @@ class Player extends Component {
 			return (
 				<div className="study-done">
 					<h1>Интервальное повторение завершено!</h1>
-					<button className="btn btn--base" onClick={this.props.onStop}>OK</button>
+					<button className="btn btn--base" onClick={this.props.routeRoot}>OK</button>
 				</div>
 			);
 		}
 
-    if (player.length === 0) {
-      return (
-        <div className="study-done">
-          <h1>Интервальное повторение завершено!</h1>
-          <button className="btn btn--base" onClick={this.props.onStop}>OK</button>
-        </div>
-      );
-    }
-  
     const card = player[0];
 		return (
 			<div>
@@ -70,15 +59,4 @@ class Player extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    player: state.player,
-    deckName: state.router.deck
-  }),
-  dispatch => ({
-    onResult: (deckName, front, level) => dispatch(Actions.cardLevel(deckName, front, level)),
-    onAnswer: (front) => dispatch(Actions.answer(front)),
-    onStop: () => dispatch(Actions.route('/'))
-  })
-)(Player);
-
+export default Player;

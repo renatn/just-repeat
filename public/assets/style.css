@@ -163,6 +163,8 @@ body {
 	display: inline-block;
 	font-size: 1.2rem;
 	color: #f8a6be; /*rgba(0, 0, 0, 0.3); */
+	text-decoration: none;
+	border-bottom: 1px dashed;
 }
 
 .deck__name {
@@ -259,6 +261,7 @@ body {
 	background-color: rgba(0, 0, 0, 0.3) ;
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAAhklEQVRYhe3VwQ3AIAxD0ezH/vO4p0gc2kqFNNiS/wD4HWiJcM4555xqAAaAwXre0wAqRirP+n2oDVsx2I7dGT6GXQEcx36B0GCzNxAdNruD0WKzGUiPzSYoPzZCDCx1JaQ+OqnfmtTDIfU0rwCOoXeG29EVg23oyqEWdD4IrOc555xzrr0LvMqzEF8atfgAAAAASUVORK5CYII=');
 	color: #fff;
+	cursor: pointer;
 }
 
 .overlay__content {
