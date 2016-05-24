@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import Actions from '../actions';
 
@@ -16,18 +15,17 @@ const plural = (n) => {
   }
 };
 
-const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
+const DeckItem = ({ deck, study, routeAddCard, route, removeDeck }) => {
 
-  const handleStudy = () => onStudy(deck.name);
+  const handleStudy = () => study(deck.name);
   const handleAddCard = (e) =>{
     e.preventDefault();
-    onAddCard(deck.name);
+    routeAddCard(deck.name);
   }
-  const handleRemove = () => onRemove(deck.name);
+  const handleRemove = () => removeDeck(deck.name);
   const handleBrowse = (e) => {
     e.preventDefault();
-    console.log('cards', deck.cards);
-    onBrowse(deck.cards);
+    route('/BROWSE');
   };
 
   return (
@@ -57,18 +55,23 @@ const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
   );
 };
 
-
 const DeckGrid = (props) => {
   if (props.decks.length === 0) {
     return null;
   }
+
+  const handleAddDeck = (e) => {
+    e.preventDefault();
+    props.routeAddDeck();
+  };
+
   return (
     <ul className="deck-list">
       {props.decks.map((deck, i) => { 
         return <DeckItem key={i} deck={deck} {...props} />
       })}
       <li className="deck deck--empty">
-        <a href="" className="btn-link" onClick={props.onAddDeck}>
+        <a href="" className="btn-link" onClick={handleAddDeck}>
           <span>
             Добавить колоду
           </span>
@@ -78,22 +81,4 @@ const DeckGrid = (props) => {
   );
 };
 
-export default connect(
-  state => {
-    return {
-      decks: state.decks
-    }
-  },
-  dispatch => {
-    return {
-      onStudy: (deckName) => dispatch(Actions.study(deckName)),
-      onBrowse: (cards) => dispatch(Actions.route('/BROWSE'), cards),
-      onAddCard: (deckName) => dispatch(Actions.routeAddCard(deckName)),
-      onRemove: (deckName) => dispatch(Actions.removeDeck(deckName)),
-      onAddDeck: (e) => {
-        e.preventDefault();
-        dispatch(Actions.route('/ADD_DECK'));
-      }
-    }
-  }
-)(DeckGrid);
+export default DeckGrid;

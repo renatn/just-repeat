@@ -67,7 +67,7 @@ class Main extends Component {
                 </button>
               </div>
             </div>
-            <DeckGrid />
+            <DeckGrid {...this.props} />
           </div>
         </main>
         <div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>

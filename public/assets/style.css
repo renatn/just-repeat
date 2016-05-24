@@ -2,7 +2,12 @@ body {
 	color: #fff;
 	font-family: 'Roboto', 'Helvetica', 'Tahoma', sans-serif;
 	font-size: 16px;
+	font-weight: 400;
 	background-color: #364f6b;
+}
+
+h1 {
+	font-weight: 700;
 }
 
 .hidden {

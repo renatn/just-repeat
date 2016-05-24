@@ -6,12 +6,14 @@ import CardItem from './CardItem';
 export default class BrowseCards extends Component {
 
   render() {
-    const { cards } = this.props;
+    const { router, decks } = this.props;
+
+    const deck = decks.find(deck => deck.name === router.deck);
 
     return (
       <ul>
         {
-          cards.map((card, i) => 
+          deck.cards.map((card, i) => 
             <CardItem {...card} key={i} onRemove={this.props.onRemoveCard} />)
         }
       </ul>
