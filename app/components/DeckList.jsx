@@ -37,7 +37,7 @@ const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
 					</span>
 				</div>
 			</div>
-			<div className="clearfix deck__actions">
+			<div className="deck__actions">
 				<button className="btn btn--alt" onClick={handleStudy}>
 					Учить
 				</button>

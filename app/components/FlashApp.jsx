@@ -53,7 +53,7 @@ class FlashApp extends Component {
 				</header>
 				<main className="main">
 					<div className="main__content">
-						<div className={classnames({ hidden: decks.length > 0 })}>
+						<div className={classnames({ hidden: decks.length > 0, 'container': true })}>
 							<p className="app_header__description">
 								Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
 							</p>

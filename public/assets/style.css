@@ -101,6 +101,7 @@ body {
 
 .deck-list {
 	margin: 0 1em 1em 0;
+	padding: 0 0 0 2em;
 	
 	display: -webkit-flex; /* Safari */
 	display: flex;
@@ -115,15 +116,15 @@ body {
 .deck {
 	margin-bottom: 1em;
 	margin-right: 1em;
-	min-width: 26rem;
-	max-width: 26rem;
-	min-height: 15rem;
+	min-width: 26em;
+	max-width: 26em;
+	min-height: 15em;
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 	background-color: #e45a84;
 	list-style-type: none;
 
-	-webkit-flex: 1 0 26rem;
-	flex: 1 0 26rem;
+	-webkit-flex: 1 0 26em;
+	flex: 1 0 26em;
 
 	display: -webkit-flex; /* Safari */
 	display: flex;	
@@ -139,7 +140,6 @@ body {
 	flex: 1;	
 }
 
-
 .deck__action-link {
 	color: rgba(0,0,0,0.3);
 	text-transform: uppercase;
@@ -154,7 +154,6 @@ body {
 }
 
 .deck__actions {
-	margin-top: 3rem;
 	padding: 1rem;
 	background-color: #d45178;
 	position: relative;
@@ -162,9 +161,8 @@ body {
 
 .deck__count {
 	display: inline-block;
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	color: #f8a6be; /*rgba(0, 0, 0, 0.3); */
-	margin-right: 0.7em;
 }
 
 .deck__name {
