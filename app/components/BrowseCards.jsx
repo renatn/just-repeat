@@ -11,12 +11,17 @@ export default class BrowseCards extends Component {
     const deck = decks.find(deck => deck.name === router.deck);
 
     return (
-      <ul>
-        {
-          deck.cards.map((card, i) => 
-            <CardItem {...card} key={i} onRemove={this.props.onRemoveCard} />)
-        }
-      </ul>
+      <div className="form">
+        <div className="form__title">
+          <h1>{router.deck}</h1>
+        </div>
+        <ul>
+          {
+            deck.cards.map((card, i) => 
+              <CardItem {...card} key={i} onRemove={this.props.onRemoveCard} />)
+          }
+        </ul>
+      </div>
     );
   }
 }

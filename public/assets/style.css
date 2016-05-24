@@ -104,8 +104,8 @@ h1 {
 	text-align: center;
 }
 
-.deck-list {
-	margin: 0 1em 1em 0;
+.deck-grid {
+	margin: 0;
 	padding: 0 0 0 2em;
 	
 	display: -webkit-flex; /* Safari */
@@ -121,15 +121,15 @@ h1 {
 .deck {
 	margin-bottom: 1em;
 	margin-right: 1em;
-	min-width: 26em;
-	max-width: 26em;
+	min-width: 25em;
+	max-width: 25em;
 	min-height: 15em;
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 	background-color: #e45a84;
 	list-style-type: none;
 
-	-webkit-flex: 1 0 26em;
-	flex: 1 0 26em;
+	-webkit-flex: 1 0 25m;
+	flex: 1 0 25em;
 
 	display: -webkit-flex; /* Safari */
 	display: flex;	
@@ -138,8 +138,9 @@ h1 {
 	flex-direction: column;
 }
 
-.deck_top {
+.deck__top {
 	padding: 1rem;
+	position: relative;
 
 	-webkit-flex: 1 0 auto;
 	flex: 1;	
@@ -162,6 +163,33 @@ h1 {
 	padding: 1rem;
 	background-color: #d45178;
 	position: relative;
+}
+
+.deck__actions.deck__actions--ext .main-actions {
+	display: none;
+}
+
+.deck__actions.deck__actions--ext .ext-actions {
+	float: none;
+}
+
+.deck__actions.deck__actions--ext .ext-actions__content {
+	display: inline-block;
+}
+
+.deck .btn.btn--more {
+	padding: 2px 0 3px 15px;
+	font-size: 2em;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.deck__actions .ext-actions {
+	float: right;
+}
+
+.ext-actions__content {
+	display: none;
 }
 
 .deck__count {

@@ -74,6 +74,7 @@ export const decks = (state = [], action) => {
       return [...state, {
         name: action.deck,
         cards: cards(undefined, {}),
+        isMenuVisible: false
       }];
     case 'REMOVE_DECK':
       return state.filter(deck => deck.name !== action.deck);
@@ -84,6 +85,17 @@ export const decks = (state = [], action) => {
           return {
             ...deck,
             cards: cards(deck.cards, action),
+          };
+        }
+        return deck;
+      });
+    case 'TOGGLE_DECK_MENU':
+      console.log(action);
+      return state.map(deck => {
+        if (deck.name === action.deckName) {
+          return {
+            ...deck,
+            isMenuVisible: !deck.isMenuVisible
           };
         }
         return deck;

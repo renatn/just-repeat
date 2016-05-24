@@ -64,6 +64,14 @@ const addCard = (deck, front, back) => dispatch => {
   dispatch(routeRoot());
 };
 
+const browse = (deckName) => dispatch => {
+    dispatch({ 
+      type: 'ROUTE', 
+      route: '/BROWSE', 
+      deck: deckName 
+    });
+};
+
 const answer = (front) => (
   { 
     type: 'SHOW_ANSWER', 
@@ -122,6 +130,13 @@ const closeUndo = () => {
 	};
 };
 
+const toggleDeckMenu = (deckName) => {
+  return {
+    type: 'TOGGLE_DECK_MENU',
+    deckName
+  }
+}
+
 export default {
 	addCard,
 	load,
@@ -133,6 +148,8 @@ export default {
 	study,
 	undo,
 	closeUndo,
+  browse,
+  toggleDeckMenu,
   route,
   routeRoot,
   routeAddCard,

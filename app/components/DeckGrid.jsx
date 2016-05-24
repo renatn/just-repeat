@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 import Actions from '../actions';
 
@@ -15,7 +16,7 @@ const plural = (n) => {
   }
 };
 
-const DeckItem = ({ deck, study, routeAddCard, route, removeDeck }) => {
+const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMenu }) => {
 
   const handleStudy = () => study(deck.name);
   const handleAddCard = (e) =>{
@@ -25,12 +26,16 @@ const DeckItem = ({ deck, study, routeAddCard, route, removeDeck }) => {
   const handleRemove = () => removeDeck(deck.name);
   const handleBrowse = (e) => {
     e.preventDefault();
-    route('/BROWSE');
+    browse(deck.name);
   };
+  const handleMenuToggle = (e) => {
+    e.preventDefault();
+    toggleDeckMenu(deck.name);
+  }
 
   return (
     <li className="deck">
-      <div className="deck_top">
+      <div className="deck__top">
         <div className="deck__name">
           {deck.name}
         </div>
@@ -40,16 +45,24 @@ const DeckItem = ({ deck, study, routeAddCard, route, removeDeck }) => {
           </a>
         </div>
       </div>
-      <div className="deck__actions">
-        <button className="btn btn--alt" onClick={handleStudy}>
-          Учить
-        </button>
-        <button className="btn btn--alt" onClick={handleAddCard}>
-          Пополнить
-        </button>
-        <button className="btn btn--alt" onClick={handleRemove}>
-          Удалить
-        </button>
+      <div className={classnames({ 'deck__actions': true, 'deck__actions--ext': deck.isMenuVisible })}>
+        <div className="ext-actions">
+          <button className="btn btn--more" onClick={handleMenuToggle}>
+            &#8942;
+          </button>
+          <div className="ext-actions__content">
+            <button className="btn btn--alt" onClick={handleRemove}>Удалить</button>
+            <button className="btn btn--alt">Переименовать</button>
+          </div>
+        </div>
+        <div className="main-actions">
+          <button className="btn btn--alt" onClick={handleStudy}>
+            Учить
+          </button>
+          <button className="btn btn--alt" onClick={handleAddCard}>
+            Пополнить
+          </button>
+        </div>
       </div>
     </li>
   );
@@ -66,7 +79,7 @@ const DeckGrid = (props) => {
   };
 
   return (
-    <ul className="deck-list">
+    <ul className="deck-grid">
       {props.decks.map((deck, i) => { 
         return <DeckItem key={i} deck={deck} {...props} />
       })}

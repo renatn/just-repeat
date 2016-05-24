@@ -16,9 +16,11 @@ class AddCard extends Component {
 
   handleAdd(e) {
     e.preventDefault();
-    this.props.addCard(this.props.router.deck, this.inputFront.value, this.inputBack.value)
-    this.inputFront.value = '';
-    this.inputBack.value = '';
+    if (this.inputFront.value && this.inputBack.value) {
+      this.props.addCard(this.props.router.deck, this.inputFront.value, this.inputBack.value)
+      this.inputFront.value = '';
+      this.inputBack.value = '';      
+    }
   }
 
   handleCancel(e) {
