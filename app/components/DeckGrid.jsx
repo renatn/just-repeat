@@ -53,7 +53,7 @@ const DeckItem = ({ deck, onStudy, onAddCard, onBrowse, onRemove }) => {
 };
 
 
-const DeckList = (props) => {
+const DeckGrid = (props) => {
 	if (props.decks.length === 0) {
 		return null;
 	}
@@ -62,7 +62,7 @@ const DeckList = (props) => {
 			{props.decks.map((deck, i) => {	
 				return <DeckItem key={i} deck={deck} {...props} />
 			})}
-			<li className="deck deck--empty">
+			<li clas sName="deck deck--empty">
 				<a href="" className="btn-link" onClick={props.onAddDeck}>
 					<span>
 						Добавить колоду
@@ -91,4 +91,4 @@ export default connect(
 			}
 		}
 	}
-)(DeckList);
+)(DeckGrid);

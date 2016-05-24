@@ -7,7 +7,7 @@ import Player from './Player';
 import AddCard from './AddCard';
 import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
-import DeckList from './DeckList';
+import DeckGrid from './DeckGrid';
 
 const renderScene = (router) => {
 	switch (router.route) {
@@ -67,7 +67,7 @@ class FlashApp extends Component {
 								</button>
 							</div>
 						</div>
-						<DeckList />
+						<DeckGrid />
 					</div>
 				</main>
 				<div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>
