@@ -18,11 +18,22 @@ const save = (decks) => dispatch => {
   });
 };
 
-const study = (deckName) => (dispatch, getState) => {
-    const deck = getState().decks.find((deck) => deck.name === deckName);
-    dispatch(startStudy(deck.cards));
-    dispatch(route('/STUDY'));
-  };
+const study = (deckName) => {
+	return (dispatch, getState) => {	
+		const deck = getState().decks.find((deck) => deck.name === deckName);	
+		dispatch(startStudy(deck.cards));
+		dispatch({type: 'ROUTE', route: '/STUDY', deck: deckName});
+	};
+};
+
+const undo = () => {
+	return (dispatch) => {
+		const prev = localStorage.getItem('react-flashcards-v1.bak');
+		localStorage.setItem('react-flashcards-v1', prev);
+
+		dispatch(load());
+		dispatch(closeUndo());
+	};
 };
 
 const startStudy = (cards) => {
@@ -58,12 +69,13 @@ const answer = (front) => (
   }
 );
 
-const cardLevel = (front, level) => (
-  { 
-    type: 'DIFFICULTY_LEVEL', 
-    front, 
-    level 
-  }
+const cardLevel = (deck, front, level) => (
+	{ 
+		type: 'DIFFICULTY_LEVEL', 
+		deck,
+		front, 
+		level 
+	}
 );
 
 const route = (route) => (
@@ -88,16 +100,23 @@ const removeDeck = (deckName) => {
   };
 };
 
+const closeUndo = () => {
+	return {
+		type: 'HIDE_UNDO'
+	};
+};
 
 export default {
-  addCard,
-  load,
-  save,
-  answer,
-  cardLevel,
-  route,
-  routeAddCard,
-  addDeck,
-  removeDeck,
-  study
+	addCard,
+	load,
+	save,
+	answer,
+	cardLevel,
+	route,
+	routeAddCard,
+	addDeck,
+	removeDeck,
+	study,
+	undo,
+	closeUndo
 };
