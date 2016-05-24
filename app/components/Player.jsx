@@ -44,7 +44,8 @@ class Player extends Component {
         </div>
       );
     }
-
+  
+    const card = player[0];
 		return (
 			<div>
 				<header className="overlay__title">
@@ -74,7 +75,7 @@ export default connect(
     player: state.player,
     deckName: state.router.deck
   }),
-  dispatch ({
+  dispatch => ({
     onResult: (deckName, front, level) => dispatch(Actions.cardLevel(deckName, front, level)),
     onAnswer: (front) => dispatch(Actions.answer(front)),
     onStop: () => dispatch(Actions.route('/'))
