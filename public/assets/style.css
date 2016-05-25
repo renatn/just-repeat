@@ -113,9 +113,12 @@ h1 {
 }
 
 .deck-grid {
-	margin: 0;
-	padding: 0 0 0 1em;
+	margin: 0 auto;
+	padding: 0 8px;
 	
+	width: 100%;
+	box-sizing: border-box;
+
 	display: -webkit-flex; /* Safari */
 	display: flex;
 
@@ -168,17 +171,16 @@ h1 {
 }
 
 .deck__actions {
-	padding: 1rem;
+	padding: 8px;
 	background-color: #d45178;
 	position: relative;
 	overflow: hidden;
 }
 
 .deck__actions.deck__actions--ext .main-actions {
-	top: 1em;
 	position: absolute;
 
-	z-index: 100;
+	z-index: 1;
 	background-color: inherit;
 
 	-webkit-transform: translateX(-100%);

@@ -24,46 +24,46 @@ const cards = (state = [], action) => {
 };
 
 export const player = (state = [], action) => {
-	switch (action.type) {
-		case 'START_STUDY':
-			return action.cards
-				.sort((a, b) => a.level - b.level)
-				.map((card) => ({...card, isAnswered: false}));
-		case 'SHOW_ANSWER':
-			return state.map((card) => {
-				if (card.front === action.front) {
-					return {
-						...card,
-						isAnswered: true
-					}
-				}
-				return card;
-			});
-		case 'DIFFICULTY_LEVEL':
-			return state.slice(1)
-		default: 
-			return state;			
-	}
+  switch (action.type) {
+    case 'START_STUDY':
+      return action.cards
+        .sort((a, b) => a.level - b.level)
+        .map((card) => ({ ...card, isAnswered: false }));
+    case 'SHOW_ANSWER':
+      return state.map((card) => {
+        if (card.front === action.front) {
+          return {
+            ...card,
+            isAnswered: true,
+          };
+        }
+        return card;
+      });
+    case 'DIFFICULTY_LEVEL':
+      return state.slice(1);
+    default:
+      return state;
+  }
 };
 
-export const router = (state = {route: '/'}, action) => {
-	switch (action.type) {
-		case 'ROUTE':
-			return action;
-		default:
-			return state;
-	}
+export const router = (state = { route: '/' }, action) => {
+  switch (action.type) {
+    case 'ROUTE':
+      return action;
+    default:
+      return state;
+  }
 };
 
 export const spa = (state = { showUndo: false }, action) => {
-	switch (action.type) {
-		case 'SHOW_UNDO':
-			return {...state, showUndo: true }
-		case 'HIDE_UNDO':
-			return {...state, showUndo: false }
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case 'SHOW_UNDO':
+      return { ...state, showUndo: true };
+    case 'HIDE_UNDO':
+      return { ...state, showUndo: false };
+    default:
+      return state;
+  }
 };
 
 export const decks = (state = [], action) => {
@@ -74,7 +74,7 @@ export const decks = (state = [], action) => {
       return [...state, {
         name: action.deck,
         cards: cards(undefined, {}),
-        isMenuVisible: false
+        isMenuVisible: false,
       }];
     case 'REMOVE_DECK':
       return state.filter(deck => deck.name !== action.deck);
@@ -90,12 +90,11 @@ export const decks = (state = [], action) => {
         return deck;
       });
     case 'TOGGLE_DECK_MENU':
-      console.log(action);
       return state.map(deck => {
         if (deck.name === action.deckName) {
           return {
             ...deck,
-            isMenuVisible: !deck.isMenuVisible
+            isMenuVisible: !deck.isMenuVisible,
           };
         }
         return deck;
