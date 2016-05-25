@@ -17,7 +17,8 @@ describe('decks reducer', () => {
 		[
 			{
 				name: 'English 101',
-				cards: []
+				cards: [],
+        isMenuVisible: false
 			}
 		]
 	);
