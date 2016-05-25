@@ -84,7 +84,7 @@ h1 {
 }
 
 .btn.btn--alt:hover {
-    background-color: #5fc1fe !important;
+    background-color: rgba(0, 0, 0, 0.2) !important;
 }
 
 .flashcard {

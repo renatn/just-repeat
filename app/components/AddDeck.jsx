@@ -4,7 +4,7 @@ import Actions from '../actions';
 import TextInput from './TextInput';
 
 const AddDeck = (props) => {
-  let input, deckName, deckIndex;
+  let input, deckName = '', deckIndex;
   const isEdit = props.router.route === '/EDIT_DECK';
 
   const handleAdd = (e) => {
