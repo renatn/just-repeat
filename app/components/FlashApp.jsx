@@ -20,9 +20,11 @@ const renderScene = (route, props) => {
       return <BrowseCards {...props} />;
     case '/ADD_DECK':
       return <AddDeck {...props} />;
+    case '/EDIT_DECK':
+      return <AddDeck {...props} />;    
     default:
       return null;
-  }
+  };
 };
 
 class Main extends Component {
@@ -49,7 +51,7 @@ class Main extends Component {
     return (
       <div>
         <header className="app-header">
-          <h1 className="app-header__title">FlashCards!</h1>
+          <h1 className="app-header__title">Just Repeat!</h1>
         </header>
         <main className="main">
           <div className="main__content">

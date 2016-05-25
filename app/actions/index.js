@@ -45,6 +45,15 @@ const addDeck = deckName => dispatch => {
   dispatch(routeRoot());
 };
 
+const updateDeck = (deckIndex, deckName) => dispatch => {
+  dispatch({
+    type: 'UPDATE_DECK', 
+    deckIndex,
+    deckName
+  });
+  dispatch(routeRoot());
+};
+
 const addCard = (deck, front, back) => dispatch => { 
   dispatch({
     type: 'ADD_CARD',
@@ -127,6 +136,14 @@ const toggleDeckMenu = (deckName) => {
     type: 'TOGGLE_DECK_MENU',
     deckName
   }
+};
+
+const routeEditDeck = (deckName) => {
+  return {
+    type: 'ROUTE',
+    route: '/EDIT_DECK',
+    deckName
+  }  
 }
 
 export default {
@@ -136,6 +153,7 @@ export default {
   answer,
   cardLevel,
   addDeck,
+  updateDeck,
   removeDeck,
   study,
   undo,
@@ -145,5 +163,6 @@ export default {
   route,
   routeRoot,
   routeAddCard,
-  routeAddDeck
+  routeAddDeck,
+  routeEditDeck
 };

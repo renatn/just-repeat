@@ -16,7 +16,7 @@ const plural = (n) => {
   }
 };
 
-const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMenu }) => {
+const DeckItem = ({ deck, study, routeAddCard, routeEditDeck, browse, removeDeck, toggleDeckMenu }) => {
 
   const handleStudy = () => study(deck.name);
   const handleAddCard = (e) =>{
@@ -31,11 +31,18 @@ const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMen
   const handleMenuToggle = (e) => {
     e.preventDefault();
     toggleDeckMenu(deck.name);
-  }
+  };
+  const handleEditDeck = (e) => {
+    e.preventDefault();
+    routeEditDeck(deck.name);
+  };
 
   return (
     <li className="deck">
       <div className="deck__top">
+        <a href="" title="Редактировать" className="deck__edit-btn" onClick={handleEditDeck}>
+          &#9881;
+        </a>
         <div className="deck__name">
           {deck.name}
         </div>
@@ -61,8 +68,9 @@ const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMen
             &#8942;
           </button>
           <div className="ext-actions__content">
-            <button className="btn btn--alt" onClick={handleRemove}>Удалить</button>
-            <button className="btn btn--alt">Переименовать</button>
+            <button className="btn btn--alt" onClick={handleRemove}>
+              Удалить
+            </button>
           </div>
         </div>
 
