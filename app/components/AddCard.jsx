@@ -30,19 +30,21 @@ class AddCard extends Component {
 
   render() {
     return (
-      <form className="form" onSubmit={this.handleAdd}>
-        <div className="form__title">
+      <div>
+        <header className="overlay__title">
           <h1>{this.props.router.deck} : Новая карточка</h1>
-        </div>
-        <div className="form__fields">
-          <TextInput caption="Вопрос" onRef={(c) => this.inputFront = c} />
-          <TextInput caption="Ответ" onRef={(c) => this.inputBack = c} />
-          <button type="submit" className="btn btn--alt">
-            Добавить
-          </button>
-          <a href="" className="link" onClick={this.handleCancel}>Отменить</a>
-        </div>
-      </form>    
+        </header>
+        <form className="form" onSubmit={this.handleAdd}>
+          <div className="form__fields">
+            <TextInput caption="Вопрос" onRef={(c) => this.inputFront = c} />
+            <TextInput caption="Ответ" onRef={(c) => this.inputBack = c} />
+            <button type="submit" className="btn btn--alt">
+              Добавить
+            </button>
+            <a href="" className="link" onClick={this.handleCancel}>Отменить</a>
+          </div>
+        </form>
+      </div>
     );
   }
 }

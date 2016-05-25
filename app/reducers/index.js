@@ -25,7 +25,7 @@ const cards = (state = [], action) => {
 
 export const player = (state = [], action) => {
   switch (action.type) {
-    case 'START_STUDY':
+    case 'START_STUDY':    
       return action.cards
         .sort((a, b) => a.level - b.level)
         .map((card) => ({ ...card, isAnswered: false }));

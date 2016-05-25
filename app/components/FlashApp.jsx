@@ -33,17 +33,17 @@ class Main extends Component {
     this.handleCloseUndo = this.handleCloseUndo.bind(this);
   }
 
+  componentDidMount() {
+    this.props.load();
+  }
+
   handleCloseUndo(e) {
     e.preventDefault();
     this.props.closeUndo();
   }
 
-  componentDidMount() {
-    this.props.load();
-  }
-
   render() {
-    const { decks, router, spa } = this.props;        
+    const { decks, router, spa } = this.props;
     const isOverlayOpen = router.route !== '/';
 
     return (
@@ -53,14 +53,16 @@ class Main extends Component {
         </header>
         <main className="main">
           <div className="main__content">
-            <div className={classnames({ hidden: decks.length > 0, 'container': true })}>
+            <div className={classnames({ hidden: decks.length > 0, container: true })}>
               <p className="app_header__description">
-                Интервальные повторения — техника удержания в памяти, заключающаяся в повторении запомненного учебного материала по определённым, постоянно возрастающим интервалам
+                Интервальные повторения — техника удержания в памяти,
+                заключающаяся в повторении запомненного учебного
+                материала по определённым, постоянно возрастающим интервалам
               </p>
 
               <div className="call-to-action">
-                <button 
-                  className="btn btn--accent" 
+                <button
+                  className="btn btn--accent"
                   onClick={this.props.routeAddDeck}
                 >
                   Добавить колоду
@@ -71,8 +73,8 @@ class Main extends Component {
           </div>
         </main>
         <div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>
-          <button 
-            className="overlay__button-close" 
+          <button
+            className="overlay__button-close"
             onClick={this.props.routeRoot}
           >
           </button>
@@ -96,13 +98,11 @@ class Main extends Component {
 }
 
 export default connect(
-  state => {
-    return {
-      decks: state.decks,
-      router: state.router,
-      player: state.player,
-      spa: state.spa
-    }
-  },
+  state => ({
+    decks: state.decks,
+    router: state.router,
+    player: state.player,
+    spa: state.spa,
+  }),
   dispatch => bindActionCreators(Actions, dispatch)
 )(Main);

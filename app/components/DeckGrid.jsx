@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import classnames from 'classnames';
-
-import Actions from '../actions';
 
 const plural = (n) => {
   switch (n) {
@@ -17,12 +15,11 @@ const plural = (n) => {
 };
 
 const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMenu }) => {
-
   const handleStudy = () => study(deck.name);
-  const handleAddCard = (e) =>{
+  const handleAddCard = (e) => {
     e.preventDefault();
     routeAddCard(deck.name);
-  }
+  };
   const handleRemove = () => removeDeck(deck.name);
   const handleBrowse = (e) => {
     e.preventDefault();
@@ -31,7 +28,7 @@ const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMen
   const handleMenuToggle = (e) => {
     e.preventDefault();
     toggleDeckMenu(deck.name);
-  }
+  };
 
   return (
     <li className="deck">
@@ -45,7 +42,11 @@ const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMen
           </a>
         </div>
       </div>
-      <div className={classnames({ 'deck__actions': true, 'deck__actions--ext': deck.isMenuVisible })}>
+      <div 
+        className={classnames({
+          deck__actions: true,
+          'deck__actions--ext': deck.isMenuVisible })}
+      >
 
         <div className="main-actions">
           <button className="btn btn--alt" onClick={handleStudy}>
@@ -62,7 +63,7 @@ const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMen
           </button>
           <div className="ext-actions__content">
             <button className="btn btn--alt" onClick={handleRemove}>Удалить</button>
-            <button className="btn btn--alt">Переименовать</button>
+            <button className="btn btn--alt">Переимен.</button>
           </div>
         </div>
 
@@ -83,9 +84,9 @@ const DeckGrid = (props) => {
 
   return (
     <ul className="deck-grid">
-      {props.decks.map((deck, i) => { 
-        return <DeckItem key={i} deck={deck} {...props} />
-      })}
+      {props.decks.map((deck, i) =>
+        <DeckItem key={i} deck={deck} {...props} />
+      )}
       <li className="deck deck--empty">
         <a href="" className="btn-link" onClick={handleAddDeck}>
           <span>

@@ -11,10 +11,10 @@ export default class BrowseCards extends Component {
     const deck = decks.find(deck => deck.name === router.deck);
 
     return (
-      <div className="form">
-        <div className="form__title">
+      <div>
+        <header className="overlay__title">
           <h1>{router.deck}</h1>
-        </div>
+        </header>
         <ul>
           {
             deck.cards.map((card, i) => 

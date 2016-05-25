@@ -19,11 +19,11 @@ class Player extends Component {
 
   handleDifficult(level) {
     const card = this.props.player[0];
-    this.props.cardLevel(this.props.deckName, card.front, level);
+    this.props.cardLevel(this.props.router.deck, card.front, level);
   }
 
   render() {
-    const { deckName, player } = this.props;
+    const { router, player } = this.props;
 
     if (player.length === 0) {
       return (
@@ -38,7 +38,7 @@ class Player extends Component {
     return (
       <div>
         <header className="overlay__title">
-          <h1>{deckName}</h1>
+          <h1>{router.deck} : Осталось {player.length}</h1>
         </header>
         <div className="flashcard">
           <p className="flashcard__front">
