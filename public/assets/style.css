@@ -6,6 +6,14 @@ body {
 	background-color: #364f6b;
 }
 
+
+@media only screen and (max-width: 375px)  { 
+	body {
+    	font-size: 14px;
+    }
+}
+
+
 h1 {
 	font-weight: 700;
 }
@@ -106,7 +114,7 @@ h1 {
 
 .deck-grid {
 	margin: 0;
-	padding: 0 0 0 2em;
+	padding: 0 0 0 1em;
 	
 	display: -webkit-flex; /* Safari */
 	display: flex;
@@ -121,15 +129,15 @@ h1 {
 .deck {
 	margin-bottom: 1em;
 	margin-right: 1em;
-	min-width: 25em;
-	max-width: 25em;
+	min-width: 26em;
+	max-width: 26em;
 	min-height: 15em;
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 	background-color: #e45a84;
 	list-style-type: none;
 
-	-webkit-flex: 1 0 25m;
-	flex: 1 0 25em;
+	-webkit-flex: 1 0 26em;
+	flex: 1 0 26em;
 
 	display: -webkit-flex; /* Safari */
 	display: flex;	
@@ -163,10 +171,19 @@ h1 {
 	padding: 1rem;
 	background-color: #d45178;
 	position: relative;
+	overflow: hidden;
 }
 
 .deck__actions.deck__actions--ext .main-actions {
-	display: none;
+	top: 1em;
+	position: absolute;
+
+	z-index: 100;
+	background-color: inherit;
+
+	-webkit-transform: translateX(-100%);
+	transform: translateX(-100%);
+
 }
 
 .deck__actions.deck__actions--ext .ext-actions {
@@ -184,8 +201,17 @@ h1 {
 	vertical-align: middle;
 }
 
-.deck__actions .ext-actions {
+.ext-actions {
 	float: right;
+	display: inline-block;
+}
+
+.main-actions {
+	position: relative;
+	display: inline-block;
+
+	-webkit-transition: -webkit-transform 0.25s ease-in;
+	transition: transform 0.25s ease-in;
 }
 
 .ext-actions__content {
@@ -276,11 +302,13 @@ h1 {
 	color: #fff;
 	background: #2CD892; /* #fc5185; */ /* #eb586f; */
 	visibility: hidden;
+	overflow: auto;
+
 	-webkit-transform: translateY(-100%);
 	transform: translateY(-100%);
+	
 	-webkit-transition: -webkit-transform 0.25s ease-in, visibility 0s 0.25s;
 	transition: transform 0.25s ease-in, visibility 0s 0.25s;	
-	overflow: auto;
 }
 
 .overlay__button-close {

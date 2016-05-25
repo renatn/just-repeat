@@ -46,6 +46,16 @@ const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMen
         </div>
       </div>
       <div className={classnames({ 'deck__actions': true, 'deck__actions--ext': deck.isMenuVisible })}>
+
+        <div className="main-actions">
+          <button className="btn btn--alt" onClick={handleStudy}>
+            Учить
+          </button>
+          <button className="btn btn--alt" onClick={handleAddCard}>
+            Пополнить
+          </button>
+        </div>
+
         <div className="ext-actions">
           <button className="btn btn--more" onClick={handleMenuToggle}>
             &#8942;
@@ -55,14 +65,7 @@ const DeckItem = ({ deck, study, routeAddCard, browse, removeDeck, toggleDeckMen
             <button className="btn btn--alt">Переименовать</button>
           </div>
         </div>
-        <div className="main-actions">
-          <button className="btn btn--alt" onClick={handleStudy}>
-            Учить
-          </button>
-          <button className="btn btn--alt" onClick={handleAddCard}>
-            Пополнить
-          </button>
-        </div>
+
       </div>
     </li>
   );
