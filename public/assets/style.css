@@ -311,6 +311,7 @@ h1 {
 	background: #2CD892; /* #fc5185; */ /* #eb586f; */
 	visibility: hidden;
 	overflow: auto;
+	z-index: 101;
 
 	-webkit-transform: translateY(-100%);
 	transform: translateY(-100%);
