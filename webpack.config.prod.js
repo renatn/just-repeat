@@ -10,7 +10,7 @@ module.exports = {
 
 	output: {
 		path: path.join(__dirname, 'public/assets'),
-		filename: 'bundle.js',
+		filename: '[name].js',
 		publicPath: '/assets'
 	},
 
@@ -29,7 +29,7 @@ module.exports = {
 	},
 
 	plugins: [
-      new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+      new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
   		new webpack.NoErrorsPlugin(),
   		new webpack.DefinePlugin({
     		'process.env.NODE_ENV': JSON.stringify('production'),
