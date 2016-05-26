@@ -17,9 +17,9 @@ class AddCard extends Component {
   handleAdd(e) {
     e.preventDefault();
     if (this.inputFront.value && this.inputBack.value) {
-      this.props.addCard(this.props.router.deck, this.inputFront.value, this.inputBack.value)
+      this.props.addCard(this.props.router.deck, this.inputFront.value, this.inputBack.value);
       this.inputFront.value = '';
-      this.inputBack.value = '';      
+      this.inputBack.value = '';
     }
   }
 
@@ -49,4 +49,4 @@ class AddCard extends Component {
   }
 }
 
-export default AddCard; 
+export default AddCard;

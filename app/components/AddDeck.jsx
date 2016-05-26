@@ -41,7 +41,7 @@ const AddDeck = (props) => {
   return (
     <div>
       <header className="overlay__title">
-        <h1>{isEdit ? deckName : 'Новая колода'}</h1>      
+        <h1>{isEdit ? deckName : 'Новая колода'}</h1>
       </header>
 
       <form className="form" onSubmit={handleAdd}>
@@ -55,6 +55,6 @@ const AddDeck = (props) => {
       </form>
     </div>
   );
-}
+};
 
 export default AddDeck;

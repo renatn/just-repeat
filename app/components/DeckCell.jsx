@@ -20,7 +20,7 @@ export default class DeckCell extends Component {
     super(props);
 
     this.state = {
-      isMenuVisible: false
+      isMenuVisible: false,
     };
   }
 
@@ -105,5 +105,5 @@ DeckCell.propTypes = {
   routeEditDeck: React.PropTypes.func,
   browse: React.PropTypes.func,
   removeDeck: React.PropTypes.func,
-  toggleDeckMenu: React.PropTypes.func
+  toggleDeckMenu: React.PropTypes.func,
 };

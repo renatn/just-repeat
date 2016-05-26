@@ -23,7 +23,7 @@ const save = (decks) => dispatch => {
   });
 };
 
-const study = deckName => (dispatch, getState) => {  
+const study = deckName => (dispatch, getState) => {
   const found = getState().decks.find((deck) => deck.name === deckName);
   dispatch(startStudy(found.cards));
   dispatch({ type: 'ROUTE', route: '/STUDY', deck: deckName });
@@ -39,22 +39,22 @@ const undo = () => dispatch => {
 
 const addDeck = deckName => dispatch => {
   dispatch({
-    type: 'ADD_DECK', 
-    deck: deckName 
+    type: 'ADD_DECK',
+    deck: deckName,
   });
   dispatch(routeRoot());
 };
 
 const updateDeck = (deckIndex, deckName) => dispatch => {
   dispatch({
-    type: 'UPDATE_DECK', 
+    type: 'UPDATE_DECK',
     deckIndex,
-    deckName
+    deckName,
   });
   dispatch(routeRoot());
 };
 
-const addCard = (deck, front, back) => dispatch => { 
+const addCard = (deck, front, back) => dispatch => {
   dispatch({
     type: 'ADD_CARD',
     deck,
@@ -66,85 +66,85 @@ const addCard = (deck, front, back) => dispatch => {
 };
 
 const browse = (deckName) => dispatch => {
-    dispatch({ 
-      type: 'ROUTE', 
-      route: '/BROWSE', 
-      deck: deckName,
-    });
+  dispatch({
+    type: 'ROUTE',
+    route: '/BROWSE',
+    deck: deckName,
+  });
 };
 
 const answer = (front) => (
-  { 
-    type: 'SHOW_ANSWER', 
-    front
+  {
+    type: 'SHOW_ANSWER',
+    front,
   }
 );
 
 const cardLevel = (deck, front, level) => (
-  { 
-    type: 'DIFFICULTY_LEVEL', 
+  {
+    type: 'DIFFICULTY_LEVEL',
     deck,
-    front, 
-    level 
+    front,
+    level,
   }
 );
 
 const route = (route) => (
   {
     type: 'ROUTE',
-    route
+    route,
   }
 );
 
 const routeRoot = () => {
   return {
     type: 'ROUTE',
-    route: '/'
+    route: '/',
   };
 };
 
 const routeAddCard = (deck) => {
   return {
-    type: 'ROUTE', 
+    type: 'ROUTE',
     route: '/ADD_CARD',
-    deck
+    deck,
   };
 };
 
 const routeAddDeck = () => {
   return {
-    type: 'ROUTE', 
-    route: '/ADD_DECK'
+    type: 'ROUTE',
+    route: '/ADD_DECK',
   };
 };
 
 const removeDeck = (deckName) => {
   return {
-    type: 'REMOVE_DECK', 
-    deck: deckName
+    type: 'REMOVE_DECK',
+    deck: deckName,
   };
 };
 
 const closeUndo = () => {
   return {
-    type: 'HIDE_UNDO'
+    type: 'HIDE_UNDO',
   };
 };
 
 const toggleDeckMenu = (deckName) => {
   return {
     type: 'TOGGLE_DECK_MENU',
-    deckName
-  }
+    deckName,
+  };
 };
 
 const routeEditDeck = (deckName) => {
   return {
     type: 'ROUTE',
     route: '/EDIT_DECK',
-    deckName
-  }  
-}
+    deckName,
+  };
+};
 
 export default {
   addCard,
@@ -164,5 +164,5 @@ export default {
   routeRoot,
   routeAddCard,
   routeAddDeck,
-  routeEditDeck
+  routeEditDeck,
 };

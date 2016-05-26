@@ -4,7 +4,7 @@
   "description": "Flashcards",
   "main": "app/index.js",
   "scripts": {
-    "lint": "eslint app --ext=jsx --ext=js",
+    "lint": "eslint app --ext=jsx --ext=js --fix",
     "compile": "webpack --config webpack.config.prod.js",
     "start": "webpack-dev-server --host 0.0.0.0 --inline --port 8080 --progress --color --content-base public/",
     "tarball": "zip -9 -r -q react-flashcards.zip public/",

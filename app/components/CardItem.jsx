@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CardItem = ({front, back, onRemove }) => {
+const CardItem = ({ front, back, onRemove }) => {
   const handleRemove = () => onRemove(front);
   return (
     <li>

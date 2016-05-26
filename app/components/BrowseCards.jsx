@@ -17,7 +17,7 @@ export default class BrowseCards extends Component {
         </header>
         <ul>
           {
-            deck.cards.map((card, i) => 
+            deck.cards.map((card, i) =>
               <CardItem {...card} key={i} onRemove={this.props.onRemoveCard} />)
           }
         </ul>

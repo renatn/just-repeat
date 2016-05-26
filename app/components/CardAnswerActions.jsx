@@ -13,7 +13,7 @@ const CardAnswerActions = ({ isAnswered, onAnswer, onDifficult }) => {
       </button>
       <span className={isAnswered ? '' : 'hidden'}>
         <button className="btn btn--base" onClick={handleEasy}>Легко</button>
-        <button className="btn btn--base" onClick={handleNorm}>Нормально</button>       
+        <button className="btn btn--base" onClick={handleNorm}>Нормально</button>
         <button className="btn btn--base" onClick={handleHard}>Тяжело</button>
       </span>
     </div>

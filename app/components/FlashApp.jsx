@@ -21,10 +21,10 @@ const renderScene = (route, props) => {
     case '/ADD_DECK':
       return <AddDeck {...props} />;
     case '/EDIT_DECK':
-      return <AddDeck {...props} />;    
+      return <AddDeck {...props} />;
     default:
       return null;
-  };
+  }
 };
 
 class Main extends Component {
