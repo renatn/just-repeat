@@ -308,7 +308,7 @@ h1 {
 	top: 0;
 	left: 0;
 	color: #fff;
-	background: #2CD892; /* #fc5185; */ /* #eb586f; */
+	background-color: #2CD892; /* #fc5185; */ /* #eb586f; */
 	visibility: hidden;
 	overflow: auto;
 	z-index: 101;
@@ -390,6 +390,7 @@ h1 {
 	font-size: 1.5em;
 	padding: 0;
 	color: #f2ede3;
+	margin-bottom: 8px;
 }
 
 .form {
@@ -442,4 +443,22 @@ h1 {
 	transform: translateY(0%);
 	-webkit-transition: -webkit-transform 0.25s ease-out;
 	transition: transform 0.25s ease-out;		
+}
+
+.color-picker {
+	margin: 0 0 16px 0;
+	padding: 0;
+}
+
+.color-picker__item {
+	display: inline-block;	
+	margin: 0 8px 0 0;
+	padding: 8px;
+	width: 3em;
+	height: 3em;
+	cursor: pointer;
+}
+
+.color-picker__item--selected {
+	border: 2px solid #fff;
 }

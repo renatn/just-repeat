@@ -77,9 +77,9 @@ export const decks = (state = [], action) => {
       }];
     case 'UPDATE_DECK':
       return [
-        ...state.slice(0, action.deckIndex),
-        { ...state[action.deckIndex], name: action.deckName },
-        ...state.slice(action.deckIndex + 1),
+        ...state.slice(0, action.index),
+        { ...state[action.index], name: action.name, color: action.color },
+        ...state.slice(action.index + 1),
       ];
     case 'REMOVE_DECK':
       return state.filter(deck => deck.name !== action.deck);

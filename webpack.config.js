@@ -2,11 +2,14 @@ var path = require('path');
 
 module.exports = {
 
-	entry: './app/index.js',
+	entry: {
+		app: './app/index.js',
+    vendor: ['react', 'react-dom', 'redux', 'classnames', 'react-redux']
+	},
 
 	output: {
 		path: path.join(__dirname, 'public/assets'),
-		filename: 'bundle.js',
+		filename: '[name].js',
 		publicPath: '/assets'
 	},
 

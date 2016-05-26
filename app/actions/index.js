@@ -45,11 +45,12 @@ const addDeck = deckName => dispatch => {
   dispatch(routeRoot());
 };
 
-const updateDeck = (deckIndex, deckName) => dispatch => {
+const updateDeck = (index, name, color) => dispatch => {
   dispatch({
     type: 'UPDATE_DECK',
-    deckIndex,
-    deckName,
+    index,
+    name,
+    color,
   });
   dispatch(routeRoot());
 };

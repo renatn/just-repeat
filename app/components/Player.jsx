@@ -59,4 +59,12 @@ class Player extends Component {
   }
 }
 
+Player.propTypes = {
+  player: React.PropTypes.object,
+  router: React.PropTypes.object,
+  answer: React.PropTypes.func,
+  cardLevel: React.PropTypes.func,
+  routeRoot: React.PropTypes.func,
+};
+
 export default Player;

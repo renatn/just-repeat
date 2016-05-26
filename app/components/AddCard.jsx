@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import Actions from '../actions';
 import TextInput from './TextInput';
 
 class AddCard extends Component {
@@ -48,5 +47,11 @@ class AddCard extends Component {
     );
   }
 }
+
+AddCard.propTypes = {
+  routeRoot: React.PropTypes.func,
+  addCard: React.PropTypes.func,
+  router: React.PropTypes.object,
+};
 
 export default AddCard;

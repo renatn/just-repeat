@@ -2,7 +2,11 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-	entry: './app/index.js',
+
+  entry: {
+    app: './app/index.js',
+    vendor: ['react', 'react-dom', 'redux', 'classnames', 'react-redux']
+  },
 
 	output: {
 		path: path.join(__dirname, 'public/assets'),
@@ -25,6 +29,7 @@ module.exports = {
 	},
 
 	plugins: [
+      new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
   		new webpack.NoErrorsPlugin(),
   		new webpack.DefinePlugin({
     		'process.env.NODE_ENV': JSON.stringify('production'),
