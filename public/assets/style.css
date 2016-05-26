@@ -6,13 +6,11 @@ body {
 	background-color: #364f6b;
 }
 
-
 @media only screen and (max-width: 375px)  { 
 	body {
     	font-size: 14px;
     }
 }
-
 
 h1 {
 	font-weight: 700;
@@ -89,7 +87,7 @@ h1 {
 }
 
 .btn.btn--alt:hover {
-    background-color: #5fc1fe !important;
+    background-color: rgba(0, 0, 0, 0.2) !important;
 }
 
 .flashcard {
@@ -136,8 +134,7 @@ h1 {
 }
 
 .deck {
-	margin-bottom: 1em;
-	margin-right: 1em;
+	margin: 0 8px 16px 8px;
 	min-width: 26em;
 	max-width: 26em;
 	min-height: 15em;
@@ -163,17 +160,19 @@ h1 {
 	flex: 1;	
 }
 
-.deck__action-link {
-	color: rgba(0,0,0,0.3);
+.deck__edit-btn {
+	color: rgba(0, 0, 0, 0.3);
+	font-size: 2.2em;
 	text-transform: uppercase;
-	border: none;
-	display: inline-block;
-	vertical-align: middle;
+	text-decoration: none;
 	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: 0.3em;
 }
 
-.deck__action-link:hover {
-	color: #222;
+.deck__edit-btn:hover {
+	color: #fff;
 }
 
 .deck__actions {
@@ -189,8 +188,8 @@ h1 {
 	z-index: 1;
 	background-color: inherit;
 
-	-webkit-transform: translateX(-100%);
-	transform: translateX(-100%);
+	-webkit-transform: translateX(-110%);
+	transform: translateX(-110%);
 
 }
 
@@ -248,6 +247,7 @@ h1 {
 	box-shadow: none;
 	position: relative;
 	max-width: 18rem;
+	box-sizing: border-box;
 }
 
 .deck--empty a {

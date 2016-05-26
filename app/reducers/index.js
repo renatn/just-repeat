@@ -76,6 +76,12 @@ export const decks = (state = [], action) => {
         cards: cards(undefined, {}),
         isMenuVisible: false,
       }];
+    case 'UPDATE_DECK':
+      return [
+        ...state.slice(0, action.deckIndex),
+        {...state[action.deckIndex], name: action.deckName},
+        ...state.slice(action.deckIndex + 1)
+      ];
     case 'REMOVE_DECK':
       return state.filter(deck => deck.name !== action.deck);
     case 'ADD_CARD':
