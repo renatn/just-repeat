@@ -25,7 +25,7 @@ const cards = (state = [], action) => {
 
 export const player = (state = [], action) => {
   switch (action.type) {
-    case 'START_STUDY':    
+    case 'START_STUDY':
       return action.cards
         .sort((a, b) => a.level - b.level)
         .map((card) => ({ ...card, isAnswered: false }));
@@ -73,13 +73,12 @@ export const decks = (state = [], action) => {
     case 'ADD_DECK':
       return [...state, {
         name: action.deck,
-        cards: cards(undefined, {}),
-        isMenuVisible: false,
+        cards: cards(undefined, {})
       }];
     case 'UPDATE_DECK':
       return [
         ...state.slice(0, action.deckIndex),
-        {...state[action.deckIndex], name: action.deckName},
+        { ...state[action.deckIndex], name: action.deckName },
         ...state.slice(action.deckIndex + 1)
       ];
     case 'REMOVE_DECK':
@@ -91,16 +90,6 @@ export const decks = (state = [], action) => {
           return {
             ...deck,
             cards: cards(deck.cards, action),
-          };
-        }
-        return deck;
-      });
-    case 'TOGGLE_DECK_MENU':
-      return state.map(deck => {
-        if (deck.name === action.deckName) {
-          return {
-            ...deck,
-            isMenuVisible: !deck.isMenuVisible,
           };
         }
         return deck;
