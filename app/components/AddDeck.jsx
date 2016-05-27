@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import TextInput from './TextInput';
 
-const DECK_COLORS = ['#e45a84', '#4aa0d5', '#f2e676'];
+const DECK_COLORS = ['#e45a84', '#5a74e4', '#f2e676', '#4fd75f'];
 
 const ColorPickerItem = (props) => {
   const CLASS_NAME = 'color-picker__item ' + (props.selected ? 'color-picker__item--selected' : '');
@@ -32,9 +32,9 @@ class AddDeck extends Component {
 
     const isEdit = this.props.router.route === '/EDIT_DECK';
     if (isEdit) {
-      this.props.updateDeck(this.deckIndex, this.input.value, this.props.selectedColor);
+      this.props.updateDeck(this.deckIndex, this.input.value, this.state.selectedColor);
     } else {
-      this.props.addDeck(this.input.value);
+      this.props.addDeck(this.input.value, this.state.selectedColor);
     }
   };
 

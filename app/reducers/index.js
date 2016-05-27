@@ -72,7 +72,8 @@ export const decks = (state = [], action) => {
       return action.decks;
     case 'ADD_DECK':
       return [...state, {
-        name: action.deck,
+        name: action.name,
+        color: action.color,
         cards: cards(undefined, {}),
       }];
     case 'UPDATE_DECK':

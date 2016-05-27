@@ -37,10 +37,11 @@ const undo = () => dispatch => {
   dispatch(closeUndo());
 };
 
-const addDeck = deckName => dispatch => {
+const addDeck = (name, color) => dispatch => {
   dispatch({
     type: 'ADD_DECK',
-    deck: deckName,
+    name: name,
+    color: color
   });
   dispatch(routeRoot());
 };

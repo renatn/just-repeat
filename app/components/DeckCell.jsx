@@ -52,7 +52,7 @@ export default class DeckCell extends Component {
     const { deck } = this.props;
 
     return (
-      <li className="deck">
+      <li className="deck" style={{ backgroundColor: deck.color || '#e45a84' }}>
         <div className="deck__top">
           <a href="" title="Редактировать" className="deck__edit-btn" onClick={this.handleEditDeck}>
             &#9881;
