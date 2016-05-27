@@ -54,7 +54,7 @@ export const player = (state = [], action) => {
             isAnswered: true,
           };
         }
-        return card;
+        return c;
       });
     case 'DIFFICULTY_LEVEL':
       return state.slice(1);
