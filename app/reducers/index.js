@@ -16,7 +16,7 @@ const card = (state = {}, action) => {
       const lastTime = Date.now();
       const nextTime = lastTime + (1000 * 60 * 60 + action.level);
       return {
-        ...card,
+        ...state,
         level: action.level,
         lastTime,
         nextTime,

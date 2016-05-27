@@ -11,17 +11,40 @@ describe('decks reducer', () => {
   	expect(
   		decks(undefined, {
         type: 'ADD_DECK', 
-        deck: 'English 101' 
+        name: 'English 101' 
       })
-	).to.deep.equal(
-		[
-			{
-				name: 'English 101',
-				cards: [],
-        isMenuVisible: false
-			}
-		]
-	);
+    ).to.deep.equal(
+  		[
+  			{
+  				name: 'English 101',
+  				cards: [],
+          color: undefined,
+          lastTime: 0
+  			}
+  		]
+  	);
+  });
+
+  it('should handle ADD_CARD', () => {
+    expect(
+      decks([{name: 'English 101', cards: []}], {
+        type: 'ADD_CARD',
+        front: 'awesome',
+        back: '1',
+        deck: 'English 101',
+      })
+    ).to.deep.equal(
+      [{
+        name: 'English 101', 
+        cards: [{
+          front: 'awesome',
+          back: '1',
+          level: 0,
+          nextTime: 0,
+          lastTime: 0,          
+        }]
+      }]
+    );
   });
 });
 
