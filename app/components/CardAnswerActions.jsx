@@ -1,7 +1,6 @@
 import React from 'react';
 
 const CardAnswerActions = ({ isAnswered, onAnswer, onDifficult }) => {
-
   const handleEasy = () => onDifficult(3);
   const handleNorm = () => onDifficult(2);
   const handleHard = () => onDifficult(1);
@@ -18,6 +17,12 @@ const CardAnswerActions = ({ isAnswered, onAnswer, onDifficult }) => {
       </span>
     </div>
   );
+};
+
+CardAnswerActions.propTypes = {
+  isAnswered: React.PropTypes.bool,
+  onAnswer: React.PropTypes.func,
+  onDifficult: React.PropTypes.func,
 };
 
 export default CardAnswerActions;

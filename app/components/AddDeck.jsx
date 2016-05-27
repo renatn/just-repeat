@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import TextInput from './TextInput';
 
-const DECK_COLORS = ['#e45a84', '#5a74e4', '#f2e676', '#4fd75f'];
+const DECK_COLORS = ['#e45a84', '#5a74e4', '#EAD82C', '#4fd75f', '#D49045'];
 
 const ColorPickerItem = (props) => {
   const CLASS_NAME = 'color-picker__item ' + (props.selected ? 'color-picker__item--selected' : '');

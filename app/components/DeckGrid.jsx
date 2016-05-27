@@ -28,4 +28,9 @@ const DeckGrid = (props) => {
   );
 };
 
+DeckGrid.propTypes = {
+  routeAddDeck: React.PropTypes.func,
+  decks: React.PropTypes.array,
+};
+
 export default DeckGrid;

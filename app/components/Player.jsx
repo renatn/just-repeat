@@ -10,6 +10,7 @@ class Player extends Component {
 
     this.handleAnswer = this.handleAnswer.bind(this);
     this.handleDifficult = this.handleDifficult.bind(this);
+    this.handleDone = this.handleDone.bind(this);
   }
 
   handleAnswer() {
@@ -22,6 +23,10 @@ class Player extends Component {
     this.props.cardLevel(this.props.router.deck, card.front, level);
   }
 
+  handleDone() {
+    this.props.studyDone(this.props.router.deck);
+  }
+
   render() {
     const { router, player } = this.props;
 
@@ -29,7 +34,9 @@ class Player extends Component {
       return (
         <div className="study-done">
           <h1>Интервальное повторение завершено!</h1>
-          <button className="btn btn--base" onClick={this.props.routeRoot}>OK</button>
+          <button className="btn btn--base" onClick={this.handleDone}>
+            OK
+          </button>
         </div>
       );
     }
@@ -60,11 +67,11 @@ class Player extends Component {
 }
 
 Player.propTypes = {
-  player: React.PropTypes.object,
+  player: React.PropTypes.array,
   router: React.PropTypes.object,
   answer: React.PropTypes.func,
   cardLevel: React.PropTypes.func,
-  routeRoot: React.PropTypes.func,
+  studyDone: React.PropTypes.func,
 };
 
 export default Player;

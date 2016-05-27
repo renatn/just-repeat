@@ -41,7 +41,7 @@ const addDeck = (name, color) => dispatch => {
   dispatch({
     type: 'ADD_DECK',
     name: name,
-    color: color
+    color: color,
   });
   dispatch(routeRoot());
 };
@@ -73,6 +73,14 @@ const browse = (deckName) => dispatch => {
     route: '/BROWSE',
     deck: deckName,
   });
+};
+
+const studyDone = deckName => dispatch => {
+  dispatch({
+    type: 'STUDY_DONE',
+    deckName,
+  });
+  dispatch(routeRoot());
 };
 
 const answer = (front) => (
@@ -133,13 +141,6 @@ const closeUndo = () => {
   };
 };
 
-const toggleDeckMenu = (deckName) => {
-  return {
-    type: 'TOGGLE_DECK_MENU',
-    deckName,
-  };
-};
-
 const routeEditDeck = (deckName) => {
   return {
     type: 'ROUTE',
@@ -161,7 +162,7 @@ export default {
   undo,
   closeUndo,
   browse,
-  toggleDeckMenu,
+  studyDone,
   route,
   routeRoot,
   routeAddCard,

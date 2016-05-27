@@ -9,4 +9,10 @@ const CardItem = ({ front, back, onRemove }) => {
   );
 };
 
+CardItem.propTypes = {
+  front: React.PropTypes.string,
+  back: React.PropTypes.string,
+  onRemove: React.PropTypes.func,
+};
+
 export default CardItem;

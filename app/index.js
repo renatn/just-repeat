@@ -30,8 +30,16 @@ const app = combineReducers({
   spa,
 });
 
+const DIRTY_ACTIONS = [
+  'ADD_DECK',
+  'UPDATE_DECK',
+  'ADD_CARD',
+  'REMOVE_DECK',
+  'DIFFICULTY_LEVEL',
+  'STUDY_DONE',
+];
+
 const autoSaver = store => next => action => {
-  const DIRTY_ACTIONS = ['ADD_DECK', 'UPDATE_DECK', 'ADD_CARD', 'REMOVE_DECK', 'DIFFICULTY_LEVEL'];
   let state = next(action);
   if (DIRTY_ACTIONS.indexOf(action.type) !== -1) {
     const { decks } = store.getState();
