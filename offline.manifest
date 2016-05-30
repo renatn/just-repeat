@@ -1,0 +1,11 @@
+CACHE MANIFEST
+
+# Revision: 1
+
+assets/app.js
+assets/vendor.js
+assets/style.css
+index.html
+
+NETWORK:
+*
