@@ -1,10 +1,15 @@
 import React from 'react';
 
-const CardItem = ({ front, back, onRemove }) => {
+const formatDate = (ms) => {
+	const d = new Date(ms);
+	return d.toString();
+}
+
+const CardItem = ({ front, back, nextTime, onRemove }) => {
   const handleRemove = () => onRemove(front);
   return (
     <li>
-      {front} - {back} &nbsp; <button onClick={handleRemove}>&times;</button>
+      {front} - {back}, nextTime: {formatDate(nextTime)} &nbsp; <button onClick={handleRemove}>&times;</button>
     </li>
   );
 };

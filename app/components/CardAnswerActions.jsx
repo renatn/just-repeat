@@ -1,9 +1,9 @@
 import React from 'react';
 
 const CardAnswerActions = ({ isAnswered, onAnswer, onDifficult }) => {
-  const handleEasy = () => onDifficult(3);
-  const handleNorm = () => onDifficult(2);
-  const handleHard = () => onDifficult(1);
+  const handleEasy = () => onDifficult(0);
+  const handleNorm = () => onDifficult(1);
+  const handleHard = () => onDifficult(2);
 
   return (
     <div className="flashcard-actions">

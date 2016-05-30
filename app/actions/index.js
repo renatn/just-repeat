@@ -168,4 +168,5 @@ export default {
   routeAddCard,
   routeAddDeck,
   routeEditDeck,
+  startStudy
 };

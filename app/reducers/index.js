@@ -1,3 +1,16 @@
+const levelToMinutes = level => {
+  switch (level) {
+    case 0: // easy
+      return 1000 * 60 * 60 * 24;
+    case 1: // normal
+      return 1000 * 60 * 60;
+    case 2: // hard
+      return 1000 * 60;
+    default:
+      return 1000;
+  }
+};
+
 const card = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_CARD':
@@ -12,9 +25,8 @@ const card = (state = {}, action) => {
       if (state.front !== action.front) {
         return state;
       }
-
       const lastTime = Date.now();
-      const nextTime = lastTime + (1000 * 60 * 60 + action.level);
+      const nextTime = lastTime + levelToMinutes(action.level);
       return {
         ...state,
         level: action.level,
@@ -43,7 +55,10 @@ const cards = (state = [], action) => {
 export const player = (state = [], action) => {
   switch (action.type) {
     case 'START_STUDY':
+
+      const now = Date.now();
       return action.cards
+        .filter(c => c.nextTime <= now)
         .sort((a, b) => a.level - b.level)
         .map((c) => ({ ...c, isAnswered: false }));
     case 'SHOW_ANSWER':
