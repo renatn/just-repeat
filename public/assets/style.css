@@ -463,3 +463,14 @@ h1 {
 .color-picker__item--selected {
 	border: 2px solid #fff;
 }
+
+.disclaimer {
+	background-color: rgba(0, 0, 0, 0.1);
+	padding: 2rem;
+	padding-right: 90px;
+
+	text-align: center;
+}
+
+.disclaimer p {
+}

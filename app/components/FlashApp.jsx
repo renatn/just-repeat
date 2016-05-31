@@ -33,10 +33,15 @@ class Main extends Component {
     super(props);
 
     this.handleCloseUndo = this.handleCloseUndo.bind(this);
+    this.handleCloseDisclaimer = this.handleCloseDisclaimer.bind(this);
   }
 
   componentDidMount() {
     this.props.load();
+  }
+
+  handleCloseDisclaimer(e) {
+    e.preventDefault();    
   }
 
   handleCloseUndo(e) {
@@ -47,30 +52,43 @@ class Main extends Component {
   render() {
     const { decks, router, spa } = this.props;
     const isOverlayOpen = router.route !== '/';
+    const isDisclaimerOpen = localStorage.getItem('just-repeat--hide-disclaimer') !== 'true';
+    console.log(isDisclaimerOpen);
 
     return (
       <div>
+        <div className={classnames({disclaimer: true, 'disclaimer--open': isDisclaimerOpen})}>
+          <p className="container">
+            Приложение работает полностью оффлайн, все ввёденные данные
+            сохраняются только в вашем браузере.<br />
+            <a href="" className="link" onClick={this.handleCloseDisclaimer}>Спасибо, понятно!</a>
+          </p>
+        </div>
         <header className="app-header">
           <h1 className="app-header__title">Just Repeat!</h1>
-        </header>
-        <main className="main">
-          <div className="main__content">
-            <div className={classnames({ hidden: decks.length > 0, container: true })}>
-              <p className="app_header__description">
+
+          <div className={classnames({ hidden: decks.length > 0, container: true})}>
+            <div className="app_header__description">
+              <p>
                 Интервальные повторения — техника удержания в памяти,
                 заключающаяся в повторении запомненного учебного
                 материала по определённым, постоянно возрастающим интервалам
               </p>
-
-              <div className="call-to-action">
-                <button
-                  className="btn btn--accent"
-                  onClick={this.props.routeAddDeck}
-                >
-                  Добавить колоду
-                </button>
-              </div>
             </div>
+
+            <div className="call-to-action">
+              <button
+                className="btn btn--accent"
+                onClick={this.props.routeAddDeck}
+              >
+                Добавить колоду
+              </button>
+            </div>
+          </div>
+
+        </header>
+        <main className="main">
+          <div className="main__content">
             <DeckGrid {...this.props} />
           </div>
         </main>
