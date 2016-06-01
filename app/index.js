@@ -10,19 +10,6 @@ import { Provider } from 'react-redux';
 import { router, decks, player, spa } from './reducers';
 import FlashApp from './components/FlashApp';
 
-/*
-TODO:
-  - Экран обучения - цвет карточки
-  - Обучения - даты
-  - Undo - удаления
-  - Экран просмотра/редактирования карточек
-  - переименование
-  - Валидация полей формы
-  - Сменить цвет кнопка при Hover (DONE)
-  - Дизайн колод - без круглых углов (MD?) (DONE)
-  - Экран overlay - max-width 960px (DONE)
-*/
-
 const app = combineReducers({
   router,
   decks,
@@ -55,9 +42,14 @@ const autoSaver = store => next => action => {
   return state;
 };
 
+const middleware = [thunk, autoSaver];
+if (process.env.NODE_ENV !== 'production') {
+  middleware.push(logger());
+}
+
 const store = createStore(
   app,
-  applyMiddleware(thunk, autoSaver, logger())
+  applyMiddleware(...middleware)
 );
 
 ReactDOM.render(

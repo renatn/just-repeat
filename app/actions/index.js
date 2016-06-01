@@ -3,6 +3,15 @@ const startStudy = cards => ({
   cards,
 });
 
+const hideDisclaimer = () => dispatch => {
+  localStorage.setItem('hide-disclaimer', 'true');
+  dispatch(
+    {
+      type: 'HIDE_DISCLAIMER'
+    }
+  );
+};
+
 const load = () => dispatch => {
   const data = localStorage.getItem('react-flashcards-v1');
   if (!data) {
@@ -168,5 +177,6 @@ export default {
   routeAddCard,
   routeAddDeck,
   routeEditDeck,
-  startStudy
+  startStudy,
+  hideDisclaimer
 };

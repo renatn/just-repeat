@@ -87,12 +87,16 @@ export const router = (state = { route: '/' }, action) => {
   }
 };
 
-export const spa = (state = { showUndo: false }, action) => {
+
+const isDisclaimerOpen = localStorage.getItem('hide-disclaimer') !== 'true';
+export const spa = (state = { showUndo: false, isDisclaimerOpen }, action) => {
   switch (action.type) {
     case 'SHOW_UNDO':
       return { ...state, showUndo: true };
     case 'HIDE_UNDO':
       return { ...state, showUndo: false };
+    case 'HIDE_DISCLAIMER':
+      return { ...state, isDisclaimerOpen: false }
     default:
       return state;
   }

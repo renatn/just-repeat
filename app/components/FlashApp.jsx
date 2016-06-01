@@ -42,6 +42,7 @@ class Main extends Component {
 
   handleCloseDisclaimer(e) {
     e.preventDefault();    
+    this.props.hideDisclaimer();
   }
 
   handleCloseUndo(e) {
@@ -52,11 +53,10 @@ class Main extends Component {
   render() {
     const { decks, router, spa } = this.props;
     const isOverlayOpen = router.route !== '/';
-    const isDisclaimerOpen = localStorage.getItem('just-repeat--hide-disclaimer') !== 'true';
-    console.log(isDisclaimerOpen);
+    const isDisclaimerOpen = spa.isDisclaimerOpen;
 
     return (
-      <div>
+      <div className="root">
         <div className={classnames({disclaimer: true, 'disclaimer--open': isDisclaimerOpen})}>
           <p className="container">
             Приложение работает полностью оффлайн, все ввёденные данные

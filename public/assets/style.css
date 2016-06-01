@@ -1,9 +1,20 @@
+html {
+	height: 100%;
+}
+
 body {
 	color: #fff;
 	font-family: 'Roboto', 'Helvetica', 'Tahoma', sans-serif;
 	font-size: 16px;
 	font-weight: 400;
 	background-color: #364f6b;
+  	min-height: 100%;
+
+	display: -webkit-flex; /* Safari */
+  	display: flex;
+  	
+	-webkit-flex-direction: column;
+  	flex-direction: column;
 }
 
 @media only screen and (max-width: 375px)  { 
@@ -14,6 +25,14 @@ body {
 
 h1 {
 	font-weight: 700;
+}
+
+footer {
+	margin-top: 1rem;
+	text-align: center;
+	padding: 2rem;
+	background-color: #333;
+	color: #fff;
 }
 
 .hidden {
@@ -33,6 +52,13 @@ h1 {
 .container {
 	max-width: 960px;
 	margin: 0 auto;
+}
+
+#app {
+	width: 100%;
+	
+	-webkit-flex: 1 0 auto;
+	flex: 1;
 }
 
 .link {
@@ -442,8 +468,6 @@ h1 {
 	visibility: visible;
 	-webkit-transform: translateY(0%);
 	transform: translateY(0%);
-	-webkit-transition: -webkit-transform 0.25s ease-out;
-	transition: transform 0.25s ease-out;		
 }
 
 .color-picker {
@@ -466,11 +490,31 @@ h1 {
 
 .disclaimer {
 	background-color: rgba(0, 0, 0, 0.1);
-	padding: 2rem;
-	padding-right: 90px;
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1;
 
-	text-align: center;
+	-webkit-transform: translateY(-100%);
+	transform: translateY(-100%);
+	-webkit-transition: -webkit-transform 0.25s ease-in;
+	transition: transform 0.25s ease-in;
+}
+
+.disclaimer--open {
+	-webkit-transform: translateY(0%);
+	transform: translateY(0%);
+	position: relative;
 }
 
 .disclaimer p {
+	padding: 2rem;
+	text-align: center;
+}
+
+.footer-link {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 1rem;
 }
