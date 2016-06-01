@@ -13,15 +13,23 @@ const hideDisclaimer = () => dispatch => {
 };
 
 const load = () => dispatch => {
+  const isDisclaimerOpen = localStorage.getItem('hide-disclaimer') !== 'true';
+  if (isDisclaimerOpen) {
+    dispatch({
+      type: 'SHOW_DISCLAIMER'
+    });
+  }
+
   const data = localStorage.getItem('react-flashcards-v1');
   if (!data) {
     return dispatch({ type: 'NOPE ' });
   }
   const decks = JSON.parse(data);
-  return dispatch({
+  dispatch({
     type: 'SET_DECKS',
     decks,
   });
+
 };
 
 const save = (decks) => dispatch => {

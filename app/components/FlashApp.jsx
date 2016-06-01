@@ -59,7 +59,7 @@ class Main extends Component {
       <div className="root">
         <div className={classnames({disclaimer: true, 'disclaimer--open': isDisclaimerOpen})}>
           <p className="container">
-            Приложение работает полностью оффлайн, все ввёденные данные
+            Приложение работает полностью оффлайн, все введённые данные
             сохраняются только в вашем браузере.<br />
             <a href="" className="link" onClick={this.handleCloseDisclaimer}>Спасибо, понятно!</a>
           </p>

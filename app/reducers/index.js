@@ -1,9 +1,9 @@
-const levelToMinutes = level => {
+const levelToMinutes = (k, level) => {
   switch (level) {
     case 0: // easy
-      return 1000 * 60 * 60 * 24;
+      return 1000 * 60 * 60 * 24 * k;
     case 1: // normal
-      return 1000 * 60 * 60;
+      return 1000 * 60 * 60 * k;
     case 2: // hard
       return 1000 * 60;
     default:
@@ -25,8 +25,10 @@ const card = (state = {}, action) => {
       if (state.front !== action.front) {
         return state;
       }
+
       const lastTime = Date.now();
-      const nextTime = lastTime + levelToMinutes(action.level);
+      const prevTime = state.lastTime || lastTime;
+      const nextTime = lastTime + levelToMinutes((lastTime / prevTime), action.level);
       return {
         ...state,
         level: action.level,
@@ -55,7 +57,6 @@ const cards = (state = [], action) => {
 export const player = (state = [], action) => {
   switch (action.type) {
     case 'START_STUDY':
-
       const now = Date.now();
       return action.cards
         .filter(c => c.nextTime <= now)
@@ -87,14 +88,14 @@ export const router = (state = { route: '/' }, action) => {
   }
 };
 
-
-const isDisclaimerOpen = localStorage.getItem('hide-disclaimer') !== 'true';
-export const spa = (state = { showUndo: false, isDisclaimerOpen }, action) => {
+export const spa = (state = { showUndo: false, isDisclaimerOpen: false }, action) => {
   switch (action.type) {
     case 'SHOW_UNDO':
       return { ...state, showUndo: true };
     case 'HIDE_UNDO':
       return { ...state, showUndo: false };
+    case 'SHOW_DISCLAIMER':
+      return { ...state, isDisclaimerOpen: true }
     case 'HIDE_DISCLAIMER':
       return { ...state, isDisclaimerOpen: false }
     default:
@@ -132,7 +133,6 @@ const deck = (state = {}, action) => {
       return state;
   }
 };
-
 
 const valN = (n) => (isNaN(n) ? 0 : n);
 const byLastTime = (a, b) => valN(a.lastTime) - valN(b.lastTime);
