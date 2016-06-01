@@ -1,11 +1,13 @@
 CACHE MANIFEST
 
-# Revision: 1
+# Revision: 2
 
 assets/app.js
 assets/vendor.js
 assets/style.css
+assets/github.png
 index.html
+https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css
 
 NETWORK:
 *
