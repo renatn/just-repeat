@@ -22,6 +22,13 @@ class AddDeck extends Component {
       selectedColor: DECK_COLORS[0],
     };
 
+    const isEdit = props.router.route === '/EDIT_DECK';
+    if (isEdit) {
+      const { decks, router } = props;
+      this.deckIndex = decks.findIndex(deck => deck.name === router.deckName);
+      this.deckName = decks[this.deckIndex].name;
+    }
+
   }
 
   handleAdd = (e) => {
@@ -53,14 +60,7 @@ class AddDeck extends Component {
   handleSelectColor = (color) => this.setState({ selectedColor: color });
 
   render() {
-
     const isEdit = this.props.router.route === '/EDIT_DECK';
-    if (isEdit) {
-      const { decks } = this.props;
-      this.deckIndex = decks.findIndex(deck => deck.name === this.props.router.deckName);
-      this.deckName = decks[this.deckIndex].name;
-    }
-
     return (
       <div>
         <header className="overlay__title">

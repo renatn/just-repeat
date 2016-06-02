@@ -8,6 +8,8 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import { router, decks, player, spa } from './reducers';
+import { saveState, loadState } from './utils';
+import { DIRTY_ACTIONS } from './constants';
 import FlashApp from './components/FlashApp';
 
 const app = combineReducers({
@@ -17,24 +19,10 @@ const app = combineReducers({
   spa,
 });
 
-const DIRTY_ACTIONS = [
-  'ADD_DECK',
-  'UPDATE_DECK',
-  'ADD_CARD',
-  'REMOVE_DECK',
-  'DIFFICULTY_LEVEL',
-  'STUDY_DONE',
-];
-
 const autoSaver = store => next => action => {
   let state = next(action);
   if (DIRTY_ACTIONS.indexOf(action.type) !== -1) {
-    const { decks } = store.getState();
-    const prev = localStorage.getItem('react-flashcards-v1');
-    localStorage.setItem('react-flashcards-v1.bak', prev);
-    localStorage.setItem('react-flashcards-v1', JSON.stringify(decks));
-    console.info(`Saved ${decks.length} decks`);
-
+    saveState(store.getState());
     if (['REMOVE_DECK'].indexOf(action.type) !== -1) {
       state = next({ type: 'SHOW_UNDO' });
     }
@@ -47,8 +35,10 @@ if (process.env.NODE_ENV !== 'production') {
   middleware.push(logger());
 }
 
+const persistedState = loadState();
 const store = createStore(
   app,
+  persistedState,
   applyMiddleware(...middleware)
 );
 

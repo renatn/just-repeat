@@ -1,3 +1,5 @@
+import { loadState, restoreState } from '../utils';
+
 const startStudy = cards => ({
   type: 'START_STUDY',
   cards,
@@ -10,26 +12,6 @@ const hideDisclaimer = () => dispatch => {
       type: 'HIDE_DISCLAIMER'
     }
   );
-};
-
-const load = () => dispatch => {
-  const isDisclaimerOpen = localStorage.getItem('hide-disclaimer') !== 'true';
-  if (isDisclaimerOpen) {
-    dispatch({
-      type: 'SHOW_DISCLAIMER'
-    });
-  }
-
-  const data = localStorage.getItem('react-flashcards-v1');
-  if (!data) {
-    return dispatch({ type: 'NOPE ' });
-  }
-  const decks = JSON.parse(data);
-  dispatch({
-    type: 'SET_DECKS',
-    decks,
-  });
-
 };
 
 const save = (decks) => dispatch => {
@@ -47,10 +29,14 @@ const study = deckName => (dispatch, getState) => {
 };
 
 const undo = () => dispatch => {
-  const prev = localStorage.getItem('react-flashcards-v1.bak');
-  localStorage.setItem('react-flashcards-v1', prev);
+  restoreState();
 
-  dispatch(load());
+  const { decks } = loadState();
+  dispatch({
+    type: 'SET_DECKS',
+    decks
+  });
+
   dispatch(closeUndo());
 };
 
@@ -168,7 +154,6 @@ const routeEditDeck = (deckName) => {
 
 export default {
   addCard,
-  load,
   save,
   answer,
   cardLevel,

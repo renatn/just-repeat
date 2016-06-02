@@ -36,10 +36,6 @@ class Main extends Component {
     this.handleCloseDisclaimer = this.handleCloseDisclaimer.bind(this);
   }
 
-  componentDidMount() {
-    this.props.load();
-  }
-
   handleCloseDisclaimer(e) {
     e.preventDefault();    
     this.props.hideDisclaimer();

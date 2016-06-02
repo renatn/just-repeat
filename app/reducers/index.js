@@ -1,3 +1,5 @@
+import { v4 } from 'node-uuid';
+
 const levelToMinutes = (k, level) => {
   switch (level) {
     case 0: // easy
@@ -15,6 +17,7 @@ const card = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_CARD':
       return {
+        id: v4(),
         front: action.front,
         back: action.back,
         level: 0,
@@ -107,6 +110,7 @@ const deck = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_DECK':
       return {
+        id: v4(),
         name: action.name,
         color: action.color,
         cards: cards(undefined, {}),
