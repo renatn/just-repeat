@@ -1,9 +1,9 @@
 import React from 'react';
 
 const formatDate = (ms) => {
-	const d = new Date(ms);
-	return d.toString();
-}
+	                    const d = new Date(ms);
+	                    return d.toString();
+};
 
 const CardItem = ({ front, back, nextTime, onRemove }) => {
   const handleRemove = () => onRemove(front);

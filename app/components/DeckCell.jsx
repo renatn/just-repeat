@@ -35,7 +35,7 @@ export default class DeckCell extends Component {
 
   handleBrowse = (e) => {
     e.preventDefault();
-    this.props.browse(this.props.deck.name);
+    this.props.browse(this.props.deck.id);
   };
 
   handleMenuToggle = (e) => {

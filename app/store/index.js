@@ -2,16 +2,9 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import { router, decks, player, spa } from '../reducers';
+import app from '../reducers';
 import { saveState, loadState } from '../utils';
 import { DIRTY_ACTIONS } from '../constants';
-
-const app = combineReducers({
-  router,
-  decks,
-  player,
-  spa,
-});
 
 const autoSaver = store => next => action => {
   let state = next(action);

@@ -9,7 +9,7 @@ const hideDisclaimer = () => dispatch => {
   localStorage.setItem('hide-disclaimer', 'true');
   dispatch(
     {
-      type: 'HIDE_DISCLAIMER'
+      type: 'HIDE_DISCLAIMER',
     }
   );
 };
@@ -34,7 +34,7 @@ const undo = () => dispatch => {
   const { decks } = loadState();
   dispatch({
     type: 'SET_DECKS',
-    decks
+    decks,
   });
 
   dispatch(closeUndo());
@@ -70,11 +70,11 @@ const addCard = (deck, front, back) => dispatch => {
   dispatch(routeRoot());
 };
 
-const browse = (deckName) => dispatch => {
+const browse = (deckId) => dispatch => {
   dispatch({
     type: 'ROUTE',
     route: '/BROWSE',
-    deck: deckName,
+    deckId: deckId,
   });
 };
 
@@ -171,5 +171,5 @@ export default {
   routeAddDeck,
   routeEditDeck,
   startStudy,
-  hideDisclaimer
+  hideDisclaimer,
 };

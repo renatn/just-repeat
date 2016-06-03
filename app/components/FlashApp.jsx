@@ -37,7 +37,7 @@ class Main extends Component {
   }
 
   handleCloseDisclaimer(e) {
-    e.preventDefault();    
+    e.preventDefault();
     this.props.hideDisclaimer();
   }
 
@@ -53,7 +53,7 @@ class Main extends Component {
 
     return (
       <div className="root">
-        <div className={classnames({disclaimer: true, 'disclaimer--open': isDisclaimerOpen})}>
+        <div className={classnames({ disclaimer: true, 'disclaimer--open': isDisclaimerOpen })}>
           <p className="container">
             Приложение работает полностью оффлайн, все введённые данные
             сохраняются только в вашем браузере.<br />
@@ -63,7 +63,7 @@ class Main extends Component {
         <header className="app-header">
           <h1 className="app-header__title">Just Repeat!</h1>
 
-          <div className={classnames({ hidden: decks.length > 0, container: true})}>
+          <div className={classnames({ hidden: decks.length > 0, container: true })}>
             <div className="app_header__description">
               <p>
                 Интервальные повторения — техника удержания в памяти,

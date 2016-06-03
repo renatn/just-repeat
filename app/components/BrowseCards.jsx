@@ -7,13 +7,12 @@ export default class BrowseCards extends Component {
 
   render() {
     const { router, decks } = this.props;
-
-    const deck = decks.find(deck => deck.name === router.deck);
+    const deck = decks.find(deck => deck.id === router.deckId);
 
     return (
       <div>
         <header className="overlay__title">
-          <h1>{router.deck}</h1>
+          <h1>{deck.name}</h1>
         </header>
         <ul>
           {
