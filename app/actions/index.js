@@ -1,5 +1,14 @@
 import { loadState, restoreState } from '../utils';
 
+const closeUndo = () => ({
+  type: 'HIDE_UNDO',
+});
+
+const routeRoot = () => ({
+  type: 'ROUTE',
+  route: '/',
+});
+
 const startStudy = cards => ({
   type: 'START_STUDY',
   cards,
@@ -14,18 +23,10 @@ const hideDisclaimer = () => dispatch => {
   );
 };
 
-const save = (decks) => dispatch => {
-  localStorage.setItem('react-flashcards-v1', JSON.stringify(decks));
-  dispatch({
-    type: 'SAVE_SUCCESS',
-    message: `Saved ${decks.length} decks`,
-  });
-};
-
-const study = deckName => (dispatch, getState) => {
-  const found = getState().decks.find((deck) => deck.name === deckName);
+const study = deckId => (dispatch, getState) => {
+  const found = getState().decks.find((deck) => deck.id === deckId);
   dispatch(startStudy(found.cards));
-  dispatch({ type: 'ROUTE', route: '/STUDY', deck: deckName });
+  dispatch({ type: 'ROUTE', route: '/STUDY', deckId });
 };
 
 const undo = () => dispatch => {
@@ -43,26 +44,26 @@ const undo = () => dispatch => {
 const addDeck = (name, color) => dispatch => {
   dispatch({
     type: 'ADD_DECK',
-    name: name,
-    color: color,
-  });
-  dispatch(routeRoot());
-};
-
-const updateDeck = (index, name, color) => dispatch => {
-  dispatch({
-    type: 'UPDATE_DECK',
-    index,
     name,
     color,
   });
   dispatch(routeRoot());
 };
 
-const addCard = (deck, front, back) => dispatch => {
+const updateDeck = (deckId, name, color) => dispatch => {
+  dispatch({
+    type: 'UPDATE_DECK',
+    deckId,
+    name,
+    color,
+  });
+  dispatch(routeRoot());
+};
+
+const addCard = (deckId, front, back) => dispatch => {
   dispatch({
     type: 'ADD_CARD',
-    deck,
+    deckId,
     front,
     back,
   });
@@ -74,30 +75,30 @@ const browse = (deckId) => dispatch => {
   dispatch({
     type: 'ROUTE',
     route: '/BROWSE',
-    deckId: deckId,
+    deckId,
   });
 };
 
-const studyDone = deckName => dispatch => {
+const studyDone = deckId => dispatch => {
   dispatch({
     type: 'STUDY_DONE',
-    deckName,
+    deckId,
   });
   dispatch(routeRoot());
 };
 
-const answer = (front) => (
+const answer = (cardId) => (
   {
     type: 'SHOW_ANSWER',
-    front,
+    cardId,
   }
 );
 
-const cardLevel = (deck, front, level) => (
+const cardLevel = (deckId, cardId, level) => (
   {
     type: 'DIFFICULTY_LEVEL',
-    deck,
-    front,
+    deckId,
+    cardId,
     level,
   }
 );
@@ -109,20 +110,11 @@ const route = (route) => (
   }
 );
 
-const routeRoot = () => {
-  return {
-    type: 'ROUTE',
-    route: '/',
-  };
-};
-
-const routeAddCard = (deck) => {
-  return {
-    type: 'ROUTE',
-    route: '/ADD_CARD',
-    deck,
-  };
-};
+const routeAddCard = deckId => ({
+  type: 'ROUTE',
+  route: '/ADD_CARD',
+  deckId,
+});
 
 const routeAddDeck = () => {
   return {
@@ -131,30 +123,32 @@ const routeAddDeck = () => {
   };
 };
 
-const removeDeck = (deckName) => {
+const removeDeck = (deckId) => {
   return {
     type: 'REMOVE_DECK',
-    deck: deckName,
+    deckId,
   };
 };
 
-const closeUndo = () => {
-  return {
-    type: 'HIDE_UNDO',
-  };
-};
-
-const routeEditDeck = (deckName) => {
+const routeEditDeck = (deckId) => {
   return {
     type: 'ROUTE',
     route: '/EDIT_DECK',
-    deckName,
+    deckId,
   };
 };
 
+const removeCard = (deckId, cardId) => (
+  {
+    type: 'REMOVE_CARD',
+    deckId,
+    cardId,
+  }
+);
+
 export default {
   addCard,
-  save,
+  removeCard,
   answer,
   cardLevel,
   addDeck,

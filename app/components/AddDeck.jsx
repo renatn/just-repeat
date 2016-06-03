@@ -4,31 +4,36 @@ import TextInput from './TextInput';
 
 const DECK_COLORS = ['#e45a84', '#5a74e4', '#EAD82C', '#4fd75f', '#D49045'];
 
-const ColorPickerItem = (props) => {
-  const CLASS_NAME = 'color-picker__item ' + (props.selected ? 'color-picker__item--selected' : '');
-  const handleClick = () => props.onClick(props.color);
+const ColorPickerItem = ({ color, selected, onClick }) => {
+  const CLASS_NAME = 'color-picker__item ' + (selected ? 'color-picker__item--selected' : '');
+  const handleClick = () => onClick(color);
   return (
-    <li className={CLASS_NAME} style={{ backgroundColor: props.color }} onClick={handleClick}></li>
+    <li className={CLASS_NAME} style={{ backgroundColor: color }} onClick={handleClick}></li>
   );
 };
 
+ColorPickerItem.propTypes = {
+  color: React.PropTypes.string,
+  selected: React.PropTypes.bool,
+  onClick: React.PropTypes.func,
+};
 
 class AddDeck extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      selectedColor: DECK_COLORS[0],
-    };
-
+    let selectedColor = DECK_COLORS[0];
     const isEdit = props.router.route === '/EDIT_DECK';
     if (isEdit) {
       const { decks, router } = props;
-      this.deckIndex = decks.findIndex(deck => deck.name === router.deckName);
-      this.deckName = decks[this.deckIndex].name;
+      this.deck = decks.find(deck => deck.id === router.deckId);
+      selectedColor = this.deck.color;
     }
 
+    this.state = {
+      selectedColor,
+    };
   }
 
   handleAdd = (e) => {
@@ -39,7 +44,7 @@ class AddDeck extends Component {
 
     const isEdit = this.props.router.route === '/EDIT_DECK';
     if (isEdit) {
-      this.props.updateDeck(this.deckIndex, this.input.value, this.state.selectedColor);
+      this.props.updateDeck(this.deck.id, this.input.value, this.state.selectedColor);
     } else {
       this.props.addDeck(this.input.value, this.state.selectedColor);
     }
@@ -53,7 +58,8 @@ class AddDeck extends Component {
   handleRef = (c) => {
     this.input = c;
     if (c) {
-      this.input.value = (this.deckName || '');
+      const name = this.deck && this.deck.name;
+      this.input.value = name || '';
     }
   };
 
@@ -64,7 +70,7 @@ class AddDeck extends Component {
     return (
       <div>
         <header className="overlay__title">
-          <h1>{isEdit ? this.deckName : 'Новая колода'}</h1>
+          <h1>{isEdit ? this.deck.name : 'Новая колода'}</h1>
         </header>
 
         <form className="form" onSubmit={this.handleAdd}>
@@ -95,6 +101,8 @@ class AddDeck extends Component {
 }
 
 AddDeck.propTypes = {
+  updateDeck: React.PropTypes.func,
+  addDeck: React.PropTypes.func,
   router: React.PropTypes.object,
   routeRoot: React.PropTypes.func,
 };

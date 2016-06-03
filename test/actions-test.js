@@ -15,16 +15,16 @@ describe('actions', () => {
         type: 'ADD_CARD',
         front: 'awesome',
         back: 'классный',
-        deck: 'english',
-      }, 
+        deckId: '#123',
+      },
       {
         type: 'ROUTE',
         route: '/',
-      }    
+      }
     ];
 
     const store = mockStore({ decks: [{name: 'english', cards: []}] });
-    store.dispatch(Actions.addCard('english', 'awesome', 'классный'));
+    store.dispatch(Actions.addCard('#123', 'awesome', 'классный'));
     expect(store.getActions())
       .to.deep.equal(expectedActions);
   });

@@ -11,9 +11,16 @@ const deck = (state = {}, action) => {
         cards: cards(undefined, {}),
         lastTime: 0,
       };
+    case 'UPDATE_DECK':
+      return {
+        ...state,
+        name: action.name,
+        color: action.color,
+      };
     case 'ADD_CARD':
+    case 'REMOVE_CARD':
     case 'DIFFICULTY_LEVEL':
-      if (state.name !== action.deck) {
+      if (state.id !== action.deckId) {
         return state;
       }
       return {
@@ -21,7 +28,7 @@ const deck = (state = {}, action) => {
         cards: cards(state.cards, action),
       };
     case 'STUDY_DONE':
-      if (state.name !== action.deckName) {
+      if (state.id !== action.deckId) {
         return state;
       }
       return {
@@ -43,14 +50,13 @@ const decks = (state = [], action) => {
     case 'ADD_DECK':
       return [...state, deck(undefined, action)];
     case 'UPDATE_DECK':
-      return [
-        ...state.slice(0, action.index),
-        { ...state[action.index], name: action.name, color: action.color },
-        ...state.slice(action.index + 1),
-      ];
+      return state
+              .filter(item => item.id === action.deckId)
+              .map(item => deck(item, action));
     case 'REMOVE_DECK':
-      return state.filter(d => d.name !== action.deck);
+      return state.filter(d => d.id !== action.deckId);
     case 'ADD_CARD':
+    case 'REMOVE_CARD':
     case 'DIFFICULTY_LEVEL':
       return state.map(item => deck(item, action));
     case 'STUDY_DONE':

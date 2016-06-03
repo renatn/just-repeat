@@ -15,16 +15,16 @@ class Player extends Component {
 
   handleAnswer() {
     const card = this.props.player[0];
-    this.props.answer(card.front);
+    this.props.answer(card.id);
   }
 
   handleDifficult(level) {
     const card = this.props.player[0];
-    this.props.cardLevel(this.props.router.deck, card.front, level);
+    this.props.cardLevel(this.props.router.deckId, card.id, level);
   }
 
   handleDone() {
-    this.props.studyDone(this.props.router.deck);
+    this.props.studyDone(this.props.router.deckId);
   }
 
   render() {

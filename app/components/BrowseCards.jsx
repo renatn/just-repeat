@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import CardItem from './CardItem';
 
 export default class BrowseCards extends Component {
 
-  render() {
+  constructor(props) {
+    super(props);
+    this.handleRemoveCard = this.handleRemoveCard.bind(this);
+  }
+
+  getDeck() {
     const { router, decks } = this.props;
-    const deck = decks.find(deck => deck.id === router.deckId);
+    return decks.find(deck => deck.id === router.deckId);
+  }
+
+  handleRemoveCard(cardId) {
+    const deck = this.getDeck();
+    this.props.removeCard(deck.id, cardId);
+  }
+
+  render() {
+    const deck = this.getDeck();
 
     return (
       <div>
@@ -17,10 +30,16 @@ export default class BrowseCards extends Component {
         <ul>
           {
             deck.cards.map((card, i) =>
-              <CardItem {...card} key={i} onRemove={this.props.onRemoveCard} />)
+              <CardItem {...card} key={i} onRemove={this.handleRemoveCard} />)
           }
         </ul>
       </div>
     );
   }
 }
+
+BrowseCards.propTypes = {
+  router: React.PropTypes.object,
+  decks: React.PropTypes.array,
+  removeCard: React.PropTypes.func,
+};

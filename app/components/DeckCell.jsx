@@ -24,14 +24,14 @@ export default class DeckCell extends Component {
     };
   }
 
-  handleStudy = () => this.props.study(this.props.deck.name);
+  handleStudy = () => this.props.study(this.props.deck.id);
 
   handleAddCard = (e) => {
     e.preventDefault();
-    this.props.routeAddCard(this.props.deck.name);
+    this.props.routeAddCard(this.props.deck.id);
   };
 
-  handleRemove = () => this.props.removeDeck(this.props.deck.name);
+  handleRemove = () => this.props.removeDeck(this.props.deck.id);
 
   handleBrowse = (e) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ export default class DeckCell extends Component {
 
   handleEditDeck = (e) => {
     e.preventDefault();
-    this.props.routeEditDeck(this.props.deck.name);
+    this.props.routeEditDeck(this.props.deck.id);
   };
 
   render() {

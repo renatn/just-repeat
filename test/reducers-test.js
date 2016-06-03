@@ -1,7 +1,8 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import Actions from '../app/actions';
-import { decks, router, player } from '../app/reducers';
+import { router, player } from '../app/reducers';
+import decks from '../app/reducers/decks';
 
 describe('decks reducer', () => {
   it('should return initial state', () => {
@@ -9,21 +10,14 @@ describe('decks reducer', () => {
   });
 
   it('should handle ADD_DECK', () => {
-  	expect(
-  		decks(undefined, {
+
+    const actual = decks(undefined, {
         type: 'ADD_DECK',
         name: 'English 101'
-      })
-    ).to.deep.equal(
-  		[
-  			{
-  				name: 'English 101',
-  				cards: [],
-          color: undefined,
-          lastTime: 0
-  			}
-  		]
-  	);
+    });
+
+  	expect(actual.length).to.equal(1);
+    expect(actual[0].name).to.equal('English 101');
   });
 
   it('should handle ADD_CARD', () => {

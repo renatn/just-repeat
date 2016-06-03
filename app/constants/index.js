@@ -5,4 +5,5 @@ export const DIRTY_ACTIONS = [
   'REMOVE_DECK',
   'DIFFICULTY_LEVEL',
   'STUDY_DONE',
+  'REMOVE_CARD',
 ];

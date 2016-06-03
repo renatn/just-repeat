@@ -113,6 +113,17 @@ class Main extends Component {
   }
 }
 
+Main.propTypes = {
+  decks: React.PropTypes.array,
+  router: React.PropTypes.object,
+  spa: React.PropTypes.object,
+  undo: React.PropTypes.func,
+  closeUndo: React.PropTypes.func,
+  hideDisclaimer: React.PropTypes.func,
+  routeRoot: React.PropTypes.func,
+  routeAddDeck: React.PropTypes.func,
+};
+
 export default connect(
   state => ({
     decks: state.decks,

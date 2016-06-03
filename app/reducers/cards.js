@@ -25,7 +25,7 @@ const card = (state = {}, action) => {
         nextTime: 0,
       };
     case 'DIFFICULTY_LEVEL': {
-      if (state.front !== action.front) {
+      if (state.id !== action.cardId) {
         return state;
       }
 
@@ -49,9 +49,9 @@ const cards = (state = [], action) => {
     case 'ADD_CARD':
       return [...state, card(undefined, action)];
     case 'REMOVE_CARD':
-      return state.filter(c => c.front !== action.front);
+      return state.filter(c => c.id !== action.cardId);
     case 'DIFFICULTY_LEVEL':
-      return state.map(item => card(item, action));
+      return state.filter(item => item.id === action.cardId).map(item => card(item, action));
     default:
       return state;
   }

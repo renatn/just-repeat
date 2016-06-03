@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
@@ -10,7 +10,7 @@ const autoSaver = store => next => action => {
   let state = next(action);
   if (DIRTY_ACTIONS.indexOf(action.type) !== -1) {
     saveState(store.getState());
-    if (['REMOVE_DECK'].indexOf(action.type) !== -1) {
+    if (['REMOVE_DECK', 'REMOVE_CARD'].indexOf(action.type) !== -1) {
       state = next({ type: 'SHOW_UNDO' });
     }
   }

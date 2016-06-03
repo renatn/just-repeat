@@ -1,17 +1,18 @@
 import { combineReducers } from 'redux';
 import decks from './decks';
 
-const player = (state = [], action) => {
+export const player = (state = [], action) => {
   switch (action.type) {
-    case 'START_STUDY':
+    case 'START_STUDY': {
       const now = Date.now();
       return action.cards
-        .filter(c => c.nextTime <= now)
-        .sort((a, b) => a.level - b.level)
-        .map((c) => ({ ...c, isAnswered: false }));
+          .filter(c => c.nextTime <= now)
+          .sort((a, b) => a.level - b.level)
+          .map((c) => ({ ...c, isAnswered: false }));
+    }
     case 'SHOW_ANSWER':
       return state.map(c => {
-        if (c.front === action.front) {
+        if (c.id === action.cardId) {
           return {
             ...c,
             isAnswered: true,
@@ -26,7 +27,7 @@ const player = (state = [], action) => {
   }
 };
 
-const router = (state = { route: '/' }, action) => {
+export const router = (state = { route: '/' }, action) => {
   switch (action.type) {
     case 'ROUTE':
       return action;
@@ -42,9 +43,9 @@ const spa = (state = { showUndo: false, isDisclaimerOpen: false }, action) => {
     case 'HIDE_UNDO':
       return { ...state, showUndo: false };
     case 'SHOW_DISCLAIMER':
-      return { ...state, isDisclaimerOpen: true }
+      return { ...state, isDisclaimerOpen: true };
     case 'HIDE_DISCLAIMER':
-      return { ...state, isDisclaimerOpen: false }
+      return { ...state, isDisclaimerOpen: false };
     default:
       return state;
   }
