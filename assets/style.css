@@ -465,6 +465,7 @@ footer {
 }
 
 .undo--open {
+	z-index: 102;
 	visibility: visible;
 	-webkit-transform: translateY(0%);
 	transform: translateY(0%);
