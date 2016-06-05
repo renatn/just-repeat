@@ -47,9 +47,9 @@ class Main extends Component {
   }
 
   render() {
-    const { decks, router, spa } = this.props;
+    const { decks, router, settings } = this.props;
     const isOverlayOpen = router.route !== '/';
-    const isDisclaimerOpen = spa.isDisclaimerOpen;
+    const isDisclaimerOpen = settings.isDisclaimerOpen;
 
     return (
       <div className="root">
@@ -98,7 +98,7 @@ class Main extends Component {
             {renderScene(router.route, this.props)}
           </div>
         </div>
-        <div className={classnames({ undo: true, 'undo--open': spa.showUndo })}>
+        <div className={classnames({ undo: true, 'undo--open': settings.showUndo })}>
           <div className="container">
             <button className="btn btn--base" onClick={this.props.undo}>
               Отменить
@@ -129,7 +129,7 @@ export default connect(
     decks: state.decks,
     router: state.router,
     player: state.player,
-    spa: state.spa,
+    settings: state.settings,
   }),
   dispatch => bindActionCreators(Actions, dispatch)
 )(Main);

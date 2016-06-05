@@ -19,7 +19,7 @@ const autoSaver = store => next => action => {
 
 const configureStore = () => {
   const persistedState = loadState();
-
+  
   const middleware = [thunk, autoSaver];
   if (process.env.NODE_ENV !== 'production') {
     middleware.push(logger());
