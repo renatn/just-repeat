@@ -1,17 +1,21 @@
-import { v4 } from 'node-uuid';
+import { combineReducers } from 'redux';
 import cards from './cards';
 
 const deck = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_DECK':
       return {
-        id: v4(),
+        id: action.id,
         name: action.name,
         color: action.color,
         cards: cards(undefined, {}),
         lastTime: 0,
       };
     case 'UPDATE_DECK':
+      if (state.id !== action.id) {
+        return state;
+      }
+
       return {
         ...state,
         name: action.name,
@@ -20,7 +24,7 @@ const deck = (state = {}, action) => {
     case 'ADD_CARD':
     case 'REMOVE_CARD':
     case 'DIFFICULTY_LEVEL':
-      if (state.id !== action.deckId) {
+      if (state.id !== action.id) {
         return state;
       }
       return {
@@ -43,27 +47,53 @@ const deck = (state = {}, action) => {
 const valN = (n) => (isNaN(n) ? 0 : n);
 const byLastTime = (a, b) => valN(a.lastTime) - valN(b.lastTime);
 
-const decks = (state = [], action) => {
+const byId = (state = {}, action) => {
   switch (action.type) {
-    case 'SET_DECKS':
-      return action.decks;
     case 'ADD_DECK':
-      return [...state, deck(undefined, action)];
     case 'UPDATE_DECK':
-      return state
-              .filter(item => item.id === action.deckId)
-              .map(item => deck(item, action));
-    case 'REMOVE_DECK':
-      return state.filter(d => d.id !== action.deckId);
     case 'ADD_CARD':
     case 'REMOVE_CARD':
     case 'DIFFICULTY_LEVEL':
-      return state.map(item => deck(item, action));
-    case 'STUDY_DONE':
-      return state.map(item => deck(item, action)).sort(byLastTime);
+      return {
+        ...state, 
+        [action.id]: deck(state[action.id], action)
+      }
+    case 'REMOVE_DECK':
+      return {
+        ...state,
+        [action.id]: undefined,
+      }   
     default:
       return state;
   }
 };
 
+const allIds = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_DECK':
+      return [...state, action.id];
+    case 'REMOVE_DECK':
+      return state.filter(id => id !== action.id);
+    default:
+      return state;
+  }  
+};
+
+const decks = combineReducers({
+  byId,
+  allIds,
+});
 export default decks;
+
+export const getDecks = (state) => 
+  state.allIds.map(id => state.byId[id]).sort(byLastTime);
+
+/*const decks = (state = [], action) => {
+  switch (action.type) {
+    case 'SET_DECKS':
+      return action.decks;
+    default:
+      return state;
+  }
+};
+*/

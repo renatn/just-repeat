@@ -10,6 +10,8 @@ import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
 import DeckGrid from './DeckGrid';
 
+import { initFirebase, signIn, signOut } from '../utils/firebase-client';
+
 const renderScene = (route, props) => {
   switch (route) {
     case '/STUDY':
@@ -34,6 +36,12 @@ class Main extends Component {
 
     this.handleCloseUndo = this.handleCloseUndo.bind(this);
     this.handleCloseDisclaimer = this.handleCloseDisclaimer.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
+  }
+
+  componentDidMount() {
+    initFirebase();
   }
 
   handleCloseDisclaimer(e) {
@@ -44,6 +52,16 @@ class Main extends Component {
   handleCloseUndo(e) {
     e.preventDefault();
     this.props.closeUndo();
+  }
+
+  handleSignIn(e) {
+    e.preventDefault();
+    signIn();
+  }
+
+  handleSignOut(e) {
+    e.preventDefault();
+    signOut();
   }
 
   render() {
@@ -63,7 +81,7 @@ class Main extends Component {
         <header className="app-header">
           <h1 className="app-header__title">Just Repeat!</h1>
 
-          <div className={classnames({ hidden: decks.length > 0, container: true })}>
+          <div className={classnames({ hidden: decks.allIds.length > 0, container: true })}>
             <div className="app_header__description">
               <p>
                 Интервальные повторения — техника удержания в памяти,
@@ -78,7 +96,9 @@ class Main extends Component {
                 onClick={this.props.routeAddDeck}
               >
                 Добавить колоду
-              </button>
+              </button><br />
+              <a href="" className="link" onClick={this.handleSignIn}>Вход</a><br />
+              <a href="" className="link" onClick={this.handleSignOut}>Выход</a><br />
             </div>
           </div>
 
@@ -114,7 +134,7 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  decks: React.PropTypes.array,
+  decks: React.PropTypes.object,
   router: React.PropTypes.object,
   spa: React.PropTypes.object,
   undo: React.PropTypes.func,

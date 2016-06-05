@@ -10,7 +10,7 @@ class AddCard extends Component {
     this.inputBack = null;
 
     const { decks, router } = props;
-    this.deck = decks.find(deck => deck.id === router.deckId);
+    this.deck = decks.byId[router.deckId];
 
     this.handleAdd = this.handleAdd.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -54,7 +54,7 @@ class AddCard extends Component {
 AddCard.propTypes = {
   routeRoot: React.PropTypes.func,
   addCard: React.PropTypes.func,
-  decks: React.PropTypes.array,
+  decks: React.PropTypes.object,
   router: React.PropTypes.object,
 };
 

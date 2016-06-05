@@ -3,7 +3,7 @@ import throttle from 'lodash/throttle';
 import { v4 } from 'node-uuid';
 
 const VERSION = 2;
-const BUCKET = `db-v${VERSION}`;
+const BUCKET = `just-repeat:v${VERSION}`;
 
 export const saveState = throttle(state => {
   const { decks } = state;
