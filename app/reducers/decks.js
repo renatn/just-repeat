@@ -32,7 +32,7 @@ const deck = (state = {}, action) => {
         cards: cards(state.cards, action),
       };
     case 'STUDY_DONE':
-      if (state.id !== action.deckId) {
+      if (state.id !== action.id) {
         return state;
       }
       return {
@@ -54,6 +54,7 @@ const byId = (state = {}, action) => {
     case 'ADD_CARD':
     case 'REMOVE_CARD':
     case 'DIFFICULTY_LEVEL':
+    case 'STUDY_DONE':
       return {
         ...state,
         [action.id]: deck(state[action.id], action)

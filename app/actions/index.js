@@ -66,6 +66,7 @@ const addCard = (id, front, back) => dispatch => {
   dispatch({
     type: 'ADD_CARD',
     id,
+    cardId: v4(),
     front,
     back,
   });
@@ -81,10 +82,10 @@ const browse = (deckId) => dispatch => {
   });
 };
 
-const studyDone = deckId => dispatch => {
+const studyDone = id => dispatch => {
   dispatch({
     type: 'STUDY_DONE',
-    deckId,
+    id,
   });
   dispatch(routeRoot());
 };

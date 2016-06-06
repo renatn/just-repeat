@@ -17,12 +17,12 @@ const card = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_CARD':
       return {
-        id: v4(),
+        id: action.cardId,
         front: action.front,
         back: action.back,
         level: 0,
-        lastTime: 0,
-        nextTime: 0,
+        lastTime: Date.now(),
+        nextTime: Date.now(),
       };
     case 'DIFFICULTY_LEVEL': {
       if (state.id !== action.cardId) {

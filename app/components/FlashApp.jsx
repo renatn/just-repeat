@@ -29,15 +29,19 @@ const renderScene = (route, props) => {
   }
 };
 
-const Link = ({ children, onClick }) => {
+const FacebookLink = () => {
   const handleClick = (e) => {
     e.preventDefault();
-    onClick();
-  }
+    signIn();
+  };
+
   return (
-    <a href="" className="link" onClick={handleClick}>{children}</a>
+    <a href="" className="link link--facebook" onClick={handleClick}>
+      <span className="facebook-logo"></span>
+      Войти
+    </a>
   );
-};  
+}
 
 const UserLink = ({ userName }) => {
   const handleClick = (e) => {
@@ -55,10 +59,9 @@ const UserLink = ({ userName }) => {
 
 const AppBar = (props) => {
   const { user } = props;
-
   const link = user.isAuthenticated 
                 ? <UserLink userName={user.userName} />
-                : <Link onClick={signIn}>Войти</Link>
+                : <FacebookLink />
   return (
     <div className="app-bar__signin">
       {link}            
@@ -119,11 +122,13 @@ class AppShell extends Component {
     return (
       <div className="root">
         <div className={classnames({ disclaimer: true, 'disclaimer--open': isDisclaimerOpen })}>
+          <a href="" className="disclaimer__close" onClick={this.handleCloseDisclaimer}>&times;</a>
           <p className="container">
             Приложение работает полностью оффлайн, все введённые данные
-            сохраняются только в вашем браузере.<br />
-            <a href="" className="link" onClick={this.handleCloseDisclaimer}>Спасибо, понятно!</a>
+            сохраняются только в вашем браузере. Если вы хотите, чтобы данные 
+            синхронизировались между устройствами - войдите с помощью Facebook.
           </p>
+
         </div>
   
         <AppBar {...this.props} />
