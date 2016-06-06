@@ -11,7 +11,7 @@ export default class BrowseCards extends Component {
 
   getDeck() {
     const { router, decks } = this.props;
-    return decks.find(deck => deck.id === router.deckId);
+    return decks.byId[router.deckId];
   }
 
   handleRemoveCard(cardId) {
@@ -40,6 +40,6 @@ export default class BrowseCards extends Component {
 
 BrowseCards.propTypes = {
   router: React.PropTypes.object,
-  decks: React.PropTypes.array,
+  decks: React.PropTypes.object,
   removeCard: React.PropTypes.func,
 };

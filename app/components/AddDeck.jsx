@@ -27,7 +27,7 @@ class AddDeck extends Component {
     const isEdit = props.router.route === '/EDIT_DECK';
     if (isEdit) {
       const { decks, router } = props;
-      this.deck = decks.find(deck => deck.id === router.deckId);
+      this.deck = decks.byId[router.deckId];
       selectedColor = this.deck.color;
     }
 

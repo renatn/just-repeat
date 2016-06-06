@@ -36,7 +36,7 @@ export const router = (state = { route: '/' }, action) => {
   }
 };
 
-const spa = (state = { showUndo: false, isDisclaimerOpen: false }, action) => {
+const settings = (state = { showUndo: false, isDisclaimerOpen: true }, action) => {
   switch (action.type) {
     case 'SHOW_UNDO':
       return { ...state, showUndo: true };
@@ -55,7 +55,7 @@ const app = combineReducers({
   router,
   decks,
   player,
-  spa,
+  settings,
 });
 
 export default app;

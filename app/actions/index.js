@@ -1,3 +1,4 @@
+import { v4 } from 'node-uuid';
 import { loadState, restoreState } from '../utils';
 
 const closeUndo = () => ({
@@ -24,8 +25,8 @@ const hideDisclaimer = () => dispatch => {
 };
 
 const study = deckId => (dispatch, getState) => {
-  const found = getState().decks.find((deck) => deck.id === deckId);
-  dispatch(startStudy(found.cards));
+  const deck = getState().decks.byId[deckId];
+  dispatch(startStudy(deck.cards));
   dispatch({ type: 'ROUTE', route: '/STUDY', deckId });
 };
 
@@ -44,26 +45,27 @@ const undo = () => dispatch => {
 const addDeck = (name, color) => dispatch => {
   dispatch({
     type: 'ADD_DECK',
+    id: v4(),
     name,
     color,
   });
   dispatch(routeRoot());
 };
 
-const updateDeck = (deckId, name, color) => dispatch => {
+const updateDeck = (id, name, color) => dispatch => {
   dispatch({
     type: 'UPDATE_DECK',
-    deckId,
+    id,
     name,
     color,
   });
   dispatch(routeRoot());
 };
 
-const addCard = (deckId, front, back) => dispatch => {
+const addCard = (id, front, back) => dispatch => {
   dispatch({
     type: 'ADD_CARD',
-    deckId,
+    id,
     front,
     back,
   });
@@ -94,10 +96,10 @@ const answer = (cardId) => (
   }
 );
 
-const cardLevel = (deckId, cardId, level) => (
+const cardLevel = (id, cardId, level) => (
   {
     type: 'DIFFICULTY_LEVEL',
-    deckId,
+    id,
     cardId,
     level,
   }
@@ -123,10 +125,10 @@ const routeAddDeck = () => {
   };
 };
 
-const removeDeck = (deckId) => {
+const removeDeck = (id) => {
   return {
     type: 'REMOVE_DECK',
-    deckId,
+    id,
   };
 };
 
@@ -138,10 +140,10 @@ const routeEditDeck = (deckId) => {
   };
 };
 
-const removeCard = (deckId, cardId) => (
+const removeCard = (id, cardId) => (
   {
     type: 'REMOVE_CARD',
-    deckId,
+    id,
     cardId,
   }
 );

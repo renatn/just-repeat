@@ -1,9 +1,13 @@
 import React from 'react';
 
+import { getDecks } from '../reducers/decks';
 import DeckCell from './DeckCell';
 
 const DeckGrid = (props) => {
-  if (props.decks.length === 0) {
+  
+  const decks = getDecks(props.decks);
+
+  if (decks.length === 0) {
     return null;
   }
 
@@ -14,7 +18,7 @@ const DeckGrid = (props) => {
 
   return (
     <ul className="deck-grid">
-      {props.decks.map((deck, i) =>
+      {decks.map((deck, i) =>
         <DeckCell key={i} deck={deck} {...props} />
       )}
       <li className="deck deck--empty">
@@ -30,7 +34,7 @@ const DeckGrid = (props) => {
 
 DeckGrid.propTypes = {
   routeAddDeck: React.PropTypes.func,
-  decks: React.PropTypes.array,
+  decks: React.PropTypes.object,
 };
 
 export default DeckGrid;
