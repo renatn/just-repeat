@@ -54,3 +54,10 @@ export const signOut = () => {
     console.log('Signout', error);
   });
 };
+
+
+export const saveToFirebase = (userId, decks) =>
+  firebase.database().ref('decks/' + userId).set({decks});
+
+export const loadFromFirebase = (userId) =>
+  firebase.database().ref('decks/' + userId).once('value');

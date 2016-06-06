@@ -10,7 +10,7 @@ import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
 import DeckGrid from './DeckGrid';
 
-import { initFirebase, signIn, signOut } from '../utils/firebase-client';
+import { initFirebase, signIn, signOut, loadFromFirebase } from '../utils/firebase-client';
 
 const renderScene = (route, props) => {
   switch (route) {
@@ -48,7 +48,7 @@ const UserLink = ({ userName }) => {
   return (
     <span>
       <span className="app-bar__username">{userName}</span> 
-      <a href="" className="link link--signOut" onClick={handleClick}>&#10162;</a>
+      <a href="" className="link link--signOut" title="Выход" onClick={handleClick}>&#10162;</a>
     </span>
   );
 };
@@ -82,6 +82,9 @@ class AppShell extends Component {
     initFirebase(user => {
       if (user) {
         this.props.userAuthenticated(user);
+        loadFromFirebase(user.uid).then((snapshot) => {
+          this.props.receiveDecks(snapshot.val().decks);
+        });
       } else {
         this.props.userNotAuthenticated();
       }

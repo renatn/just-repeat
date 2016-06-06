@@ -157,6 +157,11 @@ const userNotAuthenticated = () => ({
   type: 'USER_NOT_AUTHENTICATED'
 });
 
+const receiveDecks = (decks) => ({
+  type: 'RECEIVE_DECKS',
+  decks,
+});
+
 export default {
   addCard,
   removeCard,
@@ -179,4 +184,5 @@ export default {
   hideDisclaimer,
   userAuthenticated,
   userNotAuthenticated,
+  receiveDecks,
 };

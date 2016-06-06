@@ -50,6 +50,7 @@ export default class DeckCell extends Component {
 
   render() {
     const { deck } = this.props;
+    const cards = deck.cards || [];
 
     return (
       <li className="deck" style={{ backgroundColor: deck.color || '#e45a84' }}>
@@ -62,7 +63,7 @@ export default class DeckCell extends Component {
           </div>
           <div>
             <a href="" className="deck__count" onClick={this.handleBrowse}>
-              {deck.cards.length} {plural(deck.cards.length)}
+              {cards.length} {plural(cards.length)}
             </a>
           </div>
         </div>

@@ -55,14 +55,19 @@ const byId = (state = {}, action) => {
     case 'REMOVE_CARD':
     case 'DIFFICULTY_LEVEL':
       return {
-        ...state, 
+        ...state,
         [action.id]: deck(state[action.id], action)
       }
     case 'REMOVE_DECK':
       return {
         ...state,
         [action.id]: undefined,
-      }   
+      }
+    case 'RECEIVE_DECKS':
+      return {
+        ...state,
+        ...action.decks
+      };
     default:
       return state;
   }
@@ -74,9 +79,12 @@ const allIds = (state = [], action) => {
       return [...state, action.id];
     case 'REMOVE_DECK':
       return state.filter(id => id !== action.id);
+    case 'RECEIVE_DECKS':
+      const ids = Object.keys(action.decks);
+      return state.filter(id => ids.indexOf(id) === -1).concat(ids);
     default:
       return state;
-  }  
+  }
 };
 
 const decks = combineReducers({
@@ -85,7 +93,7 @@ const decks = combineReducers({
 });
 export default decks;
 
-export const getDecks = (state) => 
+export const getDecks = (state) =>
   state.allIds.map(id => state.byId[id]).sort(byLastTime);
 
 /*const decks = (state = [], action) => {
