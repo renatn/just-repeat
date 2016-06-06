@@ -30,7 +30,7 @@ h1 {
 footer {
 	margin-top: 1rem;
 	text-align: center;
-	padding: 2rem;
+	padding: 16px;
 	background-color: #333;
 	color: #fff;
 }
@@ -88,6 +88,10 @@ footer {
 
 	-webkit-user-select: none;  /* Chrome all / Safari all */
 	user-select: none;   
+}
+
+.btn.btn--alt:disabled {
+	color: #ddd;
 }
 
 .btn.btn--accent {
@@ -510,8 +514,25 @@ footer {
 }
 
 .disclaimer p {
-	padding: 2rem;
-	text-align: center;
+	padding: 2rem 3rem 2rem 2rem;
+	text-align: left;
+}
+
+.disclaimer__close {
+	position: absolute;
+	right: 16px;
+	top: 50%;
+	font-size: 2em;
+	text-decoration: none;
+	color: #ccc;
+	cursor: pointer;
+
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.disclaimer__close:hover {
+	color: #fff;
 }
 
 .footer-link {
@@ -556,3 +577,29 @@ footer {
 	vertical-align: middle;
 }
 
+.link.link--facebook {
+	padding: 8px;
+	background: #4c69ba;
+	background: linear-gradient(#4c69ba, #3b55a0);
+	border-color: #4c69ba;
+	border-radius: 2px;
+	color: #fff;
+	text-shadow: 0 -1px 0 #354c8c;
+    cursor: pointer;
+    border-bottom: none;
+    font-weight: bold;
+}
+
+.link.link--facebook:hover {
+    background: linear-gradient(#5b7bd5, #4864b1);
+    box-shadow: inset 0 1px 0 #607fd6;
+}
+
+.facebook-logo {
+	background-image: url('./f.png');
+	display: inline-block;
+	width: 31px;
+	height: 31px;
+	vertical-align: middle;
+	margin-right: 8px;
+}
