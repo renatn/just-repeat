@@ -60,10 +60,12 @@ const byId = (state = {}, action) => {
         [action.id]: deck(state[action.id], action)
       }
     case 'REMOVE_DECK':
-      return {
+      const result = {
         ...state,
         [action.id]: undefined,
-      }
+      };
+      delete result[action.id];
+      return result;
     case 'RECEIVE_DECKS':
       return {
         ...state,

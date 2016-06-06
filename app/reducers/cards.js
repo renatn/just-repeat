@@ -51,7 +51,7 @@ const cards = (state = [], action) => {
     case 'REMOVE_CARD':
       return state.filter(c => c.id !== action.cardId);
     case 'DIFFICULTY_LEVEL':
-      return state.filter(item => item.id === action.cardId).map(item => card(item, action));
+      return state.map(item => card(item, action));
     default:
       return state;
   }
