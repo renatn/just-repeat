@@ -320,7 +320,7 @@ footer {
 	margin: 0;
 }
 
-.app_header__description {
+.app-header__description {
 	font-size: 1.4em;
 	color: rgb(106, 152, 203);
 	text-align: center;
@@ -521,11 +521,33 @@ footer {
 }
 
 .loader {
+	display: -webkit-flex; /* Safari */
 	display: flex;
+
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+
 	height: 100%;
 	font-size: 36px;
 	color: rgba(0,0,0,0.2);
 }
+
+.app-bar__signin {
+	text-align: right;
+	padding: 16px;
+}
+
+.app-bar__username {
+	margin-right: 1em;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.link.link--signOut {
+	display: inline-block;
+	font-size: 2em;
+	border-bottom: none;
+	vertical-align: middle;
+}
+

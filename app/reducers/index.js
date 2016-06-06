@@ -51,11 +51,30 @@ const settings = (state = { showUndo: false, isDisclaimerOpen: true }, action) =
   }
 };
 
+const user = (state = {}, action) => {
+  switch (action.type) {
+    case 'USER_AUTHENTICATED':
+      return {
+        ...state,
+        userName: action.displayName,
+        isAuthenticated: true,
+        uid: action.uid
+      };
+    case 'USER_NOT_AUTHENTICATED':
+      return {
+        isAuthenticated: false
+      }
+    default:
+      return state;
+  }
+}
+
 const app = combineReducers({
   router,
   decks,
   player,
   settings,
+  user,
 });
 
 export default app;

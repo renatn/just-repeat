@@ -7,11 +7,11 @@ const config = {
   storageBucket: "flashcards-8071c.appspot.com",
 };
 
-export const initFirebase = () => {
+export const initFirebase = (handleAuthState) => {
 
   firebase.initializeApp(config);
   const database = firebase.database();
-  
+
   const connectedRef = database.ref(".info/connected");
   connectedRef.on('value', (snap) => {
     if (snap.val() === true) {
@@ -21,14 +21,7 @@ export const initFirebase = () => {
     }
   });
 
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      console.log(user);
-    } else {
-      console.log('Not auth');
-    }
-  });
-
+  firebase.auth().onAuthStateChanged(handleAuthState);
 };
 
 export const signIn = () => {

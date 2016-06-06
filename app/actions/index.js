@@ -148,6 +148,15 @@ const removeCard = (id, cardId) => (
   }
 );
 
+const userAuthenticated = user => ({
+  type: 'USER_AUTHENTICATED',
+  ...user
+});
+
+const userNotAuthenticated = () => ({
+  type: 'USER_NOT_AUTHENTICATED'
+});
+
 export default {
   addCard,
   removeCard,
@@ -168,4 +177,6 @@ export default {
   routeEditDeck,
   startStudy,
   hideDisclaimer,
+  userAuthenticated,
+  userNotAuthenticated,
 };

@@ -29,7 +29,45 @@ const renderScene = (route, props) => {
   }
 };
 
-class Main extends Component {
+const Link = ({ children, onClick }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    onClick();
+  }
+  return (
+    <a href="" className="link" onClick={handleClick}>{children}</a>
+  );
+};  
+
+const UserLink = ({ userName }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    signOut();
+  };
+
+  return (
+    <span>
+      <span className="app-bar__username">{userName}</span> 
+      <a href="" className="link link--signOut" onClick={handleClick}>&#10162;</a>
+    </span>
+  );
+};
+
+const AppBar = (props) => {
+  const { user } = props;
+
+  const link = user.isAuthenticated 
+                ? <UserLink userName={user.userName} />
+                : <Link onClick={signIn}>Войти</Link>
+  return (
+    <div className="app-bar__signin">
+      {link}            
+    </div>
+  );
+  // &#9776; humburger
+};
+
+class AppShell extends Component {
 
   constructor(props) {
     super(props);
@@ -41,7 +79,13 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    initFirebase();
+    initFirebase(user => {
+      if (user) {
+        this.props.userAuthenticated(user);
+      } else {
+        this.props.userNotAuthenticated();
+      }
+    });
   }
 
   handleCloseDisclaimer(e) {
@@ -78,31 +122,32 @@ class Main extends Component {
             <a href="" className="link" onClick={this.handleCloseDisclaimer}>Спасибо, понятно!</a>
           </p>
         </div>
+  
+        <AppBar {...this.props} />
+
         <header className="app-header">
-          <h1 className="app-header__title">Just Repeat!</h1>
+          <h1 className="app-header__title">Just Repeat!</h1>      
+        </header>
 
-          <div className={classnames({ hidden: decks.allIds.length > 0, container: true })}>
-            <div className="app_header__description">
-              <p>
-                Интервальные повторения — техника удержания в памяти,
-                заключающаяся в повторении запомненного учебного
-                материала по определённым, постоянно возрастающим интервалам
-              </p>
-            </div>
-
-            <div className="call-to-action">
-              <button
-                className="btn btn--accent"
-                onClick={this.props.routeAddDeck}
-              >
-                Добавить колоду
-              </button><br />
-              <a href="" className="link" onClick={this.handleSignIn}>Вход</a><br />
-              <a href="" className="link" onClick={this.handleSignOut}>Выход</a><br />
-            </div>
+        <div className={classnames({ hidden: decks.allIds.length > 0, container: true })}>
+          <div className="app-header__description">
+            <p>
+              Интервальные повторения — техника удержания в памяти,
+              заключающаяся в повторении запомненного учебного
+              материала по определённым, постоянно возрастающим интервалам
+            </p>
           </div>
 
-        </header>
+          <div className="call-to-action">
+            <button
+              className="btn btn--accent"
+              onClick={this.props.routeAddDeck}
+            >
+              Добавить колоду
+            </button>
+          </div>
+        </div>
+
         <main className="main">
           <div className="main__content">
             <DeckGrid {...this.props} />
@@ -133,7 +178,8 @@ class Main extends Component {
   }
 }
 
-Main.propTypes = {
+AppShell.propTypes = {
+  user: React.PropTypes.object,
   decks: React.PropTypes.object,
   router: React.PropTypes.object,
   spa: React.PropTypes.object,
@@ -150,6 +196,7 @@ export default connect(
     router: state.router,
     player: state.player,
     settings: state.settings,
+    user: state.user,
   }),
   dispatch => bindActionCreators(Actions, dispatch)
-)(Main);
+)(AppShell);
