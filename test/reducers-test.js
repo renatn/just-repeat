@@ -5,6 +5,7 @@ import { router, player } from '../app/reducers';
 import decks from '../app/reducers/decks';
 
 describe('decks reducer', () => {
+
   it('should return initial state', () => {
     expect(decks(undefined, {})).to.deep.equal([]);
   });
@@ -61,6 +62,61 @@ describe('decks reducer', () => {
     expect(card.nextTime - card.lastTime).to.deep.equal(60000);
   });
 
+  it('should handle RECEIVE_DECKS', () => {
+    const state = {
+      byId: {
+        '1-2-3': {
+          cards: [
+            {
+              front: 'a',
+              id: 'a-b-c'
+            },
+            {
+              front: 'b',
+              id: 'c-b-a'
+            }
+          ]
+        },
+      }
+    }
+
+    const fromFirebase = {
+      '1-2-3': {
+        cards: [
+            {
+              front: 'a',
+              id: 'a-b-c'
+            },
+            {
+              front: 'x',
+              id: 'x-x-x'
+            }
+        ]
+      },
+    }
+
+    const expected = {
+      '1-2-3': {
+        cards: [
+            {
+              front: 'a',
+              id: 'a-b-c'
+            },
+            {
+              front: 'b',
+              id: 'c-b-a'
+            },
+            {
+              front: 'x',
+              id: 'x-x-x'
+            }
+        ]
+      },
+    };
+
+    const { byId } = decks(state, Actions.receiveDecks(fromFirebase));
+    expect(byId).to.deep.equal(expected);
+  });
 
 });
 

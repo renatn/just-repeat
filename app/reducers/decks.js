@@ -47,6 +47,13 @@ const deck = (state = {}, action) => {
 const valN = (n) => (isNaN(n) ? 0 : n);
 const byLastTime = (a, b) => valN(a.lastTime) - valN(b.lastTime);
 
+const sync = (a, b) => {
+  return {
+    ...a,
+    ...b
+  };
+}
+
 const byId = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_DECK':
@@ -67,10 +74,7 @@ const byId = (state = {}, action) => {
       delete result[action.id];
       return result;
     case 'RECEIVE_DECKS':
-      return {
-        ...state,
-        ...action.decks
-      };
+      return sync(state, action.decks);
     default:
       return state;
   }
