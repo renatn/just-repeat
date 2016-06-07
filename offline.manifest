@@ -1,14 +1,16 @@
 CACHE MANIFEST
 
-# Revision: 7
+# Revision: 8
+# ChangeLog:
+# - Fixed sync decks
 
 assets/app.js
 assets/vendor.js
 assets/style.css
 assets/github.png
+assets/f.png
 assets/normalize.css
 index.html
-https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css
 
 NETWORK:
 *
