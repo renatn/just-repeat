@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import _mergeWith from 'lodash/mergeWith';
+import _isArray from 'lodash/isArray';
 import cards from './cards';
 
 const deck = (state = {}, action) => {
@@ -47,12 +49,13 @@ const deck = (state = {}, action) => {
 const valN = (n) => (isNaN(n) ? 0 : n);
 const byLastTime = (a, b) => valN(a.lastTime) - valN(b.lastTime);
 
-const sync = (a, b) => {
-  return {
-    ...a,
-    ...b
-  };
-}
+const syncDecks = (a, b) => _mergeWith({}, a, b, (aCards, bCards) => {
+  if (_isArray(aCards)) {
+    return aCards
+            .filter(card => !bCards.some(bCard => bCard.id === card.id))
+            .concat(bCards);
+  }
+});
 
 const byId = (state = {}, action) => {
   switch (action.type) {
@@ -74,7 +77,7 @@ const byId = (state = {}, action) => {
       delete result[action.id];
       return result;
     case 'RECEIVE_DECKS':
-      return sync(state, action.decks);
+      return syncDecks(state, action.decks);
     default:
       return state;
   }

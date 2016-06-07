@@ -66,6 +66,7 @@ describe('decks reducer', () => {
     const state = {
       byId: {
         '1-2-3': {
+          id: '1-2-3',
           cards: [
             {
               front: 'a',
@@ -82,6 +83,7 @@ describe('decks reducer', () => {
 
     const fromFirebase = {
       '1-2-3': {
+        id: '1-2-3',
         cards: [
             {
               front: 'a',
@@ -93,28 +95,37 @@ describe('decks reducer', () => {
             }
         ]
       },
+      '3-2-1': {
+        id: '3-2-1'
+      }
     }
 
     const expected = {
       '1-2-3': {
+        id: '1-2-3',
         cards: [
-            {
-              front: 'a',
-              id: 'a-b-c'
-            },
+
             {
               front: 'b',
               id: 'c-b-a'
             },
             {
+              front: 'a',
+              id: 'a-b-c'
+            },
+            {
               front: 'x',
               id: 'x-x-x'
             }
         ]
       },
+      '3-2-1': {
+        id: '3-2-1'     
+      }
     };
 
     const { byId } = decks(state, Actions.receiveDecks(fromFirebase));
+    // console.log(JSON.stringify(byId));
     expect(byId).to.deep.equal(expected);
   });
 
