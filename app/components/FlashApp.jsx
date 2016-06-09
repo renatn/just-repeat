@@ -41,7 +41,7 @@ const FacebookLink = () => {
       Войти
     </a>
   );
-}
+};
 
 const UserLink = ({ userName }) => {
   const handleClick = (e) => {
@@ -64,10 +64,63 @@ const AppBar = (props) => {
                 : <FacebookLink />
   return (
     <div className="app-bar__signin">
-      {link}            
+      <div className="container">
+        {link}            
+      </div>
     </div>
   );
   // &#9776; humburger
+};
+
+const Disclaimer = ({ isVisible, onClose }) => {
+  return (
+    <div className={classnames({ disclaimer: true, 'disclaimer--open': isVisible })}>
+      <a href="" className="disclaimer__close" onClick={onClose}>&times;</a>
+      <p className="container">
+        Приложение работает полностью оффлайн, все введённые данные
+        сохраняются только в вашем браузере. Если вы хотите, чтобы данные 
+        синхронизировались между устройствами - войдите с помощью Facebook.
+      </p>
+    </div>
+  );
+};
+
+const Landing = ({ isVisible, onClick }) => {
+  return (
+    <div className={classnames({ hidden: isVisible, container: true })}>
+      <div className="app-header__description">
+        <p>
+          Интервальные повторения — техника удержания в памяти,
+          заключающаяся в повторении запомненного учебного
+          материала по определённым, постоянно возрастающим интервалам
+        </p>
+      </div>
+
+      <div className="call-to-action">
+        <button
+          className="btn btn--accent"
+          onClick={onClick}
+        >
+          Добавить колоду
+        </button>
+      </div>
+    </div>    
+  );
+};
+
+const UndoBar = ({ isVisible, onUndo, onClose }) => {
+  return (
+    <div className={classnames({ undo: true, 'undo--open': isVisible })}>
+      <div className="container">
+        <button className="btn btn--base" onClick={onUndo}>
+          Отменить
+        </button>
+        <a href="" className="link" onClick={onClose}>
+          Закрыть
+        </a>
+      </div>
+    </div>
+  );
 };
 
 class AppShell extends Component {
@@ -121,46 +174,28 @@ class AppShell extends Component {
 
     return (
       <div className="root">
-        <div className={classnames({ disclaimer: true, 'disclaimer--open': isDisclaimerOpen })}>
-          <a href="" className="disclaimer__close" onClick={this.handleCloseDisclaimer}>&times;</a>
-          <p className="container">
-            Приложение работает полностью оффлайн, все введённые данные
-            сохраняются только в вашем браузере. Если вы хотите, чтобы данные 
-            синхронизировались между устройствами - войдите с помощью Facebook.
-          </p>
+        <Disclaimer 
+          isVisible={isDisclaimerOpen} 
+          onClose={this.handleCloseDisclaimer} 
+        />
 
-        </div>
-  
         <AppBar {...this.props} />
 
         <header className="app-header">
           <h1 className="app-header__title">Just Repeat!</h1>      
         </header>
 
-        <div className={classnames({ hidden: decks.allIds.length > 0, container: true })}>
-          <div className="app-header__description">
-            <p>
-              Интервальные повторения — техника удержания в памяти,
-              заключающаяся в повторении запомненного учебного
-              материала по определённым, постоянно возрастающим интервалам
-            </p>
-          </div>
-
-          <div className="call-to-action">
-            <button
-              className="btn btn--accent"
-              onClick={this.props.routeAddDeck}
-            >
-              Добавить колоду
-            </button>
-          </div>
-        </div>
+        <Landing 
+          isVisible={decks.allIds.length > 0} 
+          onClick={this.props.routeAddDeck}
+        />
 
         <main className="main">
           <div className="main__content">
             <DeckGrid {...this.props} />
           </div>
         </main>
+
         <div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>
           <button
             className="overlay__button-close"
@@ -171,16 +206,13 @@ class AppShell extends Component {
             {renderScene(router.route, this.props)}
           </div>
         </div>
-        <div className={classnames({ undo: true, 'undo--open': settings.showUndo })}>
-          <div className="container">
-            <button className="btn btn--base" onClick={this.props.undo}>
-              Отменить
-            </button>
-            <a href="" className="link" onClick={this.handleCloseUndo}>
-              Закрыть
-            </a>
-          </div>
-        </div>
+      
+        <UndoBar 
+          isVisible={settings.showUndo}
+          onClose={this.handleCloseUndo}
+          onUndo={this.props.undo}
+        />
+
       </div>
     );
   }
@@ -190,7 +222,7 @@ AppShell.propTypes = {
   user: React.PropTypes.object,
   decks: React.PropTypes.object,
   router: React.PropTypes.object,
-  spa: React.PropTypes.object,
+  settings: React.PropTypes.object,
   undo: React.PropTypes.func,
   closeUndo: React.PropTypes.func,
   hideDisclaimer: React.PropTypes.func,
