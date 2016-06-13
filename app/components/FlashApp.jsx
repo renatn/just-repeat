@@ -9,6 +9,8 @@ import AddCard from './AddCard';
 import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
 import DeckGrid from './DeckGrid';
+import FacebookLink from './FacebookLink';
+import UserLink from './UserLink';
 
 import { initFirebase, signIn, signOut, loadFromFirebase } from '../utils/firebase-client';
 
@@ -29,39 +31,11 @@ const renderScene = (route, props) => {
   }
 };
 
-const FacebookLink = () => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    signIn();
-  };
-
-  return (
-    <a href="" className="link link--facebook" onClick={handleClick}>
-      <span className="facebook-logo"></span>
-      Войти
-    </a>
-  );
-};
-
-const UserLink = ({ userName }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    signOut();
-  };
-
-  return (
-    <span>
-      <span className="app-bar__username">{userName}</span> 
-      <a href="" className="link link--signOut" title="Выход" onClick={handleClick}>&#10162;</a>
-    </span>
-  );
-};
-
 const AppBar = (props) => {
   const { user } = props;
   const link = user.isAuthenticated 
-                ? <UserLink userName={user.userName} />
-                : <FacebookLink />
+                ? <UserLink userName={user.userName} onClick={signOut} />
+                : <FacebookLink onClick={signIn}/>
   return (
     <div className="app-bar__signin">
       <div className="container">

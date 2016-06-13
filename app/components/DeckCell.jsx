@@ -74,7 +74,11 @@ export default class DeckCell extends Component {
         >
 
           <div className="main-actions">
-            <button className="btn btn--alt" onClick={this.handleStudy} disabled={cards.length === 0}>
+            <button 
+              className="btn btn--alt" 
+              onClick={this.handleStudy} 
+              disabled={cards.length === 0}
+            >
               Учить
             </button>
             <button className="btn btn--alt" onClick={this.handleAddCard}>

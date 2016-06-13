@@ -55,6 +55,7 @@ const syncDecks = (a, b) => _mergeWith({}, a, b, (aCards, bCards) => {
             .filter(card => !bCards.some(bCard => bCard.id === card.id))
             .concat(bCards);
   }
+  return undefined;
 });
 
 const byId = (state = {}, action) => {
@@ -69,13 +70,14 @@ const byId = (state = {}, action) => {
         ...state,
         [action.id]: deck(state[action.id], action)
       }
-    case 'REMOVE_DECK':
-      const result = {
-        ...state,
-        [action.id]: undefined,
-      };
-      delete result[action.id];
-      return result;
+    case 'REMOVE_DECK': {
+        const result = {
+          ...state,
+          [action.id]: undefined,
+        };
+        delete result[action.id];
+        return result;
+      }
     case 'RECEIVE_DECKS':
       return syncDecks(state, action.decks);
     default:
@@ -89,9 +91,10 @@ const allIds = (state = [], action) => {
       return [...state, action.id];
     case 'REMOVE_DECK':
       return state.filter(id => id !== action.id);
-    case 'RECEIVE_DECKS':
-      const ids = Object.keys(action.decks);
-      return state.filter(id => ids.indexOf(id) === -1).concat(ids);
+    case 'RECEIVE_DECKS': {
+        const ids = Object.keys(action.decks);
+        return state.filter(id => ids.indexOf(id) === -1).concat(ids);
+      }
     default:
       return state;
   }

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import firebase from 'firebase';
 
 const config = {
@@ -26,25 +27,28 @@ export const initFirebase = (handleAuthState) => {
 export const signIn = () => {
   const provider = new firebase.auth.FacebookAuthProvider();
 
-  firebase.auth().signInWithPopup(provider).then(result => {
-    const { user } = result;
-    console.log('Success', user);
-  }).catch(function(error) {
-    console.log(error);
-  });
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then(result => {
+      const { user } = result;
+      console.log('Success', user);
+    })
+    .catch(error => console.log(error));
 };
 
 export const signOut = () => {
-  firebase.auth().signOut().then(function() {
-    console.log('Signout success');
-  }, function(error) {
-    console.log('Signout', error);
-  });
+  firebase
+    .auth()
+    .signOut()
+    .then(
+      () => console.log('Signout success'),
+      (error) => console.log('Signout', error)
+  );
 };
 
-
 export const saveToFirebase = (userId, decks) =>
-  firebase.database().ref('decks/' + userId).set({decks});
+  firebase.database().ref(`decks/${userId}`).set({decks});
 
 export const loadFromFirebase = (userId) =>
-  firebase.database().ref('decks/' + userId).once('value');
+  firebase.database().ref(`decks/${userId}`).once('value');

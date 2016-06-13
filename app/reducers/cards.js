@@ -1,5 +1,3 @@
-import { v4 } from 'node-uuid';
-
 const levelToMinutes = (k, level) => {
   switch (level) {
     case 0: // easy

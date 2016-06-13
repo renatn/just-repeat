@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import throttle from 'lodash/throttle';
-import { v4 } from 'node-uuid';
 import { saveToFirebase } from './firebase-client';
 
 const VERSION = 2;
@@ -15,9 +14,8 @@ export const saveState = throttle(state => {
   localStorage.setItem(BUCKET, JSON.stringify(decks.byId));
 
   if (user.isAuthenticated) {
-    saveToFirebase(user.uid, decks.byId).then((status) => {
-      console.log('Saved to firebase', status);
-    });
+    saveToFirebase(user.uid, decks.byId)
+      .then(() => console.log('Saved to firebase'));
   }
 
   console.info(`Saved ${decks.allIds.length} decks`);
