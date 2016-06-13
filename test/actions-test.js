@@ -15,7 +15,8 @@ describe('actions', () => {
         type: 'ADD_CARD',
         front: 'awesome',
         back: 'классный',
-        deckId: '#123',
+        id: '#123',
+        cardId: '12',
       },
       {
         type: 'ROUTE',
@@ -25,7 +26,18 @@ describe('actions', () => {
 
     const store = mockStore({ decks: [{name: 'english', cards: []}] });
     store.dispatch(Actions.addCard('#123', 'awesome', 'классный'));
-    expect(store.getActions())
+    
+    const actions = store.getActions().map(a => {
+      if (a.type === 'ADD_CARD') {
+        return {
+          ...a,
+          cardId: '12'
+        }
+      }
+      return a;
+    });
+
+    expect(actions)
       .to.deep.equal(expectedActions);
   });
 });

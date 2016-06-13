@@ -2,44 +2,52 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import Actions from '../app/actions';
 import { router, player } from '../app/reducers';
-import decks from '../app/reducers/decks';
+import decks, { getDecks } from '../app/reducers/decks';
 
 describe('decks reducer', () => {
 
   it('should return initial state', () => {
-    expect(decks(undefined, {})).to.deep.equal([]);
+    expect(decks(undefined, {})).to.deep.equal({ byId: {}, allIds: []});
   });
 
   it('should handle ADD_DECK', () => {
+    const state = decks(undefined, {
+        type: 'ADD_DECK',
+        name: 'English 101',
+        color: '#ff00ff',
+        id: '1-2-3'
+    });
 
-    const actual = decks(undefined, {
+    const result = getDecks(state);
+
+  	expect(result.length).to.equal(1);
+    expect(result[0]).to.deep.equal({
+      name: 'English 101',
+      color: '#ff00ff',
+      id: '1-2-3',
+      cards: [],
+      lastTime: 0,
+    });
+  });
+
+  it('should handle ADD_CARD', () => {
+
+    const state = decks(undefined, {
         type: 'ADD_DECK',
         name: 'English 101'
     });
 
-  	expect(actual.length).to.equal(1);
-    expect(actual[0].name).to.equal('English 101');
-  });
 
-  it('should handle ADD_CARD', () => {
     expect(
-      decks([{name: 'English 101', cards: []}], {
+      decks(state, {
         type: 'ADD_CARD',
         front: 'awesome',
         back: '1',
-        deck: 'English 101',
+        id: '123',
+        cardId: 'abc'
       })
     ).to.deep.equal(
-      [{
-        name: 'English 101',
-        cards: [{
-          front: 'awesome',
-          back: '1',
-          level: 0,
-          nextTime: 0,
-          lastTime: 0,
-        }]
-      }]
+      state
     );
   });
 
