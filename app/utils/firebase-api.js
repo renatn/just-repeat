@@ -7,7 +7,7 @@ const config = {
   storageBucket: "flashcards-8071c.appspot.com",
 };
 
-export const initFirebase = (handleAuthState) => {
+export const init = (handleAuthState) => {
   firebase.initializeApp(config);
   const database = firebase.database();
 
@@ -26,25 +26,25 @@ export const initFirebase = (handleAuthState) => {
 export const signIn = () => {
   const provider = new firebase.auth.FacebookAuthProvider();
 
-  firebase.auth().signInWithPopup(provider).then(result => {
+  return firebase.auth().signInWithPopup(provider).then(result => {
     const { user } = result;
-    console.log('Success', user);
-  }).catch(function(error) {
-    console.log(error);
+    return user;
   });
 };
 
 export const signOut = () => {
-  firebase.auth().signOut().then(function() {
+  firebase.auth().signOut().then(() => {
     console.log('Signout success');
-  }, function(error) {
+  }, (error) => {
     console.log('Signout', error);
   });
 };
 
-
 export const saveToFirebase = (userId, decks) =>
   firebase.database().ref('decks/' + userId).set({decks});
 
-export const loadFromFirebase = (userId) =>
-  firebase.database().ref('decks/' + userId).once('value');
+export const loadDecks = (userId) =>
+  firebase
+    .database()
+    .ref('decks/' + userId).once('value')
+    .then((snapshot) => snapshot.val().decks);

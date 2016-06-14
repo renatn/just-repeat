@@ -128,11 +128,14 @@ describe('decks reducer', () => {
         ]
       },
       '3-2-1': {
-        id: '3-2-1'     
+        id: '3-2-1'
       }
     };
 
-    const { byId } = decks(state, Actions.receiveDecks(fromFirebase));
+    const { byId } = decks(state, {
+      type: 'RECEIVE_DECKS',
+      decks: fromFirebase,
+    });
     // console.log(JSON.stringify(byId));
     expect(byId).to.deep.equal(expected);
   });

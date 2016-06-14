@@ -76,6 +76,8 @@ const byId = (state = {}, action) => {
       };
       delete result[action.id];
       return result;
+    case 'UNDO':
+      return action.decks;
     case 'RECEIVE_DECKS':
       return syncDecks(state, action.decks);
     default:
@@ -89,6 +91,7 @@ const allIds = (state = [], action) => {
       return [...state, action.id];
     case 'REMOVE_DECK':
       return state.filter(id => id !== action.id);
+    case 'UNDO':
     case 'RECEIVE_DECKS':
       const ids = Object.keys(action.decks);
       return state.filter(id => ids.indexOf(id) === -1).concat(ids);
