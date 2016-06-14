@@ -10,7 +10,7 @@ import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
 import DeckGrid from './DeckGrid';
 
-import { initFirebase, signIn, signOut, loadFromFirebase } from '../utils/firebase-client';
+import { initFirebase, signIn, signOut, loadFromFirebase } from '../utils/firebase-api';
 
 const renderScene = (route, props) => {
   switch (route) {

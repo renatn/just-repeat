@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import throttle from 'lodash/throttle';
 import { v4 } from 'node-uuid';
-import { saveToFirebase } from './firebase-client';
+import { saveToFirebase } from './firebase-api';
 
 const VERSION = 2;
 const BUCKET = `just-repeat:v${VERSION}`;
