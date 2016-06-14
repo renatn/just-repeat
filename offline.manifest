@@ -1,7 +1,8 @@
 CACHE MANIFEST
 
-# Revision: 8
+# Revision: 9
 # ChangeLog:
+# - Fixed undo
 # - Fixed sync decks
 
 assets/app.js
