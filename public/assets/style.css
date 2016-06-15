@@ -54,6 +54,10 @@ footer {
 	margin: 0 auto;
 }
 
+.center {
+	text-align: center;
+}
+
 #app {
 	width: 100%;
 	
@@ -603,4 +607,9 @@ footer {
 	height: 31px;
 	vertical-align: middle;
 	margin-right: 8px;
+}
+
+.decks-filter {
+	text-align: center;
+	margin: 16px 0;
 }

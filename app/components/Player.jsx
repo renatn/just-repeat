@@ -52,7 +52,7 @@ class Player extends Component {
             {card.front}
           </p>
           <p className={classnames({ hidden: !card.isAnswered, flashcard__back: true })}>
-            {card.back}
+            {card.back.split('\n').map((line, i) => <div key={i}>{line}</div>)}
           </p>
         </div>
 

@@ -57,6 +57,15 @@ const UndoBar = ({ isVisible, onUndo, onClose }) => {
   );
 };
 
+const FilterLink = ({ children, isActive }) => {
+  if (isActive) {
+    return <span>{children}</span>
+  }
+  return (
+      <a href="" className="link">{children}</a>
+  );
+}
+
 class AppShell extends Component {
 
   constructor(props) {
@@ -64,8 +73,6 @@ class AppShell extends Component {
 
     this.handleCloseUndo = this.handleCloseUndo.bind(this);
     this.handleCloseDisclaimer = this.handleCloseDisclaimer.bind(this);
-    this.handleSignIn = this.handleSignIn.bind(this);
-    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -80,16 +87,6 @@ class AppShell extends Component {
   handleCloseUndo(e) {
     e.preventDefault();
     this.props.closeUndo();
-  }
-
-  handleSignIn(e) {
-    e.preventDefault();
-    signIn();
-  }
-
-  handleSignOut(e) {
-    e.preventDefault();
-    signOut();
   }
 
   render() {
@@ -117,6 +114,11 @@ class AppShell extends Component {
 
         <main className="main">
           <div className="main__content">
+            <p className="decks-filter">
+              <FilterLink isActive>Все</FilterLink>&nbsp;|&nbsp;
+              <FilterLink>Учить</FilterLink>&nbsp;|&nbsp;
+              <FilterLink>Повторенные</FilterLink>
+            </p>
             <DeckGrid {...this.props} />
           </div>
         </main>
