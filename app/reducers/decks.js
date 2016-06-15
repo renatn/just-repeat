@@ -67,8 +67,8 @@ const byId = (state = {}, action) => {
     case 'STUDY_DONE':
       return {
         ...state,
-        [action.id]: deck(state[action.id], action)
-      }
+        [action.id]: deck(state[action.id], action),
+      };
     case 'REMOVE_DECK':
       const result = {
         ...state,
@@ -109,7 +109,9 @@ export default decks;
 export const getDecks = (state) =>
   state.allIds.map(id => state.byId[id]).sort(byLastTime);
 
-/*const decks = (state = [], action) => {
+export const getDeckById = (state, id) => state.byId[id];
+
+/* const decks = (state = [], action) => {
   switch (action.type) {
     case 'SET_DECKS':
       return action.decks;

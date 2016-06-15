@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { getDeckById } from '../reducers/decks';
 import TextInput from './TextInput';
 
 class AddCard extends Component {
@@ -10,7 +11,7 @@ class AddCard extends Component {
     this.inputBack = null;
 
     const { decks, router } = props;
-    this.deck = decks.byId[router.deckId];
+    this.deck = getDeckById(decks, router.deckId);
 
     this.handleAdd = this.handleAdd.bind(this);
     this.handleCancel = this.handleCancel.bind(this);

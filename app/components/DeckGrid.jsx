@@ -4,7 +4,6 @@ import { getDecks } from '../reducers/decks';
 import DeckCell from './DeckCell';
 
 const DeckGrid = (props) => {
-  
   const decks = getDecks(props.decks);
 
   if (decks.length === 0) {

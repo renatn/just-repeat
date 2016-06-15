@@ -23,7 +23,7 @@ const renderScene = (route, props) => {
     case '/ADD_DECK':
       return <AddDeck {...props} />;
     case '/EDIT_DECK':
-      return <AddDeck {...props} />;
+      return <AddDeck {...props} isEdit={true}/>;
     default:
       return null;
   }
@@ -34,7 +34,7 @@ const Disclaimer = ({ isVisible, onClose }) => (
     <a href="" className="disclaimer__close" onClick={onClose}>&times;</a>
     <p className="container">
       Приложение работает полностью оффлайн, все введённые данные
-      сохраняются только в вашем браузере. Если вы хотите, чтобы данные 
+      сохраняются только в вашем браузере. Если вы хотите, чтобы данные
       синхронизировались между устройствами - войдите с помощью Facebook.
     </p>
   </div>
@@ -97,19 +97,19 @@ class AppShell extends Component {
 
     return (
       <div className="root">
-        <Disclaimer 
-          isVisible={isDisclaimerVisible} 
-          onClose={this.handleCloseDisclaimer} 
+        <Disclaimer
+          isVisible={isDisclaimerVisible}
+          onClose={this.handleCloseDisclaimer}
         />
 
         <AppBar {...this.props} />
 
         <header className="app-header">
-          <h1 className="app-header__title">Just Repeat!</h1>      
+          <h1 className="app-header__title">Just Repeat!</h1>
         </header>
 
-        <Landing 
-          isVisible={decks.allIds.length > 0} 
+        <Landing
+          isVisible={decks.allIds.length > 0}
           onClick={this.props.routeAddDeck}
         />
 
@@ -129,8 +129,8 @@ class AppShell extends Component {
             {renderScene(router.route, this.props)}
           </div>
         </div>
-      
-        <UndoBar 
+
+        <UndoBar
           isVisible={settings.showUndo}
           onClose={this.handleCloseUndo}
           onUndo={this.props.undo}

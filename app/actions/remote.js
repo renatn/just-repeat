@@ -2,7 +2,7 @@ import * as fb from '../utils/firebase-api';
 
 const userAuthenticated = user => ({
   type: 'USER_AUTHENTICATED',
-  ...user
+  ...user,
 });
 
 const receiveDecks = (decks) => ({
@@ -11,12 +11,12 @@ const receiveDecks = (decks) => ({
 });
 
 const userNotAuthenticated = () => ({
-  type: 'USER_NOT_AUTHENTICATED'
+  type: 'USER_NOT_AUTHENTICATED',
 });
 
 export const connectToFirebase = () => dispatch => {
   dispatch({
-    type: 'REQUEST_DECKS_FROM_FIREBASE'
+    type: 'REQUEST_DECKS_FROM_FIREBASE',
   });
 
   fb.init(user => {
@@ -31,14 +31,14 @@ export const connectToFirebase = () => dispatch => {
 
 export const userSignIn = () => dispatch => {
   dispatch({
-    type: 'USER_WANTS_SINGIN'
+    type: 'USER_WANTS_SINGIN',
   });
   fb.signIn();
 };
 
 export const userSignOut = () => dispatch => {
   dispatch({
-    type: 'USER_WANTS_SIGNOUT'
+    type: 'USER_WANTS_SIGNOUT',
   });
   fb.signOut();
 };

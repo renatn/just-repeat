@@ -5,7 +5,7 @@ import { route,
   routeRoot,
   routeAddCard,
   routeAddDeck,
-  routeEditDeck
+  routeEditDeck,
 } from './route';
 
 const closeUndo = () => ({
@@ -146,5 +146,5 @@ export default {
   hideDisclaimer,
   connectToFirebase,
   userSignIn,
-  userSignOut
+  userSignOut,
 };

@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import throttle from 'lodash/throttle';
-import { v4 } from 'node-uuid';
 import { saveToFirebase } from './firebase-api';
 
 const VERSION = 2;
@@ -34,8 +33,8 @@ export const loadState = () => {
     const db = localStorage.getItem(BUCKET);
     if (!db) {
       return {
-        settings
-      }
+        settings,
+      };
     }
 
     const byId = JSON.parse(db);
@@ -45,7 +44,7 @@ export const loadState = () => {
       settings,
       decks: {
         byId,
-        allIds
+        allIds,
       },
     };
   } catch (err) {
