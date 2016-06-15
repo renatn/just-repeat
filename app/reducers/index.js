@@ -58,16 +58,16 @@ const user = (state = {}, action) => {
         ...state,
         userName: action.displayName,
         isAuthenticated: true,
-        uid: action.uid
+        uid: action.uid,
       };
     case 'USER_NOT_AUTHENTICATED':
       return {
-        isAuthenticated: false
-      }
+        isAuthenticated: false,
+      };
     default:
       return state;
   }
-}
+};
 
 const app = combineReducers({
   router,

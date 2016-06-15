@@ -1,14 +1,17 @@
 import { v4 } from 'node-uuid';
 import { loadState, restoreState } from '../utils';
+import { connectToFirebase, userSignIn, userSignOut } from './remote';
+import { route,
+  routeRoot,
+  routeAddCard,
+  routeAddDeck,
+  routeEditDeck,
+} from './route';
 
 const closeUndo = () => ({
   type: 'HIDE_UNDO',
 });
 
-const routeRoot = () => ({
-  type: 'ROUTE',
-  route: '/',
-});
 
 const startStudy = cards => ({
   type: 'START_STUDY',
@@ -35,8 +38,8 @@ const undo = () => dispatch => {
 
   const { decks } = loadState();
   dispatch({
-    type: 'SET_DECKS',
-    decks,
+    type: 'UNDO',
+    decks: decks.byId,
   });
 
   dispatch(closeUndo());
@@ -106,38 +109,10 @@ const cardLevel = (id, cardId, level) => (
   }
 );
 
-const route = (route) => (
-  {
-    type: 'ROUTE',
-    route,
-  }
-);
-
-const routeAddCard = deckId => ({
-  type: 'ROUTE',
-  route: '/ADD_CARD',
-  deckId,
-});
-
-const routeAddDeck = () => {
-  return {
-    type: 'ROUTE',
-    route: '/ADD_DECK',
-  };
-};
-
 const removeDeck = (id) => {
   return {
     type: 'REMOVE_DECK',
     id,
-  };
-};
-
-const routeEditDeck = (deckId) => {
-  return {
-    type: 'ROUTE',
-    route: '/EDIT_DECK',
-    deckId,
   };
 };
 
@@ -148,20 +123,6 @@ const removeCard = (id, cardId) => (
     cardId,
   }
 );
-
-const userAuthenticated = user => ({
-  type: 'USER_AUTHENTICATED',
-  ...user
-});
-
-const userNotAuthenticated = () => ({
-  type: 'USER_NOT_AUTHENTICATED'
-});
-
-const receiveDecks = (decks) => ({
-  type: 'RECEIVE_DECKS',
-  decks,
-});
 
 export default {
   addCard,
@@ -183,7 +144,7 @@ export default {
   routeEditDeck,
   startStudy,
   hideDisclaimer,
-  userAuthenticated,
-  userNotAuthenticated,
-  receiveDecks,
+  connectToFirebase,
+  userSignIn,
+  userSignOut,
 };

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { getDeckById } from '../reducers/decks';
 import TextInput from './TextInput';
 
 const DECK_COLORS = ['#e45a84', '#5a74e4', '#EAD82C', '#4fd75f', '#D49045'];
@@ -24,10 +25,9 @@ class AddDeck extends Component {
     super(props);
 
     let selectedColor = DECK_COLORS[0];
-    const isEdit = props.router.route === '/EDIT_DECK';
-    if (isEdit) {
+    if (props.isEdit) {
       const { decks, router } = props;
-      this.deck = decks.byId[router.deckId];
+      this.deck = getDeckById(decks, router.deckId);
       selectedColor = this.deck.color;
     }
 
@@ -42,8 +42,7 @@ class AddDeck extends Component {
       return;
     }
 
-    const isEdit = this.props.router.route === '/EDIT_DECK';
-    if (isEdit) {
+    if (this.props.isEdit) {
       this.props.updateDeck(this.deck.id, this.input.value, this.state.selectedColor);
     } else {
       this.props.addDeck(this.input.value, this.state.selectedColor);
@@ -66,11 +65,10 @@ class AddDeck extends Component {
   handleSelectColor = (color) => this.setState({ selectedColor: color });
 
   render() {
-    const isEdit = this.props.router.route === '/EDIT_DECK';
     return (
       <div>
         <header className="overlay__title">
-          <h1>{isEdit ? this.deck.name : 'Новая колода'}</h1>
+          <h1>{this.props.isEdit ? this.deck.name : 'Новая колода'}</h1>
         </header>
 
         <form className="form" onSubmit={this.handleAdd}>
@@ -90,7 +88,7 @@ class AddDeck extends Component {
               </ul>
             </div>
             <button className="btn btn--alt" type="submit">
-              {isEdit ? 'Изменить' : 'Создать'}
+              {this.props.isEdit ? 'Изменить' : 'Создать'}
             </button>
             <a href="" className="link" onClick={this.handleCancel}>Отменить</a>
           </div>
@@ -105,6 +103,7 @@ AddDeck.propTypes = {
   addDeck: React.PropTypes.func,
   router: React.PropTypes.object,
   routeRoot: React.PropTypes.func,
+  isEdit: React.PropTypes.bool,
 };
 
 export default AddDeck;

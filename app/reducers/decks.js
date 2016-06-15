@@ -68,16 +68,17 @@ const byId = (state = {}, action) => {
     case 'STUDY_DONE':
       return {
         ...state,
-        [action.id]: deck(state[action.id], action)
-      }
-    case 'REMOVE_DECK': {
-        const result = {
-          ...state,
-          [action.id]: undefined,
-        };
-        delete result[action.id];
-        return result;
-      }
+        [action.id]: deck(state[action.id], action),
+      };
+    case 'REMOVE_DECK':
+      const result = {
+        ...state,
+        [action.id]: undefined,
+      };
+      delete result[action.id];
+      return result;
+    case 'UNDO':
+      return action.decks;
     case 'RECEIVE_DECKS':
       return syncDecks(state, action.decks);
     default:
@@ -91,10 +92,10 @@ const allIds = (state = [], action) => {
       return [...state, action.id];
     case 'REMOVE_DECK':
       return state.filter(id => id !== action.id);
-    case 'RECEIVE_DECKS': {
-        const ids = Object.keys(action.decks);
-        return state.filter(id => ids.indexOf(id) === -1).concat(ids);
-      }
+    case 'UNDO':
+    case 'RECEIVE_DECKS':
+      const ids = Object.keys(action.decks);
+      return state.filter(id => ids.indexOf(id) === -1).concat(ids);
     default:
       return state;
   }
@@ -109,7 +110,9 @@ export default decks;
 export const getDecks = (state) =>
   state.allIds.map(id => state.byId[id]).sort(byLastTime);
 
-/*const decks = (state = [], action) => {
+export const getDeckById = (state, id) => state.byId[id];
+
+/* const decks = (state = [], action) => {
   switch (action.type) {
     case 'SET_DECKS':
       return action.decks;

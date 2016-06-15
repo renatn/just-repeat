@@ -11,8 +11,8 @@ import AddDeck from './AddDeck';
 import DeckGrid from './DeckGrid';
 import FacebookLink from './FacebookLink';
 import UserLink from './UserLink';
-
-import { initFirebase, signIn, signOut, loadFromFirebase } from '../utils/firebase-client';
+import Landing from './Landing';
+import AppBar from './AppBar';
 
 const renderScene = (route, props) => {
   switch (route) {
@@ -25,62 +25,22 @@ const renderScene = (route, props) => {
     case '/ADD_DECK':
       return <AddDeck {...props} />;
     case '/EDIT_DECK':
-      return <AddDeck {...props} />;
+      return <AddDeck {...props} isEdit={true}/>;
     default:
       return null;
   }
 };
 
-const AppBar = (props) => {
-  const { user } = props;
-  const link = user.isAuthenticated 
-                ? <UserLink userName={user.userName} onClick={signOut} />
-                : <FacebookLink onClick={signIn}/>
-  return (
-    <div className="app-bar__signin">
-      <div className="container">
-        {link}            
-      </div>
-    </div>
-  );
-  // &#9776; humburger
-};
-
-const Disclaimer = ({ isVisible, onClose }) => {
-  return (
-    <div className={classnames({ disclaimer: true, 'disclaimer--open': isVisible })}>
-      <a href="" className="disclaimer__close" onClick={onClose}>&times;</a>
-      <p className="container">
-        Приложение работает полностью оффлайн, все введённые данные
-        сохраняются только в вашем браузере. Если вы хотите, чтобы данные 
-        синхронизировались между устройствами - войдите с помощью Facebook.
-      </p>
-    </div>
-  );
-};
-
-const Landing = ({ isVisible, onClick }) => {
-  return (
-    <div className={classnames({ hidden: isVisible, container: true })}>
-      <div className="app-header__description">
-        <p>
-          Интервальные повторения — техника удержания в памяти,
-          заключающаяся в повторении запомненного учебного
-          материала по определённым, постоянно возрастающим интервалам
-        </p>
-      </div>
-
-      <div className="call-to-action">
-        <button
-          className="btn btn--accent"
-          onClick={onClick}
-        >
-          Добавить колоду
-        </button>
-      </div>
-    </div>    
-  );
-};
+const Disclaimer = ({ isVisible, onClose }) => (
+  <div className={classnames({ disclaimer: true, 'disclaimer--open': isVisible })}>
+    <a href="" className="disclaimer__close" onClick={onClose}>&times;</a>
+    <p className="container">
+      Приложение работает полностью оффлайн, все введённые данные
+      сохраняются только в вашем браузере. Если вы хотите, чтобы данные
+      синхронизировались между устройствами - войдите с помощью Facebook.
+    </p>
+  </div>
+);
 
 const UndoBar = ({ isVisible, onUndo, onClose }) => {
   return (
@@ -109,16 +69,7 @@ class AppShell extends Component {
   }
 
   componentDidMount() {
-    initFirebase(user => {
-      if (user) {
-        this.props.userAuthenticated(user);
-        loadFromFirebase(user.uid).then((snapshot) => {
-          this.props.receiveDecks(snapshot.val().decks);
-        });
-      } else {
-        this.props.userNotAuthenticated();
-      }
-    });
+    this.props.connectToFirebase();
   }
 
   handleCloseDisclaimer(e) {
@@ -143,24 +94,24 @@ class AppShell extends Component {
 
   render() {
     const { decks, router, settings } = this.props;
-    const isOverlayOpen = router.route !== '/';
-    const isDisclaimerOpen = settings.isDisclaimerOpen;
+    const isOverlayVisible = router.route !== '/';
+    const isDisclaimerVisible = settings.isDisclaimerOpen;
 
     return (
       <div className="root">
-        <Disclaimer 
-          isVisible={isDisclaimerOpen} 
-          onClose={this.handleCloseDisclaimer} 
+        <Disclaimer
+          isVisible={isDisclaimerVisible}
+          onClose={this.handleCloseDisclaimer}
         />
 
         <AppBar {...this.props} />
 
         <header className="app-header">
-          <h1 className="app-header__title">Just Repeat!</h1>      
+          <h1 className="app-header__title">Just Repeat!</h1>
         </header>
 
-        <Landing 
-          isVisible={decks.allIds.length > 0} 
+        <Landing
+          isVisible={decks.allIds.length > 0}
           onClick={this.props.routeAddDeck}
         />
 
@@ -170,7 +121,7 @@ class AppShell extends Component {
           </div>
         </main>
 
-        <div className={classnames({ overlay: true, 'overlay--open': isOverlayOpen })}>
+        <div className={classnames({ overlay: true, 'overlay--open': isOverlayVisible })}>
           <button
             className="overlay__button-close"
             onClick={this.props.routeRoot}
@@ -180,8 +131,8 @@ class AppShell extends Component {
             {renderScene(router.route, this.props)}
           </div>
         </div>
-      
-        <UndoBar 
+
+        <UndoBar
           isVisible={settings.showUndo}
           onClose={this.handleCloseUndo}
           onUndo={this.props.undo}
