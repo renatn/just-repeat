@@ -77,6 +77,13 @@ footer {
 	border-bottom: 1px dashed #000;
 }
 
+.link-disabled {
+	color: #ffffff;
+	text-decoration: none;
+	text-transform: uppercase;	
+}
+
+
 .btn {
 	border: none;
 	display: inline-block;
@@ -613,3 +620,4 @@ footer {
 	text-align: center;
 	margin: 16px 0;
 }
+

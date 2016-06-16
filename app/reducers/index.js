@@ -69,12 +69,22 @@ const user = (state = {}, action) => {
   }
 };
 
+const decksFilter = (state = 'ALL', action) => {
+  switch (action.type) {
+    case 'SET_FILTER':
+      return action.filter;
+    default:
+      return state;
+  }
+}
+
 const app = combineReducers({
   router,
   decks,
   player,
   settings,
   user,
+  decksFilter,
 });
 
 export default app;

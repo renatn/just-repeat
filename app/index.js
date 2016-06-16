@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable global-require */
 
 import React from 'react';
 import ReactDOM from 'react-dom';

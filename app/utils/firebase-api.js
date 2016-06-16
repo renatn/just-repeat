@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import firebase from 'firebase';
 
 const config = {
@@ -43,10 +45,10 @@ export const signOut = () => {
 };
 
 export const saveToFirebase = (userId, decks) =>
-  firebase.database().ref('decks/' + userId).set({ decks });
+  firebase.database().ref(`decks/${userId}`).set({ decks });
 
 export const loadDecks = (userId) =>
   firebase
     .database()
-    .ref('decks/' + userId).once('value')
+    .ref(`decks/${userId}`).once('value')
     .then((snapshot) => snapshot.val().decks);

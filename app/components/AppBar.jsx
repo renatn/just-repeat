@@ -1,42 +1,6 @@
 import React from 'react';
-
-const FacebookLink = ({ onClick }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    onClick();
-  };
-
-  return (
-    <a href="" className="link link--facebook" onClick={handleClick}>
-      <span className="facebook-logo"></span>
-      Войти
-    </a>
-  );
-};
-
-FacebookLink.propTypes = {
-  onClick: React.PropTypes.func,
-};
-
-const UserLink = ({ userName, onClick }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    onClick();
-  };
-
-  return (
-    <span>
-      <span className="app-bar__username">{userName}</span>
-      <a href="" className="link link--signOut" title="Выход" onClick={handleClick}>&#10162;</a>
-    </span>
-  );
-};
-
-UserLink.propTypes = {
-  userName: React.PropTypes.string,
-  onClick: React.PropTypes.func,
-};
-
+import UserLink from './UserLink';
+import FacebookLink from './FacebookLink';
 
 const AppBar = ({ user, userSignIn, userSignOut }) => {
   const link = user.isAuthenticated

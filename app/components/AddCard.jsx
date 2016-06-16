@@ -39,8 +39,8 @@ class AddCard extends Component {
         </header>
         <form className="form" onSubmit={this.handleAdd}>
           <div className="form__fields">
-            <TextInput caption="Вопрос" onRef={(c) => this.inputFront = c} />
-            <TextInput caption="Ответ" onRef={(c) => this.inputBack = c} multiLine />
+            <TextInput caption="Вопрос" onRef={(c) => {this.inputFront = c;}} />
+            <TextInput caption="Ответ" onRef={(c) => {this.inputBack = c;}} multiLine />
             <button type="submit" className="btn btn--alt">
               Добавить
             </button>

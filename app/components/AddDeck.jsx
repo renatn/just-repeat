@@ -6,7 +6,7 @@ import TextInput from './TextInput';
 const DECK_COLORS = ['#e45a84', '#5a74e4', '#EAD82C', '#4fd75f', '#D49045'];
 
 const ColorPickerItem = ({ color, selected, onClick }) => {
-  const CLASS_NAME = 'color-picker__item ' + (selected ? 'color-picker__item--selected' : '');
+  const CLASS_NAME = `color-picker__item ${(selected ? 'color-picker__item--selected' : '')}`;
   const handleClick = () => onClick(color);
   return (
     <li className={CLASS_NAME} style={{ backgroundColor: color }} onClick={handleClick}></li>

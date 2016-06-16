@@ -70,13 +70,14 @@ const byId = (state = {}, action) => {
         ...state,
         [action.id]: deck(state[action.id], action),
       };
-    case 'REMOVE_DECK':
+    case 'REMOVE_DECK': {
       const result = {
         ...state,
         [action.id]: undefined,
       };
       delete result[action.id];
       return result;
+    }
     case 'UNDO':
       return action.decks;
     case 'RECEIVE_DECKS':
@@ -93,9 +94,10 @@ const allIds = (state = [], action) => {
     case 'REMOVE_DECK':
       return state.filter(id => id !== action.id);
     case 'UNDO':
-    case 'RECEIVE_DECKS':
+    case 'RECEIVE_DECKS': {
       const ids = Object.keys(action.decks);
       return state.filter(id => ids.indexOf(id) === -1).concat(ids);
+    }
     default:
       return state;
   }
@@ -107,8 +109,18 @@ const decks = combineReducers({
 });
 export default decks;
 
-export const getDecks = (state) =>
-  state.allIds.map(id => state.byId[id]).sort(byLastTime);
+export const getDecks = (state, filter) =>
+  state.allIds
+    .map(id => state.byId[id])
+    .filter(item => {
+      if (!filter || filter === 'ALL') {
+        return true;
+      } else if (filter === 'TODO') {
+        return item.cards.length > 0;
+      }
+      return false;
+    })
+    .sort(byLastTime);
 
 export const getDeckById = (state, id) => state.byId[id];
 

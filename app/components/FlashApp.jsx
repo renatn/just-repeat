@@ -9,8 +9,6 @@ import AddCard from './AddCard';
 import BrowseCards from './BrowseCards';
 import AddDeck from './AddDeck';
 import DeckGrid from './DeckGrid';
-import FacebookLink from './FacebookLink';
-import UserLink from './UserLink';
 import Landing from './Landing';
 import AppBar from './AppBar';
 
@@ -42,29 +40,29 @@ const Disclaimer = ({ isVisible, onClose }) => (
   </div>
 );
 
-const UndoBar = ({ isVisible, onUndo, onClose }) => {
-  return (
-    <div className={classnames({ undo: true, 'undo--open': isVisible })}>
-      <div className="container">
-        <button className="btn btn--base" onClick={onUndo}>
-          Отменить
-        </button>
-        <a href="" className="link" onClick={onClose}>
-          Закрыть
-        </a>
-      </div>
-    </div>
-  );
+Disclaimer.propTypes = {
+  isVisible: React.PropTypes.bool,
+  onClose: React.PropTypes.func,
 };
 
-const FilterLink = ({ children, isActive }) => {
-  if (isActive) {
-    return <span>{children}</span>
-  }
-  return (
-      <a href="" className="link">{children}</a>
-  );
-}
+const UndoBar = ({ isVisible, onUndo, onClose }) => (
+  <div className={classnames({ undo: true, 'undo--open': isVisible })}>
+    <div className="container">
+      <button className="btn btn--base" onClick={onUndo}>
+        Отменить
+      </button>
+      <a href="" className="link" onClick={onClose}>
+        Закрыть
+      </a>
+    </div>
+  </div>
+);
+
+UndoBar.propTypes = {
+  isVisible: React.PropTypes.bool,
+  onClose: React.PropTypes.func,
+  onUndo: React.PropTypes.func,
+};
 
 class AppShell extends Component {
 
@@ -93,6 +91,7 @@ class AppShell extends Component {
     const { decks, router, settings } = this.props;
     const isOverlayVisible = router.route !== '/';
     const isDisclaimerVisible = settings.isDisclaimerOpen;
+    const hasDecks = decks.allIds.length > 0;
 
     return (
       <div className="root">
@@ -107,21 +106,14 @@ class AppShell extends Component {
           <h1 className="app-header__title">Just Repeat!</h1>
         </header>
 
-        <Landing
-          isVisible={decks.allIds.length > 0}
-          onClick={this.props.routeAddDeck}
-        />
-
-        <main className="main">
-          <div className="main__content">
-            <p className="decks-filter">
-              <FilterLink isActive>Все</FilterLink>&nbsp;|&nbsp;
-              <FilterLink>Учить</FilterLink>&nbsp;|&nbsp;
-              <FilterLink>Повторенные</FilterLink>
-            </p>
-            <DeckGrid {...this.props} />
-          </div>
-        </main>
+        { hasDecks ? 
+          <main className="main">
+            <div className="main__content">
+              <DeckGrid {...this.props} />
+            </div>
+          </main> :
+          <Landing onClick={this.props.routeAddDeck} />
+        }
 
         <div className={classnames({ overlay: true, 'overlay--open': isOverlayVisible })}>
           <button
@@ -155,6 +147,7 @@ AppShell.propTypes = {
   hideDisclaimer: React.PropTypes.func,
   routeRoot: React.PropTypes.func,
   routeAddDeck: React.PropTypes.func,
+  connectToFirebase: React.PropTypes.func,
 };
 
 export default connect(
@@ -164,6 +157,7 @@ export default connect(
     player: state.player,
     settings: state.settings,
     user: state.user,
+    decksFilter: state.decksFilter,
   }),
   dispatch => bindActionCreators(Actions, dispatch)
 )(AppShell);

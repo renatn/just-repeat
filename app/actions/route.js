@@ -1,7 +1,7 @@
-export const route = (route) => (
+export const route = (path) => (
   {
     type: 'ROUTE',
-    route,
+    route: path,
   }
 );
 
@@ -16,17 +16,17 @@ export const routeAddCard = deckId => ({
   deckId,
 });
 
-export const routeAddDeck = () => {
-  return {
+export const routeAddDeck = () => (
+  {
     type: 'ROUTE',
     route: '/ADD_DECK',
-  };
-};
+  }
+);
 
-export const routeEditDeck = (deckId) => {
-  return {
+export const routeEditDeck = (deckId) => (
+  {
     type: 'ROUTE',
     route: '/EDIT_DECK',
     deckId,
-  };
-};
+  }
+);

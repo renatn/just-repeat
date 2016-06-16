@@ -109,18 +109,23 @@ const cardLevel = (id, cardId, level) => (
   }
 );
 
-const removeDeck = (id) => {
-  return {
-    type: 'REMOVE_DECK',
-    id,
-  };
-};
+const removeDeck = (id) => ({
+  type: 'REMOVE_DECK',
+  id,
+});
 
 const removeCard = (id, cardId) => (
   {
     type: 'REMOVE_CARD',
     id,
     cardId,
+  }
+);
+
+const setFilter = (filter) => (
+  {
+    type: 'SET_FILTER',
+    filter
   }
 );
 
@@ -147,4 +152,5 @@ export default {
   connectToFirebase,
   userSignIn,
   userSignOut,
+  setFilter,
 };
