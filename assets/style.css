@@ -54,6 +54,10 @@ footer {
 	margin: 0 auto;
 }
 
+.root {
+  	padding-top: 76px;
+}
+
 .center {
 	text-align: center;
 }
@@ -570,10 +574,18 @@ footer {
 	color: rgba(0,0,0,0.2);
 }
 
-.app-bar__signin {
+.app-bar-wrap {
 	text-align: right;
-	padding: 16px;
-    background-color: rgba(0,0,0,0.1);
+    background-color: #314862;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
+}
+
+.app-bar {
+	padding: 16px;	
 }
 
 .app-bar__username {

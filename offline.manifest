@@ -1,7 +1,8 @@
 CACHE MANIFEST
 
-# Revision: 10
+# Revision: 11
 # ChangeLog:
+# - Fixed filters, Fixed header
 # - IndexedDB
 # - Fixed undo
 # - Fixed sync decks
