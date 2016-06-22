@@ -5,10 +5,11 @@
   "main": "app/index.js",
   "scripts": {
     "lint": "eslint app --ext=jsx --ext=js --fix",
+    "postcss": "postcss --use autoprefixer public/assets/style.css -o public/assets/style.build.css",
     "compile": "webpack --config webpack.config.prod.js",
     "start": "webpack-dev-server --hot --host 0.0.0.0 --inline --port 8080 --progress --color --content-base public/",
     "tarball": "zip -9 -r -q just-repeat.zip public/",
-    "dist": "npm run compile && npm run tarball",
+    "dist": "npm run postcss && npm run compile && npm run tarball",
     "test": "mocha --globals localStorage --compilers js:babel-core/register --recursive"
   },
   "repository": {
@@ -39,6 +40,7 @@
     "firebase": "^3.0.3"
   },
   "devDependencies": {
+    "autoprefixer": "^6.3.6",
     "babel-core": "^6.8.0",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
@@ -52,6 +54,7 @@
     "eslint-plugin-jsx-a11y": "^1.2.2",
     "eslint-plugin-react": "^5.1.1",
     "mocha": "^2.5.3",
+    "postcss-cli": "^2.5.2",
     "redux-mock-store": "^1.0.3",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
