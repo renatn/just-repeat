@@ -109,18 +109,26 @@ const decks = combineReducers({
 });
 export default decks;
 
-export const getDecks = (state, filter) =>
-  state.allIds
+export const getDecks = (state, filter) => {
+  const now = Date.now();
+  return state.allIds
     .map(id => state.byId[id])
     .filter(item => {
       if (!filter || filter === 'ALL') {
         return true;
       } else if (filter === 'TODO') {
-        return item.cards.length > 0;
+        if (item.cards.length === 0) {
+          return false;
+        }
+        const shouldStudyCards = item.cards.filter(c => c.nextTime < now);
+        return shouldStudyCards.length > 0;
+      } else if (filter === 'DONE') {
+        return item.cards.length >0 && item.cards.every(c => c.nextTime > now);
       }
       return false;
     })
     .sort(byLastTime);
+};
 
 export const getDeckById = (state, id) => state.byId[id];
 
