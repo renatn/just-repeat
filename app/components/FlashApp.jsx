@@ -93,6 +93,10 @@ class AppShell extends Component {
     const isDisclaimerVisible = settings.isDisclaimerOpen;
     const hasDecks = decks.allIds.length > 0;
 
+    if (settings.isLoading) {
+      return <div className="loader">Загрузка...</div>;
+    }
+
     return (
       <div className="root">
         <Disclaimer

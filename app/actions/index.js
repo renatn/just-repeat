@@ -12,7 +12,6 @@ const closeUndo = () => ({
   type: 'HIDE_UNDO',
 });
 
-
 const startStudy = cards => ({
   type: 'START_STUDY',
   cards,
@@ -34,15 +33,16 @@ const study = deckId => (dispatch, getState) => {
 };
 
 const undo = () => dispatch => {
-  restoreState();
+  restoreState()
+    .then(loadState)
+    .then((decks) => {
+      dispatch({
+        type: 'UNDO',
+        decks,
+      });
 
-  const { decks } = loadState();
-  dispatch({
-    type: 'UNDO',
-    decks: decks.byId,
-  });
-
-  dispatch(closeUndo());
+      dispatch(closeUndo());
+    })
 };
 
 const addDeck = (name, color) => dispatch => {

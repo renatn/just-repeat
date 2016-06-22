@@ -1,15 +1,18 @@
 import { createStore, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+import throttle from 'lodash/throttle';
 
 import app from '../reducers';
-import { saveState, loadState } from '../utils';
+import { saveState } from '../utils';
 import { DIRTY_ACTIONS } from '../constants';
+
+const _saveState = throttle(saveState, 1000);
 
 const autoSaver = store => next => action => {
   let state = next(action);
   if (DIRTY_ACTIONS.indexOf(action.type) !== -1) {
-    saveState(store.getState());
+    _saveState(store.getState());
     if (['REMOVE_DECK', 'REMOVE_CARD'].indexOf(action.type) !== -1) {
       state = next({ type: 'SHOW_UNDO' });
     }
@@ -18,7 +21,16 @@ const autoSaver = store => next => action => {
 };
 
 const configureStore = () => {
-  const persistedState = loadState();
+
+  const isDisclaimerOpen = localStorage.getItem('hide-disclaimer') !== 'true';
+  const settings = {
+    showUndo: false,
+    isDisclaimerOpen,
+  };
+
+  const persistedState = {
+    settings
+  };
 
   const middleware = [thunk, autoSaver];
   if (process.env.NODE_ENV !== 'production') {

@@ -1,57 +1,42 @@
 /* eslint-disable no-console */
-import throttle from 'lodash/throttle';
 import { saveToFirebase } from './firebase-api';
+import * as idb from './indexed-storage';
 
 const VERSION = 2;
 const BUCKET = `just-repeat:v${VERSION}`;
 
-export const saveState = throttle(state => {
-  const { user, decks } = state;
-  const prev = localStorage.getItem(BUCKET);
-  if (prev) {
-    localStorage.setItem(`${BUCKET}.bakup`, prev);
-  }
-  localStorage.setItem(BUCKET, JSON.stringify(decks.byId));
-
-  if (user.isAuthenticated) {
-    saveToFirebase(user.uid, decks.byId)
-      .then(() => console.log('Saved to firebase'));
-  }
-
-  console.info(`Saved ${decks.allIds.length} decks`);
-}, 1000);
-
-export const loadState = () => {
-  try {
-    const isDisclaimerOpen = localStorage.getItem('hide-disclaimer') !== 'true';
-    const settings = {
-      showUndo: false,
-      isDisclaimerOpen,
-    };
-
-    const db = localStorage.getItem(BUCKET);
-    if (!db) {
-      return {
-        settings,
-      };
-    }
-
-    const byId = JSON.parse(db);
-    const allIds = Object.keys(byId);
-
-    return {
-      settings,
-      decks: {
-        byId,
-        allIds,
-      },
-    };
-  } catch (err) {
-    return undefined;
+const migrateFromLocalStorage = () => {
+  const oldData = localStorage.getItem(BUCKET);
+  if (oldData) {
+    return idb.setItem(BUCKET, JSON.parse(oldData))
+      .then(() => {
+        localStorage.removeItem(BUCKET);
+      });
   }
 };
 
+export const loadState = () => {
+  return idb.init()
+    .then(migrateFromLocalStorage)
+    .then(() => idb.getItem(BUCKET))
+    .then((decks) => decks || {});
+};
+
+export const saveState = state => {
+  const { user, decks } = state;
+  const saving = idb.getItem(BUCKET)
+    .then((data) => idb.setItem(`${BUCKET}.bakup`, data))
+    .then(() => idb.setItem(BUCKET, decks.byId));
+
+  if (user.isAuthenticated) {
+    saving
+      .then(saveToFirebase(user.uid, decks.byId))
+      .then(() => console.log('Saved to firebase'));
+  }
+  saving.then(() => console.info(`Saved ${decks.allIds.length} decks`));
+};
+
 export const restoreState = () => {
-  const prev = localStorage.getItem(`${BUCKET}.bakup`);
-  localStorage.setItem(BUCKET, prev);
+  return idb.getItem(`${BUCKET}.bakup`)
+            .then((prev) => idb.setItem(BUCKET, prev));
 };

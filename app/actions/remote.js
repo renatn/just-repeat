@@ -1,4 +1,5 @@
 import * as fb from '../utils/firebase-api';
+import { loadState } from '../utils';
 
 const userAuthenticated = user => ({
   type: 'USER_AUTHENTICATED',
@@ -16,8 +17,15 @@ const userNotAuthenticated = () => ({
 
 export const connectToFirebase = () => dispatch => {
   dispatch({
-    type: 'REQUEST_DECKS_FROM_FIREBASE',
+    type: 'REQUEST_DECKS',
   });
+
+  loadState()
+    .then((decks) => dispatch(receiveDecks(decks)))
+    .catch((e) => {
+      console.log('Fuck', e);
+      dispatch(receiveDecks({}));
+    });
 
   fb.init(user => {
     if (user) {

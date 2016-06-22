@@ -36,7 +36,7 @@ export const router = (state = { route: '/' }, action) => {
   }
 };
 
-const settings = (state = { showUndo: false, isDisclaimerOpen: true }, action) => {
+const settings = (state = { showUndo: false, isDisclaimerOpen: true, isLoading: false }, action) => {
   switch (action.type) {
     case 'SHOW_UNDO':
       return { ...state, showUndo: true };
@@ -46,6 +46,10 @@ const settings = (state = { showUndo: false, isDisclaimerOpen: true }, action) =
       return { ...state, isDisclaimerOpen: true };
     case 'HIDE_DISCLAIMER':
       return { ...state, isDisclaimerOpen: false };
+    case 'REQUEST_DECKS':
+      return { ...state, isLoading: true };
+    case 'RECEIVE_DECKS':
+      return { ...state, isLoading: false };
     default:
       return state;
   }
