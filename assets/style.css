@@ -54,6 +54,10 @@ footer {
 	margin: 0 auto;
 }
 
+.center {
+	text-align: center;
+}
+
 #app {
 	width: 100%;
 	
@@ -72,6 +76,13 @@ footer {
 	color: #000;
 	border-bottom: 1px dashed #000;
 }
+
+.link-disabled {
+	color: #ffffff;
+	text-decoration: none;
+	text-transform: uppercase;	
+}
+
 
 .btn {
 	border: none;
@@ -604,3 +615,9 @@ footer {
 	vertical-align: middle;
 	margin-right: 8px;
 }
+
+.decks-filter {
+	text-align: center;
+	margin: 16px 0;
+}
+
