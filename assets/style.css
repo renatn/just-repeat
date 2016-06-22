@@ -8,13 +8,14 @@ body {
 	font-size: 16px;
 	font-weight: 400;
 	background-color: #364f6b;
-  	min-height: 100%;
-
-	display: -webkit-flex; /* Safari */
+  	min-height: 100%; /* Safari */
+  	display: -webkit-box;
+  	display: -ms-flexbox;
   	display: flex;
-  	
-	-webkit-flex-direction: column;
-  	flex-direction: column;
+ -webkit-box-orient: vertical;
+ -webkit-box-direction: normal;
+     -ms-flex-direction: column;
+         flex-direction: column;
 }
 
 @media only screen and (max-width: 375px)  { 
@@ -64,9 +65,9 @@ footer {
 
 #app {
 	width: 100%;
-	
-	-webkit-flex: 1 0 auto;
-	flex: 1;
+	-webkit-box-flex: 1;
+	    -ms-flex: 1;
+	        flex: 1;
 }
 
 .link {
@@ -97,12 +98,15 @@ footer {
 	color: whitesmoke;
 	font-weight: 700;
 	letter-spacing: 0.1em;
+	-webkit-transition: background 0.25s ease-out;
 	transition: background 0.25s ease-out;
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 	cursor: pointer;
 
 	-webkit-user-select: none;  /* Chrome all / Safari all */
-	user-select: none;   
+	-moz-user-select: none;
+	 -ms-user-select: none;
+	     user-select: none;   
 }
 
 .btn.btn--alt:disabled {
@@ -166,16 +170,15 @@ footer {
 	padding: 0 8px;
 	
 	width: 100%;
-	box-sizing: border-box;
-
-	display: -webkit-flex; /* Safari */
-	display: flex;
-
-    -webkit-flex-wrap: wrap; /* Safari */
-	flex-wrap: wrap;
-	
-	-webkit-justify-content: center; /* Safari */
-	justify-content: center;
+	box-sizing: border-box; /* Safari */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex; /* Safari */
+	-ms-flex-wrap: wrap;
+	    flex-wrap: wrap; /* Safari */
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
 }
 
 .deck {
@@ -186,23 +189,24 @@ footer {
 	box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 	background-color: #e45a84;
 	list-style-type: none;
-
-	-webkit-flex: 1 0 26em;
-	flex: 1 0 26em;
-
-	display: -webkit-flex; /* Safari */
-	display: flex;	
-
-	-webkit-flex-direction: column;
-	flex-direction: column;
+	-webkit-box-flex: 1;
+	    -ms-flex: 1 0 26em;
+	        flex: 1 0 26em; /* Safari */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
 }
 
 .deck__top {
 	padding: 1rem;
 	position: relative;
-
-	-webkit-flex: 1 0 auto;
-	flex: 1;	
+	-webkit-box-flex: 1;
+	    -ms-flex: 1;
+	        flex: 1;	
 }
 
 .deck__edit-btn {
@@ -263,7 +267,9 @@ footer {
 	display: inline-block;
 
 	-webkit-transition: -webkit-transform 0.25s ease-in;
+	transition: -webkit-transform 0.25s ease-in;
 	transition: transform 0.25s ease-in;
+	transition: transform 0.25s ease-in, -webkit-transform 0.25s ease-in;
 }
 
 .ext-actions__content {
@@ -362,7 +368,10 @@ footer {
 	transform: translateY(-100%);
 	
 	-webkit-transition: -webkit-transform 0.25s ease-in, visibility 0s 0.25s;
-	transition: transform 0.25s ease-in, visibility 0s 0.25s;	
+	-webkit-transition: visibility 0s 0.25s, -webkit-transform 0.25s ease-in;
+	transition: visibility 0s 0.25s, -webkit-transform 0.25s ease-in;
+	transition: transform 0.25s ease-in, visibility 0s 0.25s;
+	transition: transform 0.25s ease-in, visibility 0s 0.25s, -webkit-transform 0.25s ease-in;	
 }
 
 .overlay__button-close {
@@ -395,7 +404,10 @@ footer {
 	-webkit-transform: translateY(0%);
 	transform: translateY(0%);
 	-webkit-transition: -webkit-transform 0.4s ease-in-out;
-	transition: transform 0.25s ease-out;	
+	-webkit-transition: -webkit-transform 0.25s ease-out;
+	transition: -webkit-transform 0.25s ease-out;
+	transition: transform 0.25s ease-out;
+	transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;	
 }
 
 .study-done {
@@ -476,7 +488,10 @@ footer {
 	-webkit-transform: translateY(100%);
 	transform: translateY(100%);
 	-webkit-transition: -webkit-transform 0.25s ease-in, visibility 0s 0.25s;
-	transition: transform 0.25s ease-in, visibility 0s 0.25s;	
+	-webkit-transition: visibility 0s 0.25s, -webkit-transform 0.25s ease-in;
+	transition: visibility 0s 0.25s, -webkit-transform 0.25s ease-in;
+	transition: transform 0.25s ease-in, visibility 0s 0.25s;
+	transition: transform 0.25s ease-in, visibility 0s 0.25s, -webkit-transform 0.25s ease-in;	
 }
 
 .undo button {
@@ -519,7 +534,9 @@ footer {
 	-webkit-transform: translateY(-100%);
 	transform: translateY(-100%);
 	-webkit-transition: -webkit-transform 0.25s ease-in;
+	transition: -webkit-transform 0.25s ease-in;
 	transition: transform 0.25s ease-in;
+	transition: transform 0.25s ease-in, -webkit-transform 0.25s ease-in;
 }
 
 .disclaimer--open {
@@ -556,18 +573,20 @@ footer {
 	margin-left: 1rem;
 }
 
-.loader {
-	display: -webkit-flex; /* Safari */
+.loader { /* Safari */
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
-
-	-webkit-align-items: center;
-	align-items: center;
-
-	-webkit-justify-content: center; /* Safari */
-	justify-content: center;
-
-	-webkit-flex-direction: column; /* Safari */
-	flex-direction: column;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center; /* Safari */
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center; /* Safari */
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
 
 	height: 100%;
 	font-size: 36px;
@@ -604,6 +623,7 @@ footer {
 .link.link--facebook {
 	padding: 8px;
 	background: #4c69ba;
+	background: -webkit-linear-gradient(#4c69ba, #3b55a0);
 	background: linear-gradient(#4c69ba, #3b55a0);
 	border-color: #4c69ba;
 	border-radius: 2px;
@@ -615,6 +635,7 @@ footer {
 }
 
 .link.link--facebook:hover {
+    background: -webkit-linear-gradient(#5b7bd5, #4864b1);
     background: linear-gradient(#5b7bd5, #4864b1);
     box-shadow: inset 0 1px 0 #607fd6;
 }

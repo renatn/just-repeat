@@ -1,7 +1,8 @@
 CACHE MANIFEST
 
-# Revision: 11
+# Revision: 12
 # ChangeLog:
+# - Autoprefixer
 # - Fixed filters, Fixed header
 # - IndexedDB
 # - Fixed undo
