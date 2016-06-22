@@ -7,8 +7,8 @@ const AppBar = ({ user, userSignIn, userSignOut }) => {
                 ? <UserLink userName={user.userName} onClick={userSignOut} />
                 : <FacebookLink onClick={userSignIn} />;
   return (
-    <div className="app-bar__signin">
-      <div className="container">
+    <div className="app-bar-wrap">
+      <div className="app-bar container">
         {link}
       </div>
     </div>
