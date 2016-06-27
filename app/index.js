@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 
 import configureStore from './store';
 
+require('es6-promise').polyfill();
+
 const store = configureStore();
 const rootEl = document.getElementById('app');
 
@@ -26,3 +28,10 @@ if (module.hot) {
 }
 
 render();
+
+const Worker = require('worker!./worker');
+const worker = new Worker('assets/worker.js');
+worker.postMessage('GET_DECKS');
+worker.onmessage = (e) => {
+  console.log(e.data);
+};
