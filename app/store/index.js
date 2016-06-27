@@ -7,12 +7,12 @@ import app from '../reducers';
 import { saveState } from '../utils';
 import { DIRTY_ACTIONS } from '../constants';
 
-const _saveState = throttle(saveState, 1000);
+const throttledSaveState = throttle(saveState, 1000);
 
 const autoSaver = store => next => action => {
   let state = next(action);
   if (DIRTY_ACTIONS.indexOf(action.type) !== -1) {
-    _saveState(store.getState());
+    throttledSaveState(store.getState());
     if (['REMOVE_DECK', 'REMOVE_CARD'].indexOf(action.type) !== -1) {
       state = next({ type: 'SHOW_UNDO' });
     }
@@ -21,7 +21,6 @@ const autoSaver = store => next => action => {
 };
 
 const configureStore = () => {
-
   const isDisclaimerOpen = localStorage.getItem('hide-disclaimer') !== 'true';
   const settings = {
     showUndo: false,

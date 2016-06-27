@@ -36,7 +36,13 @@ export const router = (state = { route: '/' }, action) => {
   }
 };
 
-const settings = (state = { showUndo: false, isDisclaimerOpen: true, isLoading: false }, action) => {
+const INITIAL_SETTINGS = {
+  showUndo: false,
+  isDisclaimerOpen: true,
+  isLoading: false
+};
+
+const settings = (state = INITIAL_SETTINGS, action) => {
   switch (action.type) {
     case 'SHOW_UNDO':
       return { ...state, showUndo: true };

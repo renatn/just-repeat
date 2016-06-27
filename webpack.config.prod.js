@@ -9,9 +9,9 @@ module.exports = {
   },
 
 	output: {
-		path: path.join(__dirname, 'public/assets'),
+		path: path.join(__dirname, 'dist/assets'),
 		filename: '[name].js',
-		publicPath: '/assets'
+		publicPath: '/assets/'
 	},
 
 	module: {
@@ -42,5 +42,5 @@ module.exports = {
       			warnings: false
     		}
 		}),
-	]	
+	]
 }

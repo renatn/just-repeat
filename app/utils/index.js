@@ -8,19 +8,18 @@ const BUCKET = `just-repeat:v${VERSION}`;
 const migrateFromLocalStorage = () => {
   const oldData = localStorage.getItem(BUCKET);
   if (oldData) {
-    return idb.setItem(BUCKET, JSON.parse(oldData))
+    idb.setItem(BUCKET, JSON.parse(oldData))
       .then(() => {
         localStorage.removeItem(BUCKET);
       });
   }
 };
 
-export const loadState = () => {
-  return idb.init()
-    .then(migrateFromLocalStorage)
-    .then(() => idb.getItem(BUCKET))
-    .then((decks) => decks || {});
-};
+export const loadState = () => idb.init()
+  .then(migrateFromLocalStorage)
+  .then(() => idb.getItem(BUCKET))
+  .then((decks) => decks || {});
+
 
 export const saveState = state => {
   const { user, decks } = state;
@@ -36,7 +35,7 @@ export const saveState = state => {
   saving.then(() => console.info(`Saved ${decks.allIds.length} decks`));
 };
 
-export const restoreState = () => {
-  return idb.getItem(`${BUCKET}.bakup`)
-            .then((prev) => idb.setItem(BUCKET, prev));
-};
+export const restoreState = () =>
+  idb.getItem(`${BUCKET}.bakup`)
+    .then((prev) => idb.setItem(BUCKET, prev));
+
